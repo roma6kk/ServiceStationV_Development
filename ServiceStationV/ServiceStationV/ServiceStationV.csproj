@@ -10,10 +10,16 @@
 
   <ItemGroup>
     <None Remove="images\LoginWindowBackground.jpg" />
+    <None Remove="images\RegistrationWindowBackground.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\LoginWindowBackground.jpg" />
+    <Resource Include="images\LoginWindowBackground.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\RegistrationWindowBackground.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
