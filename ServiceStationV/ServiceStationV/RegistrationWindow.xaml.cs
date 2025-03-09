@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,33 @@ namespace ServiceStationV
 
         private void RegBTN_Click(object sender, RoutedEventArgs e)
         {
-
+            User user = new();
+            if (!UserRepository.Users.Any(user => user.PhoneNum == PhoneNumberTB.Text && user.Login == LoginTB.Text))
+            {
+                if (PasswordTB.Password == PasswordRepeatTB.Password)
+                {
+                    user.FullName = FullNameTB.Text;
+                    user.PhoneNum = PhoneNumberTB.Text;
+                    user.Login = LoginTB.Text;
+                    user.Password = PasswordTB.Password;
+                }
+                else
+                {
+                    MessageBox.Show("Пароли не совпадают!", "Ошибка!", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                    PasswordTB.Clear();
+                    PasswordRepeatTB.Clear();
+                }
+                if (user.ValidateUser())
+                {
+                    UserRepository.AddUser(user);
+                    MessageBox.Show("Вы успешно зарегистрировались!", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пользователь с данным логином и/или номером телефона уже существует!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
