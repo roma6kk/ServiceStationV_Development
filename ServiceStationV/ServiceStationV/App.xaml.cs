@@ -6,6 +6,10 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Navigation;
+using System.Data.SqlClient;
+using System;
+using BCrypt.Net;
+using Microsoft.Data.SqlClient;
 
 namespace ServiceStationV
 {
@@ -14,50 +18,66 @@ namespace ServiceStationV
     /// </summary>
     public partial class App : Application
     {
-        public static readonly string UserListFilePath = "./ServiceStationV/UserList.json";
+        public static string conStr = @"Server=ROMAN; Database=ServiceStationDB; Integrated Security = true;TrustServerCertificate=True;";
+        public static readonly string UserListFilePath = "..//..//..//UserList.json";
     }
 
     public static class UserRepository
     {
         public static User CurrentUser = new User();
         public static List<User> Users = new List<User>();
-        static UserRepository()
+        public static bool AddUser(User user, SqlConnection con)
         {
-            RefreshUserList();
-        }
-        public static void AddUser(User NewUser)
-        {
-            RefreshUserList();
-            Users.Add(NewUser);
-            string UsersToJson = JsonSerializer.Serialize<List<User>>(Users, new JsonSerializerOptions {WriteIndented = true });
-            File.WriteAllText(App.UserListFilePath, UsersToJson);
-
-        }
-        private static void RefreshUserList()
-        {
-            if (!File.Exists(App.UserListFilePath))
-            {
-                File.WriteAllText(App.UserListFilePath, "[]");
-            }
-
-            string json = File.ReadAllText(App.UserListFilePath);
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                File.WriteAllText(App.UserListFilePath, "[]");
-                json = "[]";
-            }
-
             try
             {
-                List<User> DeserializedUsers = JsonSerializer.Deserialize<List<User>>(json);
-                ValidateUserList(DeserializedUsers);
+                string addUserQuery = "INSERT INTO Users (Login, FullName, PhoneNumber, Password)" +
+                            " VALUES(@Login, @FullName, @PhoneNumber, @Password)";
+
+                using (SqlCommand cmd = new(addUserQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@Login", user.Login);
+                    cmd.Parameters.AddWithValue("@FullName", user.FullName);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNum);
+                    cmd.Parameters.AddWithValue("@Password", BCrypt.Net.BCrypt.HashPassword(user.Password));
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
             }
-            catch (JsonException ex)
+            catch(SqlException ex) 
             {
-                Console.WriteLine($"Ошибка десериализации: {ex.Message}");
+                MessageBox.Show("Ошибка при добавлении пользователя в БД: " + ex.Message, "Ошибка SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
+
         }
+
+        //public static List<User> GetAllUsers(string connectionString)
+        //{
+        //    List<User> users = new List<User>();
+
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+        //        string query = "SELECT Login, FullName, PhoneNumber FROM Users";
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    users.Add(new User
+        //                    {
+        //                        Login = reader.GetString(0),
+        //                        FullName = reader.GetString(1),
+        //                        PhoneNum = reader.GetString(2),
+        //                    });
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return users;
+        //}
         private static void ValidateUserList(List<User> userlist)
         {
             if (userlist != null)
@@ -110,7 +130,7 @@ namespace ServiceStationV
             this.Login = "";
             this.Password = "";
         }
-        public bool IsEmpty()
+        private bool IsEmpty()
         {
             return string.IsNullOrWhiteSpace(FullName) &&
                    string.IsNullOrWhiteSpace(PhoneNum) &&
@@ -165,7 +185,7 @@ namespace ServiceStationV
             }
 
             string fullName = value.ToString();
-            string pattern = @"^[A-Za-z]+ [A-Za-z]+( [A-Za-z]+)?$";
+            string pattern = @"^[A-Za-zА-Яа-я]+ [A-Za-zА-Яа-я]+( [A-Za-zА-Яа-я]+)?$";
 
             if (!Regex.IsMatch(fullName, pattern))
             {

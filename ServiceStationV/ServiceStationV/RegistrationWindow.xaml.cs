@@ -1,6 +1,10 @@
-﻿using System;
+﻿using BCrypt.Net;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,35 +40,56 @@ namespace ServiceStationV
             loginWindow.Show();
         }
 
-        private void RegBTN_Click(object sender, RoutedEventArgs e)
+        private async void RegBTN_Click(object sender, RoutedEventArgs e)
         {
-            User user = new();
-            if (!UserRepository.Users.Any(user => user.PhoneNum == PhoneNumberTB.Text && user.Login == LoginTB.Text))
+            if (PasswordTB.Password != PasswordRepeatTB.Password)
             {
-                if (PasswordTB.Password == PasswordRepeatTB.Password)
+                MessageBox.Show("Пароли не совпадают!", "Ошибка!", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                PasswordTB.Clear();
+                PasswordRepeatTB.Clear();
+                return;
+            }
+            User user = new()
+            {
+                FullName = FullNameTB.Text,
+                PhoneNum = PhoneNumberTB.Text,
+                Login = LoginTB.Text,
+                Password = PasswordTB.Password
+            };
+
+            if (!user.ValidateUser()) return;
+            using (SqlConnection con = new(App.conStr))
+            {
+                try
                 {
-                    user.FullName = FullNameTB.Text;
-                    user.PhoneNum = PhoneNumberTB.Text;
-                    user.Login = LoginTB.Text;
-                    user.Password = PasswordTB.Password;
+                    await con.OpenAsync();
+                    string query = @"SELECT COUNT(*) FROM Users 
+                             WHERE Login = @Login OR PhoneNumber = @PhoneNumber";
+                    int count;
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Login", LoginTB.Text);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", PhoneNumberTB.Text);
+                        count = (int)await cmd.ExecuteScalarAsync();
+                        if (count > 0)
+                        {
+                            MessageBox.Show("Пользователь с таким логином или номером телефона уже существует!",
+                                            "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                    if (UserRepository.AddUser(user, con))
+                    {
+                        MessageBox.Show("Вы успешно зарегистрировались!", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Пароли не совпадают!", "Ошибка!", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-                    PasswordTB.Clear();
-                    PasswordRepeatTB.Clear();
-                }
-                if (user.ValidateUser())
-                {
-                    UserRepository.AddUser(user);
-                    MessageBox.Show("Вы успешно зарегистрировались!", "Успех!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
+                    MessageBox.Show("Ошибка регистрации: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else
-            {
-                MessageBox.Show("Пользователь с данным логином и/или номером телефона уже существует!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
         }
     }
 }

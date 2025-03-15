@@ -7,6 +7,32 @@
         mc:Ignorable="d"
         Title="MainMenuWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Информационная шапка -->
+        <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Background="#003468">
+            <TextBlock Text="Информационная шапка" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="WhiteSmoke"/>
+        </Border>
+
+        <!-- Панель для выполнения действий -->
+        <Border Grid.Column="0" Grid.Row="1" Background="LightGray">
+            <StackPanel VerticalAlignment="Top" Margin="10">
+                <Button Content="Действие 1" Margin="0,5"/>
+                <Button Content="Действие 2" Margin="0,5"/>
+                <Button Content="Действие 3" Margin="0,5"/>
+                <Button Content="Действие 4" Margin="0,5"/>
+            </StackPanel>
+        </Border>
+
+
+
+        <!-- Дополнительная информация или реклама -->
     </Grid>
 </Window>

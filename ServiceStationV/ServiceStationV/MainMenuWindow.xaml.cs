@@ -22,6 +22,15 @@ namespace ServiceStationV
         public MainMenuWindow()
         {
             InitializeComponent();
+            
         }
     }
+
+    // Класс для представления услуги
+    public class Service
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
 }
+
