@@ -6,11 +6,139 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Orbitron\Orbitron-Black.ttf" />
+    <None Remove="Fonts\Orbitron\Orbitron-Bold.ttf" />
+    <None Remove="Fonts\Orbitron\Orbitron-ExtraBold.ttf" />
+    <None Remove="Fonts\Orbitron\Orbitron-Medium.ttf" />
+    <None Remove="Fonts\Orbitron\Orbitron-Regular.ttf" />
+    <None Remove="Fonts\Orbitron\Orbitron-SemiBold.ttf" />
+    <None Remove="Fonts\Orbitron\Orbitron-VariableFont_wght.ttf" />
+    <None Remove="images\Close.png" />
+    <None Remove="images\EngineChange.mp4" />
+    <None Remove="images\Icons\profile.png" />
+    <None Remove="images\Icons\SettingsIcon.png" />
+    <None Remove="images\Icons\ShoppingCart.png" />
+    <None Remove="images\Icons\Star.png" />
+    <None Remove="images\Icons\StarAdd.png" />
+    <None Remove="images\Icons\StarAdded.png" />
     <None Remove="images\LoginWindowBackground.jpg" />
+    <None Remove="images\MainMenuBackground.HEIC" />
+    <None Remove="images\MainWindowBackground.png" />
+    <None Remove="images\ProfileImages\ChangePassword.png" />
+    <None Remove="images\ProfileImages\List.png" />
+    <None Remove="images\ProfileImages\ShoppingCartBlack.jpg" />
+    <None Remove="images\ProfileImages\ShoppingCartBlack.png" />
     <None Remove="images\RegistrationWindowBackground.png" />
+    <None Remove="images\ServicesImages\AlarmInstallation.HEIC" />
+    <None Remove="images\ServicesImages\AlarmInstallation.jpeg" />
+    <None Remove="images\ServicesImages\BlindsInstallation.HEIC" />
+    <None Remove="images\ServicesImages\BlindsInstallation.jpeg" />
+    <None Remove="images\ServicesImages\BrakeDiskCheck.HEIC" />
+    <None Remove="images\ServicesImages\BrakeDiskCheck.jpeg" />
+    <None Remove="images\ServicesImages\CheckEngine.png" />
+    <None Remove="images\ServicesImages\CoolingSystemDiagnostic.HEIC" />
+    <None Remove="images\ServicesImages\CoolingSystemDiagnostic.jpeg" />
+    <None Remove="images\ServicesImages\DiskEdit.HEIC" />
+    <None Remove="images\ServicesImages\DiskEdit.jpeg" />
+    <None Remove="images\ServicesImages\EngineCheck.HEIC" />
+    <None Remove="images\ServicesImages\EngineCheck.jpeg" />
+    <None Remove="images\ServicesImages\EnigneDiagnostic.HEIC" />
+    <None Remove="images\ServicesImages\EnigneDiagnostic.jpeg" />
+    <None Remove="images\ServicesImages\Exhaust.HEIC" />
+    <None Remove="images\ServicesImages\Exhaust.jpeg" />
+    <None Remove="images\ServicesImages\GlowPlugChange.HEIC" />
+    <None Remove="images\ServicesImages\GlowPlugChange.jpeg" />
+    <None Remove="images\ServicesImages\MegaphoneInstallation.HEIC" />
+    <None Remove="images\ServicesImages\MegaphoneInstallation.jpeg" />
+    <None Remove="images\ServicesImages\NozzleChange.HEIC" />
+    <None Remove="images\ServicesImages\NozzleChange.jpeg" />
+    <None Remove="images\ServicesImages\OilChange.HEIC" />
+    <None Remove="images\ServicesImages\OilChange.jpeg" />
+    <None Remove="images\ServicesImages\OpticCheck.HEIC" />
+    <None Remove="images\ServicesImages\OpticCheck.jpeg" />
+    <None Remove="images\ServicesImages\PadsCheck.HEIC" />
+    <None Remove="images\ServicesImages\PadsCheck.jpeg" />
+    <None Remove="images\ServicesImages\RadiatorCheck.HEIC" />
+    <None Remove="images\ServicesImages\RadiatorCheck.jpeg" />
+    <None Remove="images\ServicesImages\SuspensionCheck.HEIC" />
+    <None Remove="images\ServicesImages\SuspensionCheck.jpeg" />
+    <None Remove="images\ServicesImages\TimingBeltChange.HEIC" />
+    <None Remove="images\ServicesImages\TimingBeltChange.jpeg" />
+    <None Remove="images\ServicesImages\TireTread.HEIC" />
+    <None Remove="images\ServicesImages\TireTread.jpeg" />
+    <None Remove="images\ServicesImages\TurnSignals.HEIC" />
+    <None Remove="images\ServicesImages\TurnSignals.jpeg" />
+    <None Remove="images\ServicesImages\WiringDiagnostic.HEIC" />
+    <None Remove="images\ServicesImages\WiringDiagnostic.jpeg" />
+    <None Remove="images\ShoppingCart.png" />
+    <None Remove="images\Success.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\EngineChange.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\AlarmInstallation.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\BlindsInstallation.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\BrakeDiskCheck.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\CoolingSystemDiagnostic.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\EngineCheck.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\EnigneDiagnostic.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\Exhaust.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\GlowPlugChange.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\MegaphoneInstallation.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\NozzleChange.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\OilChange.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\OpticCheck.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\PadsCheck.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\RadiatorCheck.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\SuspensionCheck.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\TimingBeltChange.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\TireTread.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\TurnSignals.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\ServicesImages\WiringDiagnostic.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -19,12 +147,135 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Orbitron\Orbitron-Black.ttf" />
+    <Resource Include="Fonts\Orbitron\Orbitron-Bold.ttf" />
+    <Resource Include="Fonts\Orbitron\Orbitron-ExtraBold.ttf" />
+    <Resource Include="Fonts\Orbitron\Orbitron-Medium.ttf" />
+    <Resource Include="Fonts\Orbitron\Orbitron-Regular.ttf" />
+    <Resource Include="Fonts\Orbitron\Orbitron-SemiBold.ttf" />
+    <Resource Include="Fonts\Orbitron\Orbitron-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Icons\profile.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Icons\SettingsIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Icons\ShoppingCart.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Icons\Star.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Icons\StarAdd.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Icons\StarAdded.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\LoginWindowBackground.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\MainMenuBackground.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\MainWindowBackground.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ProfileImages\ChangePassword.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ProfileImages\List.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ProfileImages\ShoppingCartBlack.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ProfileImages\ShoppingCartBlack.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\RegistrationWindowBackground.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\ServicesImages\AlarmInstallation.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\BlindsInstallation.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\BrakeDiskCheck.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\CoolingSystemDiagnostic.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\DiskEdit.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="images\ServicesImages\DiskEdit.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="images\ServicesImages\EngineCheck.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\EnigneDiagnostic.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\Exhaust.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\GlowPlugChange.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\MegaphoneInstallation.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\NozzleChange.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\OilChange.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\OpticCheck.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\PadsCheck.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\RadiatorCheck.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\SuspensionCheck.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\TimingBeltChange.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\TireTread.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\TurnSignals.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ServicesImages\WiringDiagnostic.HEIC">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ShoppingCart.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Success.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ApplicationDefinition>
+  </ItemGroup>
+	
 </Project>

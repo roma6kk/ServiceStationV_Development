@@ -1,0 +1,97 @@
+﻿<Window x:Class="ServiceStationV.Views.FavListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceStationV.Views"
+        mc:Ignorable="d"
+        Title="Избранное" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip"
+        >
+
+    <!-- Фоновое изображение -->
+    <Window.Background>
+        <ImageBrush ImageSource="..\images\LoginWindowBackground.jpg" Stretch="UniformToFill" />
+    </Window.Background>
+
+    <!-- Основная панель с полупрозрачным слоем -->
+    <Grid Background="#B3FFFFFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Избранное"
+                   FontFamily="{Binding MainFont}"
+                   FontSize="36"
+                   FontWeight="Black"
+                   Foreground="#0B2444"
+                   HorizontalAlignment="Center"
+                   Margin="0,20,0,10"/>
+
+        <!-- Список карточек -->
+        <ScrollViewer Grid.Row="1" Margin="30,0,30,20">
+            <ItemsControl ItemsSource="{Binding FavList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" ItemWidth="400" ItemHeight="Auto" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#0B2444" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <!-- Изображение -->
+                                <Border Width="150" Height="150" CornerRadius="10" Margin="0,0,10,0" Background="White">
+                                    <Image Source="{Binding ImageSrc}" Stretch="UniformToFill" />
+                                </Border>
+
+                                <!-- Информация -->
+                                <StackPanel VerticalAlignment="Center" MaxWidth="220">
+                                    <TextBlock Text="{Binding ServiceName}" 
+                                               FontFamily="{Binding MainFont}" 
+                                               FontSize="20" 
+                                               FontWeight="ExtraBold" 
+                                               Foreground="WhiteSmoke"
+                                               TextWrapping="Wrap"/>
+
+                                    <TextBlock Text="{Binding SmallDescription}" 
+                                               FontFamily="{Binding MainFont}" 
+                                               FontSize="14" 
+                                               FontWeight="SemiBold" 
+                                               Foreground="WhiteSmoke"
+                                               Margin="0,5,0,0"
+                                               MaxWidth="200"
+                                               TextWrapping="Wrap"/>
+
+                                    <TextBlock Text="{Binding Price, StringFormat={}{0} ₽}" 
+                                               FontFamily="{Binding MainFont}" 
+                                               FontSize="16" 
+                                               FontWeight="Bold" 
+                                               Foreground="#EA022B"
+                                               Margin="0,8,0,0"/>
+
+                                    <!-- Кнопка -->
+                                    <Border Background="#EA022B" Width="100" Height="30" Margin="0,10,0,0" CornerRadius="10">
+                                        <Button Content="Удалить"
+                                                FontFamily="{Binding MainFont}"
+                                                FontWeight="Bold"
+                                                FontSize="14"
+                                                Foreground="WhiteSmoke"
+                                                Background="#EA022B"
+                                                BorderThickness="0"
+                                                Cursor="Hand"
+                                               />
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

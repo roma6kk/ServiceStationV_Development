@@ -1,0 +1,113 @@
+﻿<Window x:Class="ServiceStationV.Views.ServiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceStationV" xmlns:viewsmodels="clr-namespace:ServiceStationV.ViewsModels" d:DataContext="{d:DesignInstance Type=viewsmodels:ServiceWindowViewModel}"
+        mc:Ignorable="d"
+        Title="ServiceWindow" Height="760" Width="600"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Deactivated="Window_Deactivated"
+        Background="Transparent"
+        AllowsTransparency="True"
+        
+        >
+    <Window.Resources>
+        <FontFamily x:Key="MainFont">\Fonts\Orbitron\#Orbitron</FontFamily>
+    </Window.Resources>
+
+    <Border CornerRadius="10" BorderThickness="2" BorderBrush="Black" Background="white">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="2*"/>
+
+            </Grid.RowDefinitions>
+            <Border Grid.Column="1"
+                Grid.Row="1"
+                BorderThickness="1"
+                BorderBrush="Black"
+                Width="auto"
+                Height="auto"
+                Margin="10, 5 , 10, 5"
+                CornerRadius="10">
+                <Border.Background>
+                    <ImageBrush ImageSource="{Binding ImagePath}" Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+            <Button Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Margin="5"
+                    BorderThickness="0"
+                    Background="White"
+                    Foreground="Red"
+                    FontWeight="DemiBold"
+                    Click="CloseBTN_Click">
+                <TextBlock Text="X" FontSize="30" VerticalAlignment="Center"/>
+            </Button>
+            <ScrollViewer Grid.Row="2" 
+                          Grid.Column="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Width="auto" Height="auto"
+                          Margin="15,10,15,10"
+                          BorderThickness="0"
+                          FontFamily="{StaticResource MainFont}"
+                          FontWeight="Medium"
+                          FontSize="24">
+                <StackPanel>
+                    <TextBlock Text="{Binding LargeDiscription}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="auto" Width="auto" TextWrapping="Wrap"/>
+                    <MediaElement x:Name="ServiceVideo"
+              Grid.Row="1"
+              Grid.Column="1"
+              Height="0"
+              Width="0"
+              LoadedBehavior="Manual"
+              UnloadedBehavior="Stop"
+              Stretch="UniformToFill"
+              Volume="0.7"/>
+
+                </StackPanel>
+            </ScrollViewer >
+            <StackPanel Orientation="Horizontal"  Grid.Row="3" Grid.Column="1" Height="auto" Width="auto" VerticalAlignment="Center">
+                <Button Name="FavListBTN"
+                        Height="60"
+                        Width="60"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="330,0,10,0"
+                        Click="FavListBTN_Click"
+                        >
+                    <Button.Background>
+                        <ImageBrush ImageSource="{StaticResource StarAdd}"/>
+                    </Button.Background>
+                </Button>
+                <Button Name="CartBTN"
+                        Height="60"
+                        Width="60"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="20,0,0,0"
+                        Click="CartBTN_Click"
+                        >
+                    <Button.Background>
+                        <ImageBrush ImageSource="{StaticResource ShoppingCart}"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,117 @@
+﻿<Window x:Class="ServiceStationV.ProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceStationV"
+        xmlns:viewsmodels="clr-namespace:ServiceStationV.ViewsModels"
+        d:DataContext="{d:DesignInstance Type=viewsmodels:ProfileWindowViewModel}"
+        mc:Ignorable="d"
+        Title="ProfileWindow" Height="750" Width="1400"
+        ResizeMode="NoResize" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent">
+
+    <Window.Resources>
+        <FontFamily x:Key="MainFont">\Fonts\Orbitron\#Orbitron</FontFamily>
+    </Window.Resources>
+
+
+    <Grid Background="#B3FFFFFF">
+        <Border CornerRadius="10" BorderThickness="2" BorderBrush="Black" Background="#0B2444" Margin="20">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Личный кабинет"
+                           Grid.Row="0"
+                           FontFamily="{StaticResource MainFont}"
+                           FontSize="40"
+                           Foreground="WhiteSmoke"
+                           FontWeight="Black"
+                           HorizontalAlignment="Center"
+                           Margin="0,10,0,10"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Левая часть -->
+                    <StackPanel Grid.Column="0" Margin="20">
+                        <Border Width="240" Height="240" Background="White" CornerRadius="10" Margin="0,0,0,20">
+                            <!-- Аватар -->
+                        </Border>
+                        <TextBlock Text="Имя:" FontSize="20" FontFamily="{StaticResource MainFont}" Foreground="WhiteSmoke" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding ProfileName}" FontSize="20" FontFamily="{StaticResource MainFont}" Foreground="WhiteSmoke" Margin="0,0,0,10"/>
+                        <TextBlock Text="Номер:" FontSize="20" FontFamily="{StaticResource MainFont}" Foreground="WhiteSmoke" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding PhoneNumber}" FontSize="20" FontFamily="{StaticResource MainFont}" Foreground="WhiteSmoke"/>
+                    </StackPanel>
+
+                    <!-- Правая часть -->
+                    <StackPanel Grid.Column="1" Margin="20" VerticalAlignment="Top">
+                        <Border CornerRadius="10" BorderBrush="White" BorderThickness="1" Background="#B3FFFFFF" Margin="0,0,0,20" Height="150">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Image Source="..\images\ProfileImages\List.png" Width="100" Height="100"/>
+                                <Button Content="Мои записи"
+                                        FontFamily="{StaticResource MainFont}"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        FontSize="18"
+                                        VerticalAlignment="Center"
+                                        Margin="20,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border CornerRadius="10" BorderBrush="White" BorderThickness="1" Background="#B3FFFFFF" Margin="0,0,0,20" Height="150">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Image Source="..\images\ProfileImages\ShoppingCartBlack.jpg" Width="100" Height="100"/>
+                                <Button Content="Корзина"
+                                        FontFamily="{StaticResource MainFont}"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        FontSize="18"
+                                        VerticalAlignment="Center"
+                                        Margin="20,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border CornerRadius="10" BorderBrush="White" BorderThickness="1" Background="#B3FFFFFF" Height="150">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Image Source="..\images\ProfileImages\ChangePassword.png" Width="100" Height="100"/>
+                                <Button Content="Изменить пароль"
+                                        FontFamily="{StaticResource MainFont}"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        FontSize="18"
+                                        VerticalAlignment="Center"
+                                        Margin="20,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Кнопка закрытия -->
+                <Button Content="X" Click="GetBackBTN_Click"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="#EA022B"
+                        FontFamily="{StaticResource MainFont}"
+                        Foreground="White"
+                        FontSize="20"
+                        Width="40" Height="40"
+                        BorderThickness="0"
+                        Margin="0,10,10,0"
+                        FontWeight="Bold"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
