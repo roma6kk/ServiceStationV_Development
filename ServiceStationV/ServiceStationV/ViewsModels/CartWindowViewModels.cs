@@ -2,6 +2,7 @@
 using ServiceStationV.Repositories;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -24,8 +25,9 @@ namespace ServiceStationV.ViewsModels
         public List<int> CartServicesIds { get; set; }
         public string ImagePath { get; set; }
 
-        public decimal TotalPrice => CartItems?.Sum(x => x.Price) ?? 0;
-
+        private decimal TotalPrice => CartItems?.Sum(x => x.Price) ?? 0;
+        public string LocalizedTotalPriceString => string.Format(
+      LocalizationManager.IsEnglish ? "Total: {0:C}" : "Итого: {0:C}", TotalPrice);
         public CartWindowViewModels(List<int> cartServicesIds)
         {
             CartServicesIds = cartServicesIds;

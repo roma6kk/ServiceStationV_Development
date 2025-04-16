@@ -16,13 +16,48 @@ namespace ServiceStationV.ViewsModels
         public ICollectionView ViewServices { get; private set; }
         private string _searchText;
         private ServiceTypes? _selectedCategory = null;
-        public List<ServiceTypes> FilterServices { get; } = new List<ServiceTypes>(Enum.GetValues(typeof(ServiceTypes)).Cast<ServiceTypes>()).ToList();
-        public List<string> SortOptions { get; } = new List<string>
-{
-    "Цена (по возрастанию)",
-    "Цена (по убыванию)",
-    "Название"
-};
+        public List<LocalizedServiceType> FilterServices { get; } = Enum.GetValues(typeof(ServiceTypes))
+            .Cast<ServiceTypes>()
+            .Select(t => new LocalizedServiceType { Type = t })
+            .ToList();
+        private ObservableCollection<SortOption> _sortOptions;
+        public ObservableCollection<SortOption> SortOptions
+        {
+            get => _sortOptions;
+            set
+            {
+                _sortOptions = value;
+                OnPropertyChanged(nameof(SortOptions));
+            }
+        }
+        
+        public void UpdateSortOptions()
+        {
+            SortOptions = new ObservableCollection<SortOption>
+    {
+        new SortOption { Key = "PriceAsc", DisplayName = (string)Application.Current.Resources["Sort_Ascending"] },
+        new SortOption { Key = "PriceDesc", DisplayName = (string)Application.Current.Resources["Sort_Descending"] },
+        new SortOption { Key = "ByName", DisplayName = (string)Application.Current.Resources["Sort_ByName"] }
+    };
+            OnPropertyChanged(nameof(SortOptions)); 
+
+        }
+
+        public string GetLocalizedType(ServiceTypes type)
+        {
+            return Application.Current.Resources[type.ToString()]?.ToString() ?? type.ToString();
+        }
+        public class SortOption
+        {
+            public string Key { get; set; }
+            public string DisplayName { get; set; }
+        }
+        public class LocalizedServiceType
+        {
+            public ServiceTypes Type { get; set; }
+            public string DisplayName => Application.Current.Resources[Type.ToString()]?.ToString() ?? Type.ToString();
+        }
+
         private string _selectedSort;
         public string SearchText
         {
@@ -70,11 +105,13 @@ namespace ServiceStationV.ViewsModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
 
-
         public MainMenuViewModel()
         {
+            UpdateSortOptions();
+            LocalizationManager.LanguageChanged += OnLanguageChanged;
             _ = InitializeServicesAsync();
         }
+
 
         private async Task InitializeServicesAsync()
         {
@@ -84,8 +121,12 @@ namespace ServiceStationV.ViewsModels
             ViewServices.Filter = ServiceFilter;
 
         }
-
-
+        private async void OnLanguageChanged(object sender, EventArgs e)
+        {
+            UpdateSortOptions();
+            await RefreshServicesAsync();
+            ViewServices?.Refresh();
+        }
         private bool ServiceFilter(object item)
         {
             if (item is not Service service)
@@ -101,20 +142,20 @@ namespace ServiceStationV.ViewsModels
                 ViewServices.SortDescriptions.Clear();
                 switch (SelectedSortOption)
                 {
-                    case "Цена (по возрастанию)":
+                    case "PriceAsc":
                         ViewServices.SortDescriptions.Add(new SortDescription("Price", ListSortDirection.Ascending));
                         break;
-                    case "Цена (по убыванию)":
+                    case "PriceDesc":
                         ViewServices.SortDescriptions.Add(new SortDescription("Price", ListSortDirection.Descending));
                         break;
-                    case "Название":
+                    case "ByName":
                         ViewServices.SortDescriptions.Add(new SortDescription("ServiceName", ListSortDirection.Ascending));
                         break;
                 }
                 ViewServices.Refresh();
             }
         }
-        private async Task RefreshServicesAsync()
+        public async Task RefreshServicesAsync()
         {
 
             ObservableCollection<Service> services;

@@ -2,8 +2,11 @@
 using ServiceStationV.Repositories;
 using ServiceStationV.ViewsModels;
 using System;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace ServiceStationV{
     /// <summary>
@@ -16,12 +19,27 @@ namespace ServiceStationV{
             InitializeComponent();
             this.DataContext = new ProfileWindowViewModel();
         }
+
+        private void ThemeToggleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ToggleTheme();
+        }
+
         private void Window_Deactivated(object sender, EventArgs e)
         {
             this.Topmost = true;
             this.Activate();
         }
+        private async void ChangeLanguageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var newCulture = LocalizationManager.CurrentCulture.Name == "en-US"
+                ? new CultureInfo("ru-RU")
+                : new CultureInfo("en-US");
+            //MainMenuViewModel mainMenuViewModel = new MainMenuViewModel();
+            //mainMenuViewModel.SearchText = "";
+            LocalizationManager.SetLanguage(newCulture);
 
+        }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);

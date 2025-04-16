@@ -1,0 +1,56 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:system="clr-namespace:System;assembly=mscorlib">
+	<!--LOGINWINDOW-->
+	<system:String x:Key="LoginWindowTitle">Вход</system:String>
+	<system:String x:Key="LoginWindowAuthorization">Авторизация</system:String>
+	<system:String x:Key="LoginWindowInfo">Введите ваши данные</system:String>
+	<system:String x:Key="LoginWindowLogin">Логин</system:String>
+	<system:String x:Key="LoginWindowPassword">Пароль</system:String>
+	<system:String x:Key="LoginWindowSignIn">Войти</system:String>
+	<system:String x:Key="LoginWindowRegister">Регистрация</system:String>
+	<system:String x:Key="LoginWindowChangeLanguage">EN</system:String>
+	<!--REGISTRATIONWINDOW-->
+	<system:String x:Key="RegWindowTitle">Регистрация</system:String>
+	<system:String x:Key="RegWindowInfoText">Пожалуйста, заполните все поля</system:String>
+	<system:String x:Key="RegWindowFullName">Как к вам обращаться?</system:String>
+	<system:String x:Key="RegWindowPhone">Ваш номер телефона</system:String>
+	<system:String x:Key="RegWindowLogin">Логин</system:String>
+	<system:String x:Key="RegWindowPassword">Пароль</system:String>
+	<system:String x:Key="RegWindowRepeatPassword">Повторите пароль</system:String>
+	<system:String x:Key="RegWindowRegisterButton">Зарегистрироваться</system:String>
+	<system:String x:Key="RegWindowBackButton">Назад</system:String>
+    <!-- Main menu window -->
+    <system:String x:Key="MainMenu_Header">Крутой автосервис</system:String>
+    <system:String x:Key="Sort_Ascending">Цена (по возрастанию)</system:String>
+    <system:String x:Key="Sort_Descending">Цена (по убыванию)</system:String>
+    <system:String x:Key="Sort_ByName">Название</system:String>
+    <system:String x:Key="Price_Format">Цена: {0:C}</system:String>
+    <!--SERVICETYPES-->
+    <system:String x:Key="Diagnostics">Диагностика</system:String>
+    <system:String x:Key="Engine">Двигатель</system:String>
+    <system:String x:Key="Suspension">Подвеска</system:String>
+    <system:String x:Key="Brakes">Тормоза</system:String>
+    <system:String x:Key="Wheels">Колеса</system:String>
+    <system:String x:Key="Cooling">Охлаждение</system:String>
+    <system:String x:Key="Tuning">Тюнинг</system:String>
+    <system:String x:Key="Maintenance">Обслуживание</system:String>
+    <!--CARTWINDOW-->
+    <system:String x:Key="CartWindowHeader">Корзина</system:String>
+    <system:String x:Key="CartWindowPlaceOrder">Оформить заказ</system:String>
+    <system:String x:Key="CartWindowRemove">Удалить</system:String>
+    <!--FAVLISTWINDOW-->
+    <system:String x:Key="FavListWindowHeader">Избранное</system:String>
+    <system:String x:Key="FavListWindowTitle">Название</system:String>
+    <system:String x:Key="FavListWindowRemoveFromFav">Удалить</system:String>
+    <!--PROFILEWINDOW-->
+    <system:String x:Key="ProfileWindowHeader">Личный кабинет</system:String>
+    <system:String x:Key="ProfileWindowNameLabel">Имя:</system:String>
+    <system:String x:Key="ProfileWindowPhoneLabel">Номер:</system:String>
+    <system:String x:Key="ProfileWindowMyAppointments">Мои записи</system:String>
+    <system:String x:Key="ProfileWindowCart">Корзина</system:String>
+    <system:String x:Key="ProfileWindowChangePassword">Изменить пароль</system:String>
+    <system:String x:Key="ChangeThemeTooltip">Сменить тему оформления</system:String>
+
+
+</ResourceDictionary>

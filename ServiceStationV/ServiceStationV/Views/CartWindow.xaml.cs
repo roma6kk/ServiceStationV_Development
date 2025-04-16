@@ -1,9 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
+using ServiceStationV.Models;
+using ServiceStationV.Repositories;
 using ServiceStationV.ViewsModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ServiceStationV.Views
 {
@@ -23,7 +26,7 @@ namespace ServiceStationV.Views
             {
                 CartServicesIds = await GetCartAsync();
                 var vm = new CartWindowViewModels(CartServicesIds);
-                await vm.LoadCartItemsAsync(); // ← сюда загрузку
+                await vm.LoadCartItemsAsync();
                 DataContext = vm;
             }
             catch (Exception ex)
@@ -53,8 +56,32 @@ namespace ServiceStationV.Views
             }
             return cart;
         }
-    
-    private void CloseButton_Click(object sender, EventArgs e)
+
+        private async Task RemoveServiceFromCart(int serviceId, string login)
+        {
+            using (SqlConnection con = new SqlConnection(App.conStr))
+            {
+                await con.OpenAsync();
+                string query = @"DELETE FROM UserCart WHERE ServiceId = @ServiceId AND Login = @Login";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@ServiceId", serviceId);
+                    cmd.Parameters.AddWithValue("@Login", login);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private async void RemoveBTN_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                var serviceToRemove = btn.DataContext as Service;
+                await RemoveServiceFromCart(serviceToRemove.ServiceId, UserRepository.CurrentUser.Login);
+                LoadCartAsync();
+            }
+        }
+        private void CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }

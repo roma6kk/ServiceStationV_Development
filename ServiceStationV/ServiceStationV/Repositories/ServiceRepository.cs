@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+
 using Microsoft.Data.SqlClient;
 using ServiceStationV.Models;
 
@@ -13,6 +14,7 @@ namespace ServiceStationV.Repositories
 
     public static class ServiceRepository
     {
+
         private static bool _isInitialized = false;
         public static ObservableCollection<Service> Services { get; } = new();
 
@@ -74,7 +76,10 @@ namespace ServiceStationV.Repositories
                 await using var con = new SqlConnection(App.conStr);
                 await con.OpenAsync();
 
-                var getServicesQuery = "SELECT * FROM Services";
+                var getServicesQuery = @"SELECT ServiceId, ServiceName, 
+                           SmallDescription, LargeDescription, 
+                           Price, ImageSrc, ServiceType, ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN, ServiceTypeEN 
+                           FROM Services";
                 await using var cmd = new SqlCommand(getServicesQuery, con);
                 using var reader = await cmd.ExecuteReaderAsync();
 
@@ -83,14 +88,17 @@ namespace ServiceStationV.Repositories
                     services.Add(new Service()
                     {
                         ServiceId = reader.GetInt32(0),
-                        ServiceName = reader.GetString(1),
-                        SmallDescription = reader.GetString(2),
-                        LargeDescription = reader.GetString(3),
+                        ServiceName = LocalizationManager.IsEnglish ? reader.GetString(7) : reader.GetString(1),
+                        SmallDescription = LocalizationManager.IsEnglish ? reader.GetString(8) : reader.GetString(2),
+                        LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                         Price = reader.GetDecimal(4),
                         ImageSrc = reader.GetString(5),
-                        ServiceType = (ServiceTypes)Enum.Parse(typeof(ServiceTypes), reader.GetString(6)),
+                        ServiceType = LocalizationManager.IsEnglish
+                        ? (Enum.TryParse<ServiceTypesEN>(reader.GetString(10), out var stEn) ? (ServiceTypes)(int)stEn : ServiceTypes.Обслуживание)
+                        : (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
                     });
                 }
+
             }
             catch (Exception ex)
             {
@@ -108,10 +116,11 @@ namespace ServiceStationV.Repositories
                 using (SqlConnection con = new(App.conStr))
                 {
                     await con.OpenAsync();
-                    string searchQuery = "SELECT * FROM Services WHERE ServiceName LIKE @Servicename";
+                    string searchQuery = "SELECT * FROM Services WHERE ServiceName LIKE @SearchString OR ServiceNameEN LIKE @SearchString";
                     using (SqlCommand cmd = new SqlCommand(searchQuery, con))
                     {
-                        cmd.Parameters.AddWithValue("@Servicename", $"%{searchString}%");
+                        cmd.Parameters.AddWithValue("@SearchString", $"%{searchString}%");
+
                         using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
                             while (await reader.ReadAsync())
@@ -119,12 +128,14 @@ namespace ServiceStationV.Repositories
                                 Service service = new Service
                                 {
                                     ServiceId = reader.GetInt32(0),
-                                    ServiceName = reader.GetString(1),
-                                    SmallDescription = reader.GetString(2),
-                                    LargeDescription = reader.GetString(3),
+                                    ServiceName = LocalizationManager.IsEnglish ? reader.GetString(7) : reader.GetString(1),
+                                    SmallDescription = LocalizationManager.IsEnglish ? reader.GetString(8) : reader.GetString(2),
+                                    LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                                     Price = reader.GetDecimal(4),
                                     ImageSrc = reader.GetString(5),
-                                    ServiceType = (ServiceTypes)Enum.Parse(typeof(ServiceTypes), reader.GetString(6)),
+                                    ServiceType = LocalizationManager.IsEnglish
+                        ? (Enum.TryParse<ServiceTypesEN>(reader.GetString(10), out var stEn) ? (ServiceTypes)(int)stEn : ServiceTypes.Обслуживание)
+                        : (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
                                 };
                                 services.Add(service);
                             }
@@ -152,7 +163,12 @@ namespace ServiceStationV.Repositories
             {
                 await con.OpenAsync();
 
-                string query = "SELECT * FROM Services WHERE ServiceId IN (" + string.Join(",", ids) + ")";
+                string query = @"SELECT ServiceId, ServiceName, 
+                           SmallDescription, LargeDescription, 
+                           Price, ImageSrc, ServiceType, 
+                           ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN, ServiceTypeEN 
+                         FROM Services 
+                         WHERE ServiceId IN (" + string.Join(",", ids) + ")";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -160,23 +176,26 @@ namespace ServiceStationV.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            Service service = new Service()
+                            services.Add(new Service
                             {
                                 ServiceId = reader.GetInt32(0),
-                                ServiceName = reader.GetString(1),
-                                SmallDescription = reader.GetString(2),
-                                LargeDescription = reader.GetString(3),
+                                ServiceName = LocalizationManager.IsEnglish ? reader.GetString(7) : reader.GetString(1),
+                                SmallDescription = LocalizationManager.IsEnglish ? reader.GetString(8) : reader.GetString(2),
+                                LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                                 Price = reader.GetDecimal(4),
                                 ImageSrc = reader.GetString(5),
-                                ServiceType = (ServiceTypes)Enum.Parse(typeof(ServiceTypes), reader.GetString(6)),
-                            };
-                            services.Add(service);
+                                ServiceType = LocalizationManager.IsEnglish
+                                    ? (Enum.TryParse<ServiceTypesEN>(reader.GetString(10), out var stEn) ? (ServiceTypes)(int)stEn : ServiceTypes.Обслуживание)
+                                    : (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
+                            });
                         }
                     }
                 }
             }
+
             return services;
         }
+
     }
 
 }

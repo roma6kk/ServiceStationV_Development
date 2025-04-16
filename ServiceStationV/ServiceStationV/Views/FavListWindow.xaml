@@ -4,18 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServiceStationV.Views"
+        xmlns:vm="clr-namespace:ServiceStationV.ViewsModels"
         mc:Ignorable="d"
-        Title="Избранное" Height="600" Width="900"
+        Title="{DynamicResource FavListWindowTitle}"
+        Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip"
-        >
+        ResizeMode="CanResizeWithGrip">
 
-    <!-- Фоновое изображение -->
+    <!-- Фон -->
     <Window.Background>
         <ImageBrush ImageSource="..\images\LoginWindowBackground.jpg" Stretch="UniformToFill" />
     </Window.Background>
 
-    <!-- Основная панель с полупрозрачным слоем -->
+
     <Grid Background="#B3FFFFFF">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,8 +24,8 @@
         </Grid.RowDefinitions>
 
         <!-- Заголовок -->
-        <TextBlock Text="Избранное"
-                   FontFamily="{Binding MainFont}"
+        <TextBlock Text="{DynamicResource FavListWindowHeader}"
+                   FontFamily="{StaticResource MainFont}"
                    FontSize="36"
                    FontWeight="Black"
                    Foreground="#0B2444"
@@ -36,60 +37,63 @@
             <ItemsControl ItemsSource="{Binding FavList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" ItemWidth="400" ItemHeight="Auto" />
+                        <WrapPanel Orientation="Horizontal" ItemWidth="400" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="#0B2444" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95">
+                        <Border Background="#0B2444" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95"
+            MouseLeftButtonDown="Service_MouseLeftButtonDown"
+            Cursor="Hand">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <!-- Изображение -->
                                 <Border Width="150" Height="150" CornerRadius="10" Margin="0,0,10,0" Background="White">
                                     <Image Source="{Binding ImageSrc}" Stretch="UniformToFill" />
                                 </Border>
 
-                                <!-- Информация -->
+                                <!-- Информация и кнопка -->
                                 <StackPanel VerticalAlignment="Center" MaxWidth="220">
                                     <TextBlock Text="{Binding ServiceName}" 
-                                               FontFamily="{Binding MainFont}" 
-                                               FontSize="20" 
-                                               FontWeight="ExtraBold" 
-                                               Foreground="WhiteSmoke"
-                                               TextWrapping="Wrap"/>
+                           FontFamily="{StaticResource MainFont}" 
+                           FontSize="20" 
+                           FontWeight="ExtraBold" 
+                           Foreground="WhiteSmoke"
+                           TextWrapping="Wrap"/>
 
                                     <TextBlock Text="{Binding SmallDescription}" 
-                                               FontFamily="{Binding MainFont}" 
-                                               FontSize="14" 
-                                               FontWeight="SemiBold" 
-                                               Foreground="WhiteSmoke"
-                                               Margin="0,5,0,0"
-                                               MaxWidth="200"
-                                               TextWrapping="Wrap"/>
+                           FontFamily="{StaticResource MainFont}" 
+                           FontSize="14" 
+                           FontWeight="SemiBold" 
+                           Foreground="WhiteSmoke"
+                           Margin="0,5,0,0"
+                           TextWrapping="Wrap"/>
 
                                     <TextBlock Text="{Binding Price, StringFormat={}{0} ₽}" 
-                                               FontFamily="{Binding MainFont}" 
-                                               FontSize="16" 
-                                               FontWeight="Bold" 
-                                               Foreground="#EA022B"
-                                               Margin="0,8,0,0"/>
+                           FontFamily="{StaticResource MainFont}" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="#EA022B"
+                           Margin="0,8,0,0"/>
 
-                                    <!-- Кнопка -->
-                                    <Border Background="#EA022B" Width="100" Height="30" Margin="0,10,0,0" CornerRadius="10">
-                                        <Button Content="Удалить"
-                                                FontFamily="{Binding MainFont}"
-                                                FontWeight="Bold"
-                                                FontSize="14"
-                                                Foreground="WhiteSmoke"
-                                                Background="#EA022B"
-                                                BorderThickness="0"
-                                                Cursor="Hand"
-                                               />
-                                    </Border>
+                                    <!-- Кнопка удаления -->
+                                    <Button Content="{DynamicResource FavListWindowRemoveFromFav}"
+                        Click="RemoveBTN_Click"
+                        FontFamily="{StaticResource MainFont}"
+                        FontWeight="Bold"
+                        FontSize="14"
+                        Foreground="WhiteSmoke"
+                        Background="#EA022B"
+                        BorderThickness="0"
+                        Width="100"
+                        Height="30"
+                        Margin="0,10,0,0"
+                        Cursor="Hand"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
+
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>

@@ -24,8 +24,8 @@
 
         <!-- Заголовок в стиле FavListWindow -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Корзина"
-                       FontFamily="{Binding MainFont}"
+            <TextBlock Text="{DynamicResource CartWindowHeader}"
+                       FontFamily="{StaticResource MainFont}"
                        FontSize="36"
                        FontWeight="Black"
                        Foreground="#0B2444"
@@ -44,7 +44,7 @@
                     Click="CloseButton_Click"/>
         </StackPanel>
 
-        <!-- Список услуг в стиле FavListWindow -->
+        <!-- Список услуг -->
         <ScrollViewer Grid.Row="1" Margin="30,0,30,10">
             <ItemsControl ItemsSource="{Binding CartItems}">
                 <ItemsControl.ItemsPanel>
@@ -71,12 +71,12 @@
                                 <!-- Информация об услуге -->
                                 <StackPanel Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding ServiceName}" 
-                                               FontFamily="{Binding MainFont}" 
+                                               FontFamily="{StaticResource MainFont}" 
                                                FontSize="20" 
                                                FontWeight="ExtraBold" 
                                                Foreground="WhiteSmoke"/>
                                     <TextBlock Text="{Binding SmallDescription}" 
-                                               FontFamily="{Binding MainFont}" 
+                                               FontFamily="{StaticResource MainFont}" 
                                                FontSize="14" 
                                                FontWeight="SemiBold" 
                                                Foreground="WhiteSmoke"
@@ -87,13 +87,14 @@
                                 <!-- Цена и кнопка удаления -->
                                 <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Price, StringFormat='{}{0} ₽'}" 
-                                               FontFamily="{Binding MainFont}" 
+                                               FontFamily="{StaticResource MainFont}" 
                                                FontSize="18" 
                                                FontWeight="Bold" 
                                                Foreground="#EA022B"
                                                HorizontalAlignment="Right"/>
-                                    <Button Content="Удалить"
-                                            FontFamily="{Binding MainFont}"
+                                    <Button Content="{DynamicResource CartWindowRemove}"
+                                            FontFamily="{StaticResource MainFont}"
+                                            Click="RemoveBTN_Click"
                                             FontWeight="Bold"
                                             FontSize="14"
                                             Foreground="WhiteSmoke"
@@ -120,8 +121,8 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{Binding TotalPrice, StringFormat='Итого: {0} ₽'}"
-                           FontFamily="{Binding MainFont}"
+                <TextBlock Text="{Binding LocalizedTotalPriceString}"
+                           FontFamily="{StaticResource MainFont}"
                            FontSize="24"
                            FontWeight="Bold"
                            Foreground="WhiteSmoke"
@@ -129,7 +130,7 @@
                            HorizontalAlignment="Right"/>
 
                 <Button Grid.Column="1"
-                        Content="Оформить заказ"
+                        Content="{DynamicResource CartWindowPlaceOrder}"
                         FontFamily="nigag"
                         FontSize="16"
                         FontWeight="Bold"

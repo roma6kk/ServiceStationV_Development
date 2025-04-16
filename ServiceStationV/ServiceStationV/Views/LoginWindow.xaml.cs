@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ServiceStationV.Models;
 using ServiceStationV.Repositories;
+using System.Globalization;
 namespace ServiceStationV.Views
 {
     /// <summary>
@@ -22,6 +23,12 @@ namespace ServiceStationV.Views
         public LoginWindow()
         {
             InitializeComponent();
+            LocalizationManager.LanguageChanged += OnLanguageChanged;
+
+        }
+        private void OnLanguageChanged(object sender, EventArgs e)
+        {
+            ChangeLanguageBtn.Content = LocalizationManager.GetString("LoginWindowChangeLanguage");
         }
         private void GoToRegBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -30,6 +37,14 @@ namespace ServiceStationV.Views
             RegWindow.Show();
         }
 
+        private void ChangeLanguageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var newCulture = LocalizationManager.CurrentCulture.Name == "en-US"
+                ? new CultureInfo("ru-RU")
+                : new CultureInfo("en-US");
+
+            LocalizationManager.SetLanguage(newCulture);
+        }
         private async void LoginBTN_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(LoginTB.Text) || string.IsNullOrWhiteSpace(PasswordTB.Password))

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using ServiceStationV.ViewsModels;
+using ServiceStationV.Models;
+using ServiceStationV.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +42,19 @@ namespace ServiceStationV.Views
                 MessageBox.Show($"Ошибка при загрузке данных избранного: {ex.Message}");
             }
         }
+        private async Task RemoveServiceFromFavList(int serviceId, string login)
+        {
+            using (SqlConnection con = new SqlConnection(App.conStr)) {
+                await con.OpenAsync();
+                string query = @"DELETE FROM UserFavList WHERE ServiceId = @ServiceId AND Login = @Login";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@ServiceId", serviceId);
+                    cmd.Parameters.AddWithValue("@Login", login);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         private async Task<List<int>> GetFavListIdsAsync()
         {
@@ -60,6 +75,23 @@ namespace ServiceStationV.Views
                 }
             }
             return cart;
+        }
+        private async void RemoveBTN_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                var serviceToRemove = btn.DataContext as Service;
+                await RemoveServiceFromFavList(serviceToRemove.ServiceId, UserRepository.CurrentUser.Login);
+                LoadFavListAsync();
+            }
+        }
+        private void Service_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Border border && border.DataContext is Service selectedService)
+            {
+                ServiceWindow serviceWindow = new ServiceWindow(selectedService);
+                serviceWindow.ShowDialog();
+            }
         }
     }
 }

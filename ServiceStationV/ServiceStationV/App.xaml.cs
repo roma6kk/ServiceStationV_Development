@@ -20,6 +20,13 @@ namespace ServiceStationV
     public partial class App : Application
     {
         public static string conStr = @"Server=ROMAN; Database=ServiceStationDB; Integrated Security = true;TrustServerCertificate=True;";
-    }   
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            ThemeManager.Initialize();
+            LocalizationManager.SetLanguage(LocalizationManager.SupportedCultures[0]);
+
+        }
+    }
 
 }

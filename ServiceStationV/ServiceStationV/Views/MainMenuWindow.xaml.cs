@@ -17,10 +17,18 @@ namespace ServiceStationV
 
         public MainMenuWindow()
         {
+            // ЭТО ТОЖЕ 
+            LocalizationManager.LanguageChanged += OnLanguageChanged;
             InitializeComponent();
+            ThemeManager.LoadTheme("M");
             DataContext = _viewModel;
         }
-
+        // Я ХЗ ПОЧЕМУ НО ЕСЛИ ЭТО УБРАТЬ ТИПЫ СЕРВИСОВ В КОМБОБОКСЕ НЕ ПЕРЕВОДЯТСЯ НАДО БДУЕТ ФИКСИТЬ 
+        private void OnLanguageChanged(object sender, EventArgs e)
+        {
+            _viewModel.UpdateSortOptions();
+            _viewModel.ViewServices?.Refresh();
+        }
         private void ServiceBTN_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button { DataContext: Service selectedService })

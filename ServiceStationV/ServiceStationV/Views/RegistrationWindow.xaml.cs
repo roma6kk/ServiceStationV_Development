@@ -33,8 +33,8 @@ namespace ServiceStationV
         {
             InitializeComponent();
             loginWindow = lw;
-        }
 
+        }
 
 
         private void GetBackBTN_Click(object sender, RoutedEventArgs e)
@@ -45,6 +45,7 @@ namespace ServiceStationV
         private void RegWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             loginWindow.Show();
+
         }
 
         private async void RegBTN_Click(object sender, RoutedEventArgs e)
