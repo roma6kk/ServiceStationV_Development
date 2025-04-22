@@ -20,7 +20,7 @@ namespace ServiceStationV
             // ЭТО ТОЖЕ 
             LocalizationManager.LanguageChanged += OnLanguageChanged;
             InitializeComponent();
-            ThemeManager.LoadTheme("M");
+            ThemeManager.LoadTheme("RS");
             DataContext = _viewModel;
         }
         // Я ХЗ ПОЧЕМУ НО ЕСЛИ ЭТО УБРАТЬ ТИПЫ СЕРВИСОВ В КОМБОБОКСЕ НЕ ПЕРЕВОДЯТСЯ НАДО БДУЕТ ФИКСИТЬ 

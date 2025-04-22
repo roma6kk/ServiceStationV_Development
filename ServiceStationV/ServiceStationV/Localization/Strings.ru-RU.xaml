@@ -47,10 +47,16 @@
     <system:String x:Key="ProfileWindowHeader">Личный кабинет</system:String>
     <system:String x:Key="ProfileWindowNameLabel">Имя:</system:String>
     <system:String x:Key="ProfileWindowPhoneLabel">Номер:</system:String>
-    <system:String x:Key="ProfileWindowMyAppointments">Мои записи</system:String>
+    <system:String x:Key="ProfileWindowMyOrders">Мои заказы</system:String>
     <system:String x:Key="ProfileWindowCart">Корзина</system:String>
     <system:String x:Key="ProfileWindowChangePassword">Изменить пароль</system:String>
     <system:String x:Key="ChangeThemeTooltip">Сменить тему оформления</system:String>
-
-
+    <system:String x:Key="ChangePasswordTitle">Сменить пароль</system:String>
+    <system:String x:Key="CurrentPassword">Текущий пароль:</system:String>
+    <system:String x:Key="NewPassword">Новый пароль:</system:String>
+    <system:String x:Key="ConfirmPassword">Подтвердите пароль:</system:String>
+    <system:String x:Key="ChangePasswordButton">Сменить пароль</system:String>
+    <system:String x:Key="CancelButton">Отмена</system:String>
+    <system:String x:Key="EnterCurrentPassword">Введите текущий пароль</system:String>
+  
 </ResourceDictionary>

@@ -15,6 +15,10 @@
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource CardBackgroundColor}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}"/>
 
+    <!--ИКОНКИ-->
+    <BitmapImage x:Key="ProfileShoppingCart" UriSource="..\images\ProfileImages\DarkTheme\ShoppingCartWhite.png"/>
+    <BitmapImage x:Key="ProfileChangePassword" UriSource="..\images\ProfileImages\DarkTheme\ChangePasswordWhite.png"/>
+    <BitmapImage x:Key="ProfileOrders" UriSource="..\images\ProfileImages\DarkTheme\ListWhite.png"/>
 
     <!-- Градиент для шапки -->
     <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="0,1">
@@ -63,7 +67,7 @@
     </Style>
 
     <!-- Стиль кнопок -->
-    <Style x:Key="MButtonStyle" TargetType="Button">
+    <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>

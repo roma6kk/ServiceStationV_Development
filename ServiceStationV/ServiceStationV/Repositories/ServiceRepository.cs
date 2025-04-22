@@ -34,30 +34,71 @@ namespace ServiceStationV.Repositories
             });
             _isInitialized = true;
         }
-        public static bool AddService(Service service)
+        public static async Task<bool> AddService(Service service)
         {
             try
             {
                 using (SqlConnection con = new(App.conStr))
                 {
                     con.Open();
-                    string addServiceQuery = "INSERT INTO Services (ServiceName, SmallDescription, LargeDescription, Price, ImageSrc, ServiceType)" +
-                                " VALUES(@ServiceName, @SmallDescription, @LargeDescription, @Price, @ImageSrc, @ServiceType)";
+                    string addServiceQuery = "INSERT INTO Services (ServiceName, SmallDescription, LargeDescription, Price, ImageSrc, ServiceType, ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN)" +
+                                " VALUES(@ServiceName, @SmallDescription, @LargeDescription, @Price, @ImageSrc, @ServiceType, @ServiceNameEN, @SmallDescriptionEN, @LargeDescriptionEN)";
 
                     using (SqlCommand cmd = new SqlCommand(addServiceQuery, con))
                     {
                         cmd.Parameters.AddWithValue("@ServiceName", service.ServiceName);
+                        cmd.Parameters.AddWithValue("@ServiceNameEN", service.ServiceNameEN);
                         cmd.Parameters.AddWithValue("@SmallDescription", service.SmallDescription);
+                        cmd.Parameters.AddWithValue("@SmallDescriptionEN", service.SmallDescriptionEN);
                         cmd.Parameters.AddWithValue("@LargeDescription", service.LargeDescription);
+                        cmd.Parameters.AddWithValue("@LargeDescriptionEN", service.LargeDescriptionEN);
                         cmd.Parameters.AddWithValue("@Price", service.Price);
                         cmd.Parameters.AddWithValue("@ImageSrc", service.ImageSrc);
                         cmd.Parameters.AddWithValue("@ServiceType", service.ServiceType.ToString());
+                        cmd.Parameters.AddWithValue("@ServiceId", service.ServiceId);
 
                         cmd.ExecuteNonQuery();
                     }
                 }
                 Services.Add(service);
 
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Ошибка при добавлении услуги в БД: " + ex.Message, "Ошибка SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+        }
+        public static async Task<bool> UpdateService(Service service)
+        {
+            try
+            {
+                using (SqlConnection con = new(App.conStr))
+                {
+                    await con.OpenAsync();
+                    string addServiceQuery = "UPDATE Services SET ServiceName = @ServiceName, ServiceNameEN = @ServiceNameEN, " +
+                        "SmallDescription = @SmallDescription, SmallDescriptionEN = @SmallDescriptionEN, LargeDescription = @LargeDescription, " +
+                        "LargeDescriptionEN = @LargeDescriptionEN, Price = @Price, ImageSrc = @ImageSrc, ServiceType = @ServiceType " +
+                        "WHERE ServiceId = @ServiceId; ";
+
+                    using (SqlCommand cmd = new SqlCommand(addServiceQuery, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ServiceName", service.ServiceName);
+                        cmd.Parameters.AddWithValue("@ServiceNameEN", service.ServiceNameEN);
+                        cmd.Parameters.AddWithValue("@SmallDescription", service.SmallDescription);
+                        cmd.Parameters.AddWithValue("@SmallDescriptionEN", service.SmallDescriptionEN);
+                        cmd.Parameters.AddWithValue("@LargeDescription", service.LargeDescription);
+                        cmd.Parameters.AddWithValue("@LargeDescriptionEN", service.LargeDescriptionEN);
+                        cmd.Parameters.AddWithValue("@Price", service.Price);
+                        cmd.Parameters.AddWithValue("@ImageSrc", service.ImageSrc);
+                        cmd.Parameters.AddWithValue("@ServiceType", service.ServiceType.ToString());
+                        cmd.Parameters.AddWithValue("@ServiceId", service.ServiceId);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 return true;
             }
             catch (SqlException ex)
@@ -78,7 +119,7 @@ namespace ServiceStationV.Repositories
 
                 var getServicesQuery = @"SELECT ServiceId, ServiceName, 
                            SmallDescription, LargeDescription, 
-                           Price, ImageSrc, ServiceType, ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN, ServiceTypeEN 
+                           Price, ImageSrc, ServiceType, ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN
                            FROM Services";
                 await using var cmd = new SqlCommand(getServicesQuery, con);
                 using var reader = await cmd.ExecuteReaderAsync();
@@ -93,9 +134,7 @@ namespace ServiceStationV.Repositories
                         LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                         Price = reader.GetDecimal(4),
                         ImageSrc = reader.GetString(5),
-                        ServiceType = LocalizationManager.IsEnglish
-                        ? (Enum.TryParse<ServiceTypesEN>(reader.GetString(10), out var stEn) ? (ServiceTypes)(int)stEn : ServiceTypes.Обслуживание)
-                        : (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
+                        ServiceType = (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
                     });
                 }
 
@@ -133,9 +172,7 @@ namespace ServiceStationV.Repositories
                                     LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                                     Price = reader.GetDecimal(4),
                                     ImageSrc = reader.GetString(5),
-                                    ServiceType = LocalizationManager.IsEnglish
-                        ? (Enum.TryParse<ServiceTypesEN>(reader.GetString(10), out var stEn) ? (ServiceTypes)(int)stEn : ServiceTypes.Обслуживание)
-                        : (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
+                                    ServiceType =(Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
                                 };
                                 services.Add(service);
                             }
@@ -166,7 +203,7 @@ namespace ServiceStationV.Repositories
                 string query = @"SELECT ServiceId, ServiceName, 
                            SmallDescription, LargeDescription, 
                            Price, ImageSrc, ServiceType, 
-                           ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN, ServiceTypeEN 
+                           ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN
                          FROM Services 
                          WHERE ServiceId IN (" + string.Join(",", ids) + ")";
 
@@ -184,9 +221,7 @@ namespace ServiceStationV.Repositories
                                 LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                                 Price = reader.GetDecimal(4),
                                 ImageSrc = reader.GetString(5),
-                                ServiceType = LocalizationManager.IsEnglish
-                                    ? (Enum.TryParse<ServiceTypesEN>(reader.GetString(10), out var stEn) ? (ServiceTypes)(int)stEn : ServiceTypes.Обслуживание)
-                                    : (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
+                                ServiceType = (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание)
                             });
                         }
                     }
@@ -194,6 +229,54 @@ namespace ServiceStationV.Repositories
             }
 
             return services;
+        }
+        public static async Task<Service> GetFullServiceById(int id)
+        {
+            Service service = new();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(App.conStr))
+                {
+                    await con.OpenAsync();
+
+                    string query = @"SELECT ServiceId, ServiceName, 
+                           SmallDescription, LargeDescription, 
+                           Price, ImageSrc, ServiceType, 
+                           ServiceNameEN, SmallDescriptionEN, LargeDescriptionEN
+                         FROM Services 
+                         WHERE ServiceId = @ServiceId";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ServiceId", id);
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                service = new Service
+                                {
+                                    ServiceId = reader.GetInt32(0),
+                                    ServiceName = reader.GetString(1),
+                                    SmallDescription = reader.GetString(2),
+                                    LargeDescription = reader.GetString(3),
+                                    Price = reader.GetDecimal(4),
+                                    ImageSrc = reader.GetString(5),
+                                    ServiceType = (Enum.TryParse<ServiceTypes>(reader.GetString(6), out var stRu) ? stRu : ServiceTypes.Обслуживание),
+                                    ServiceNameEN = reader.GetString(7),
+                                    SmallDescriptionEN = reader.GetString(8),
+                                    LargeDescriptionEN = reader.GetString(9),
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка получения услуги по id: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return service;
         }
 
     }

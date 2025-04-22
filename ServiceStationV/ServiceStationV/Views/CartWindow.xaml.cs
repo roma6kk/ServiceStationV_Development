@@ -34,7 +34,10 @@ namespace ServiceStationV.Views
                 MessageBox.Show($"Ошибка при загрузке данных корзины: {ex.Message}");
             }
         }
-
+        private void CloseBTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private async Task<List<int>> GetCartAsync()
         {
@@ -42,9 +45,10 @@ namespace ServiceStationV.Views
             using (SqlConnection con = new SqlConnection(App.conStr))
             {
                 await con.OpenAsync();
-                string query = "SELECT ServiceId FROM UserCart";
+                string query = @"SELECT ServiceId FROM UserCart WHERE Login = @Login";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
+                    cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
@@ -81,6 +85,76 @@ namespace ServiceStationV.Views
                 LoadCartAsync();
             }
         }
+
+        private async void OrderBTN_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(App.conStr))
+                {
+                    await con.OpenAsync();
+
+                    // 1. Создаем заказ в таблице Orders
+                    string createOrderQuery = @"
+                INSERT INTO Orders (Login)
+                VALUES (@Login);
+                SELECT SCOPE_IDENTITY();"; 
+
+                    int orderId;
+                    using (SqlCommand cmd = new SqlCommand(createOrderQuery, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
+                        orderId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    }
+
+                    // 2. Добавляем услуги из корзины в таблицу OrderServices
+                    string addServicesQuery = @"
+                INSERT INTO OrderServices (OrderId, ServiceId)
+                VALUES (@OrderId, @ServiceId);";
+
+                    using (SqlCommand addServicesCmd = new SqlCommand(addServicesQuery, con))
+                    {
+                        foreach (var serviceId in await GetCartAsync())
+                        {
+                            addServicesCmd.Parameters.Clear(); 
+                            addServicesCmd.Parameters.AddWithValue("@OrderId", orderId);
+                            addServicesCmd.Parameters.AddWithValue("@ServiceId", serviceId);
+
+                            await addServicesCmd.ExecuteNonQueryAsync();
+                        }
+                    }
+
+                    await ClearCartAsync(UserRepository.CurrentUser.Login);
+                    LoadCartAsync();
+                    MessageBox.Show("Заказ успешно создан!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании заказа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private async Task ClearCartAsync(string login)
+        {
+            try
+            {
+                using (SqlConnection con = new(App.conStr))
+                {
+                    await con.OpenAsync();
+                    string query = @"DELETE FROM UserCart WHERE Login = @Login";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Login", login);
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при очистке корзины: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();

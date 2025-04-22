@@ -7,15 +7,15 @@
         mc:Ignorable="d"
         Title="Корзина" Height="650" Width="1000"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        WindowStyle="None">
 
-    <!-- Фоновое изображение как в FavListWindow -->
     <Window.Background>
         <ImageBrush ImageSource="..\images\LoginWindowBackground.jpg" Stretch="UniformToFill" />
     </Window.Background>
 
     <!-- Основная панель с полупрозрачным слоем -->
-    <Grid Background="#B3FFFFFF">
+    <Grid Background="{DynamicResource PrimaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -28,24 +28,26 @@
                        FontFamily="{StaticResource MainFont}"
                        FontSize="36"
                        FontWeight="Black"
-                       Foreground="#0B2444"
-                       Margin="0,20,0,10"/>
+Style="{DynamicResource PriceTextStyle}"                       Margin="0,20,0,10"/>
 
-            <!-- Кнопка закрытия -->
-            <Button Content="✕" 
-                    FontSize="20"
-                    HorizontalAlignment="Right" 
-                    Margin="20,0,0,0"
-                    Width="40" 
-                    Height="40"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Foreground="#0B2444"
-                    Click="CloseButton_Click"/>
+
         </StackPanel>
-
+        <!-- Кнопка закрытия -->
+        <Button Content="✕" 
+                        FontSize="25"
+                        FontWeight="Black"
+                        HorizontalAlignment="Right" 
+                        FontFamily="{StaticResource MainFont}"
+                        Margin="20,0,20,0"
+                        Width="40" 
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="{DynamicResource AccentBrush}"
+                        Click="CloseBTN_Click"
+                        />
         <!-- Список услуг -->
-        <ScrollViewer Grid.Row="1" Margin="30,0,30,10">
+        <ScrollViewer Grid.Row="1" Margin="30,0,30,10" VerticalScrollBarVisibility="Hidden">
             <ItemsControl ItemsSource="{Binding CartItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -55,7 +57,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="#0B2444" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95">
+                        <Border Style="{DynamicResource ServiceCardStyle}" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="150"/>
@@ -74,12 +76,12 @@
                                                FontFamily="{StaticResource MainFont}" 
                                                FontSize="20" 
                                                FontWeight="ExtraBold" 
-                                               Foreground="WhiteSmoke"/>
+                                               Foreground="{DynamicResource TextBrush}"/>
                                     <TextBlock Text="{Binding SmallDescription}" 
                                                FontFamily="{StaticResource MainFont}" 
                                                FontSize="14" 
                                                FontWeight="SemiBold" 
-                                               Foreground="WhiteSmoke"
+                                               Foreground="{DynamicResource TextBrush}"
                                                Margin="0,5,0,0"
                                                TextWrapping="Wrap"/>
                                 </StackPanel>
@@ -88,9 +90,9 @@
                                 <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Price, StringFormat='{}{0} ₽'}" 
                                                FontFamily="{StaticResource MainFont}" 
+                                               Style="{DynamicResource PriceTextStyle}"
                                                FontSize="18" 
                                                FontWeight="Bold" 
-                                               Foreground="#EA022B"
                                                HorizontalAlignment="Right"/>
                                     <Button Content="{DynamicResource CartWindowRemove}"
                                             FontFamily="{StaticResource MainFont}"
@@ -98,7 +100,7 @@
                                             FontWeight="Bold"
                                             FontSize="14"
                                             Foreground="WhiteSmoke"
-                                            Background="#EA022B"
+                                            Background="{DynamicResource AccentBrush}"
                                             BorderThickness="0"
                                             Width="100"
                                             Height="30"
@@ -114,7 +116,7 @@
         </ScrollViewer>
 
         <!-- Панель итого -->
-        <Border Grid.Row="2" Background="#0B2444" CornerRadius="0,0,10,10" Opacity="0.95" Padding="20">
+        <Border Grid.Row="2" Background="{DynamicResource HeaderGradient}" CornerRadius="0,0,10,10" Opacity="0.95" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -140,7 +142,8 @@
                         Height="40"
                         Width="200"
                         Margin="20,0,0,0"
-                        Cursor="Hand"/>
+                        Cursor="Hand"
+                        Click="OrderBTN_Click"/>
             </Grid>
         </Border>
     </Grid>

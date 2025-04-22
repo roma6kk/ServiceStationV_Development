@@ -47,10 +47,17 @@
     <system:String x:Key="ProfileWindowHeader">Profile</system:String>
     <system:String x:Key="ProfileWindowNameLabel">Name:</system:String>
     <system:String x:Key="ProfileWindowPhoneLabel">Phone:</system:String>
-    <system:String x:Key="ProfileWindowMyAppointments">My Appointments</system:String>
+    <system:String x:Key="ProfileWindowMyOrders">My Orders</system:String>
     <system:String x:Key="ProfileWindowCart">Cart</system:String>
     <system:String x:Key="ProfileWindowChangePassword">Change Password</system:String>
 
-
+    <system:String x:Key="ChangePasswordTitle">Change Password</system:String>
+    <system:String x:Key="CurrentPassword">Current Password:</system:String>
+    <system:String x:Key="NewPassword">New Password:</system:String>
+    <system:String x:Key="ConfirmPassword">Confirm Password:</system:String>
+    <system:String x:Key="ChangePasswordButton">Change Password</system:String>
+    <system:String x:Key="CancelButton">Cancel</system:String>
+    <system:String x:Key="EnterCurrentPassword">Enter current password</system:String>
+   
 
 </ResourceDictionary>

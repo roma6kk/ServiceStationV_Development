@@ -62,9 +62,10 @@ namespace ServiceStationV.Views
             using (SqlConnection con = new SqlConnection(App.conStr))
             {
                 await con.OpenAsync();
-                string query = "SELECT ServiceId FROM UserFavList";
+                string query = @"SELECT ServiceId FROM UserFavList WHERE Login = @Login";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
+                    cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
@@ -76,6 +77,11 @@ namespace ServiceStationV.Views
             }
             return cart;
         }
+        private void CloseBTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private async void RemoveBTN_Click(object sender, EventArgs e)
         {
             if (sender is Button btn)
@@ -92,6 +98,11 @@ namespace ServiceStationV.Views
                 ServiceWindow serviceWindow = new ServiceWindow(selectedService);
                 serviceWindow.ShowDialog();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

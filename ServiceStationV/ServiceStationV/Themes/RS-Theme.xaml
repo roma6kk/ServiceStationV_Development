@@ -20,6 +20,11 @@
 	<SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource CardBorderColor}"/>
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource CardBackgroundColor}"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}"/>
+    <!--ИКОНКИ-->
+	<BitmapImage x:Key="ProfileShoppingCart" UriSource="..\images\ProfileImages\DarkTheme\ShoppingCartWhite.png"/>
+	<BitmapImage x:Key="ProfileChangePassword" UriSource="..\images\ProfileImages\DarkTheme\ChangePasswordWhite.png"/>
+	<BitmapImage x:Key="ProfileOrders" UriSource="..\images\ProfileImages\DarkTheme\ListWhite.png"/>
+
 
 
 	<!-- Градиент для шапки -->
@@ -69,7 +74,7 @@
  </Style>
 
  <!-- Стиль кнопок -->
- <Style x:Key="MButtonStyle" TargetType="Button">
+ <Style x:Key="ButtonStyle" TargetType="Button">
      <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
      <Setter Property="Foreground" Value="White"/>
      <Setter Property="BorderThickness" Value="0"/>
@@ -90,5 +95,38 @@
      <Setter Property="BorderThickness" Value="0"/>
      <Setter Property="Padding" Value="5"/>
  </Style>
+	<Style x:Key="EditButtonStyle" TargetType="Button">
+		<Setter Property="Background" Value="LightGreen"/>
+		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Padding" Value="8,4"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Border Background="{TemplateBinding Background}" CornerRadius="4">
+						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="DeleteButtonStyle" TargetType="Button">
+		<Setter Property="Background" Value="LightCoral"/>
+		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Padding" Value="8,4"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Border Background="{TemplateBinding Background}" CornerRadius="4">
+						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 </ResourceDictionary>

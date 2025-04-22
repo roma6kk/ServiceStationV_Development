@@ -1,5 +1,6 @@
 ﻿using ServiceStationV.Models;
 using ServiceStationV.Repositories;
+using ServiceStationV.Views;
 using ServiceStationV.ViewsModels;
 using System;
 using System.Globalization;
@@ -24,7 +25,14 @@ namespace ServiceStationV{
         {
             ThemeManager.ToggleTheme();
         }
-
+        private void ChangePasswordBTN_Click(object sender, RoutedEventArgs e)
+        {
+            var changePasswordWindow = new ChangePasswordWindow
+            {
+                Owner = this
+            };
+            changePasswordWindow.ShowDialog();
+        }
         private void Window_Deactivated(object sender, EventArgs e)
         {
             this.Topmost = true;
@@ -35,11 +43,15 @@ namespace ServiceStationV{
             var newCulture = LocalizationManager.CurrentCulture.Name == "en-US"
                 ? new CultureInfo("ru-RU")
                 : new CultureInfo("en-US");
-            //MainMenuViewModel mainMenuViewModel = new MainMenuViewModel();
-            //mainMenuViewModel.SearchText = "";
             LocalizationManager.SetLanguage(newCulture);
 
         }
+
+        private void MyOrdersBTN_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);

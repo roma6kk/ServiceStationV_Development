@@ -15,7 +15,11 @@
 <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}"/>
 <SolidColorBrush x:Key="CardBackground" Color="{StaticResource CardBackgroundColor}"/>
 
-<!-- Градиент для шапки -->
+<!--ИКОНКИ-->
+    <BitmapImage x:Key="ProfileShoppingCart" UriSource="..\images\ProfileImages\ShoppingCartBlack.jpg"/>
+    <BitmapImage x:Key="ProfileChangePassword" UriSource="..\images\ProfileImages\ChangePassword.png"/>
+    <BitmapImage x:Key="ProfileOrders" UriSource="..\images\ProfileImages\List.png"/>
+    <!-- Градиент для шапки -->
 <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="0,1">
 	<GradientStop Color="{StaticResource PrimaryColor}" Offset="0"/>
 	<GradientStop Color="{StaticResource AccentColor}" Offset="0.95"/>
@@ -62,7 +66,7 @@
 </Style>
 
 <!-- Стиль кнопок -->
-<Style x:Key="AMGButtonStyle" TargetType="Button">
+<Style x:Key="ButtonStyle" TargetType="Button">
 	<Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
 	<Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
 	<Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>

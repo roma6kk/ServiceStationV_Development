@@ -9,31 +9,48 @@
         Title="{DynamicResource FavListWindowTitle}"
         Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        WindowStyle="None">
 
     <!-- Фон -->
     <Window.Background>
         <ImageBrush ImageSource="..\images\LoginWindowBackground.jpg" Stretch="UniformToFill" />
     </Window.Background>
 
-
-    <Grid Background="#B3FFFFFF">
+    <!-- Основная панель -->
+    <Grid Background="{DynamicResource PrimaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Заголовок -->
-        <TextBlock Text="{DynamicResource FavListWindowHeader}"
-                   FontFamily="{StaticResource MainFont}"
-                   FontSize="36"
-                   FontWeight="Black"
-                   Foreground="#0B2444"
-                   HorizontalAlignment="Center"
-                   Margin="0,20,0,10"/>
+            <TextBlock Text="{DynamicResource FavListWindowHeader}"
+                       FontFamily="{StaticResource MainFont}"
+                       FontSize="36"
+                       FontWeight="Black"
+                       Style="{DynamicResource PriceTextStyle}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="0,20,0,10"/>
+
+            <!-- Кнопка закрытия -->
+        <Button Content="✕" 
+                        FontSize="25"
+                        FontWeight="Black"
+                        HorizontalAlignment="Right" 
+                        FontFamily="{StaticResource MainFont}"
+                        Margin="20,0,20,0"
+                        Width="40" 
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="{DynamicResource AccentBrush}"
+                        Click="CloseBTN_Click"
+                        />
 
         <!-- Список карточек -->
-        <ScrollViewer Grid.Row="1" Margin="30,0,30,20">
+        <ScrollViewer Grid.Row="1" Margin="30,0,30,20" VerticalScrollBarVisibility="Hidden">
             <ItemsControl ItemsSource="{Binding FavList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -43,9 +60,9 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="#0B2444" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95"
-            MouseLeftButtonDown="Service_MouseLeftButtonDown"
-            Cursor="Hand">
+                        <Border Style="{DynamicResource ServiceCardStyle}" CornerRadius="15" Margin="10" Padding="10" Opacity="0.95"
+                                MouseLeftButtonDown="Service_MouseLeftButtonDown"
+                                Cursor="Hand">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <!-- Изображение -->
                                 <Border Width="150" Height="150" CornerRadius="10" Margin="0,0,10,0" Background="White">
@@ -55,45 +72,41 @@
                                 <!-- Информация и кнопка -->
                                 <StackPanel VerticalAlignment="Center" MaxWidth="220">
                                     <TextBlock Text="{Binding ServiceName}" 
-                           FontFamily="{StaticResource MainFont}" 
-                           FontSize="20" 
-                           FontWeight="ExtraBold" 
-                           Foreground="WhiteSmoke"
-                           TextWrapping="Wrap"/>
+                                               FontFamily="{StaticResource MainFont}" 
+                                               FontSize="20" 
+                                               FontWeight="ExtraBold" 
+                                               Foreground="{DynamicResource TextBrush}"
+                                               TextWrapping="Wrap"/>
 
                                     <TextBlock Text="{Binding SmallDescription}" 
-                           FontFamily="{StaticResource MainFont}" 
-                           FontSize="14" 
-                           FontWeight="SemiBold" 
-                           Foreground="WhiteSmoke"
-                           Margin="0,5,0,0"
-                           TextWrapping="Wrap"/>
+                                               FontFamily="{StaticResource MainFont}" 
+                                               FontSize="14" 
+                                               FontWeight="SemiBold" 
+                                               Foreground="{DynamicResource TextBrush}"
+                                               Margin="0,5,0,0"
+                                               TextWrapping="Wrap"/>
 
                                     <TextBlock Text="{Binding Price, StringFormat={}{0} ₽}" 
-                           FontFamily="{StaticResource MainFont}" 
-                           FontSize="16" 
-                           FontWeight="Bold" 
-                           Foreground="#EA022B"
-                           Margin="0,8,0,0"/>
+                                               Style="{DynamicResource PriceTextStyle}"
+                                               Margin="0,8,0,0"/>
 
                                     <!-- Кнопка удаления -->
                                     <Button Content="{DynamicResource FavListWindowRemoveFromFav}"
-                        Click="RemoveBTN_Click"
-                        FontFamily="{StaticResource MainFont}"
-                        FontWeight="Bold"
-                        FontSize="14"
-                        Foreground="WhiteSmoke"
-                        Background="#EA022B"
-                        BorderThickness="0"
-                        Width="100"
-                        Height="30"
-                        Margin="0,10,0,0"
-                        Cursor="Hand"/>
+                                            Click="RemoveBTN_Click"
+                                            FontFamily="{StaticResource MainFont}"
+                                            FontWeight="Bold"
+                                            FontSize="14"
+                                            Foreground="{DynamicResource TextBrush}"
+                                            Background="{DynamicResource AccentBrush}"
+                                            BorderThickness="0"
+                                            Width="100"
+                                            Height="30"
+                                            Margin="0,10,0,0"
+                                            Cursor="Hand"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
-
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>

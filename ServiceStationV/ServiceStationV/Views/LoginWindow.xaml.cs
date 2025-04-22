@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ServiceStationV.Models;
 using ServiceStationV.Repositories;
+using ServiceStationV.Views.Admin;
 using System.Globalization;
 namespace ServiceStationV.Views
 {
@@ -86,6 +87,13 @@ namespace ServiceStationV.Views
             if (BCrypt.Net.BCrypt.Verify(PasswordTB.Password, LoggedUser.Password))
             {
                 UserRepository.CurrentUser = LoggedUser;
+                if (LoggedUser.Login == "admin") 
+                {
+                    AdminWindow adminWindow = new AdminWindow();
+                    adminWindow.Show();
+                    this.Close();
+                    return;
+                }
                 MainMenuWindow MMWindow = new MainMenuWindow();
                 Application.Current.MainWindow = MMWindow;
                 MMWindow.Show();

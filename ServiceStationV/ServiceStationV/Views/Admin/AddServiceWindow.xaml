@@ -1,0 +1,75 @@
+﻿<Window x:Class="ServiceStationV.Views.Admin.AddServiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование услуги" Height="auto" Width="600"
+        Background="{DynamicResource PrimaryBrush}">
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <StackPanel Margin="20">
+                <!--DragNDrop поле-->
+                <Border Name="imageBorder" 
+                        BorderBrush="Gray" 
+                        BorderThickness="1" 
+                        CornerRadius="5" 
+                        Height="150" 
+                        Margin="0,10,0,10"
+                        AllowDrop="True"
+                        DragEnter="ImageBorder_DragEnter"
+                        DragOver="ImageBorder_DragOver"
+                        Drop="ImageBorder_Drop">
+                    <TextBlock Text="Перетащите изображение сюда" 
+               HorizontalAlignment="Stretch" 
+               VerticalAlignment="Stretch"
+                Padding="60"
+               TextAlignment="Center"
+                               
+                Foreground="Gray"/>
+                </Border>
+                <!-- Название услуги -->
+                <TextBlock Text="Название услуги (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="ServiceNameTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
+
+                <TextBlock Text="Название услуги (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="ServiceNameENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
+
+                <!-- Описание -->
+                <TextBlock Text="Краткое описание (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="DescriptionTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="80"/>
+
+                <TextBlock Text="Краткое описание (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="DescriptionENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="80"/>
+
+                <TextBlock Text="Полное описание (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="LargeDescriptionTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="100"/>
+
+                <TextBlock Text="Полное описание (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="LargeDescriptionENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="100"/>
+
+                <!-- Цена -->
+                <TextBlock Text="Цена:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="PriceTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
+
+                <!-- Тип услуги -->
+                <TextBlock Text="Тип услуги:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <ComboBox Name="ServiceTypeComboBox" Style="{DynamicResource ComboBoxStyle}" Margin="0,5,0,10">
+                    <ComboBoxItem Content="Диагностика"/>
+                    <ComboBoxItem Content="Двигатель"/>
+                    <ComboBoxItem Content="Подвеска"/>
+                    <ComboBoxItem Content="Тормоза"/>
+                    <ComboBoxItem Content="Колеса"/>
+                    <ComboBoxItem Content="Охлаждение"/>
+                    <ComboBoxItem Content="Тюнинг"/>
+                    <ComboBoxItem Content="Обслуживание"/>
+                </ComboBox>
+
+                <!-- Изображение -->
+                <TextBlock Text="Ссылка на изображение:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Name="ImageSrcTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Text="pack://siteoforigin:,,," Margin="0,5,0,10"/>
+
+                <!-- Кнопка сохранения -->
+                <Button Content="Сохранить" Click="SaveBTN_Click" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Right" Width="100" Margin="0,20,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

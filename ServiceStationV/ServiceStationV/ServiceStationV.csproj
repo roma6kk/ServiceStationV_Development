@@ -18,6 +18,7 @@
     <None Remove="Fonts\Orbitron\Orbitron-Regular.ttf" />
     <None Remove="Fonts\Orbitron\Orbitron-SemiBold.ttf" />
     <None Remove="Fonts\Orbitron\Orbitron-VariableFont_wght.ttf" />
+    <None Remove="images\AdminImages\AddService.png" />
     <None Remove="images\Close.png" />
     <None Remove="images\EngineChange.mp4" />
     <None Remove="images\Icons\profile.png" />
@@ -30,6 +31,10 @@
     <None Remove="images\MainMenuBackground.HEIC" />
     <None Remove="images\MainWindowBackground.png" />
     <None Remove="images\ProfileImages\ChangePassword.png" />
+    <None Remove="images\ProfileImages\DarkTheme\ChangePasswordWhite.png" />
+    <None Remove="images\ProfileImages\DarkTheme\ListWhite.png" />
+    <None Remove="images\ProfileImages\DarkTheme\ShoppingCartWhite.jpg" />
+    <None Remove="images\ProfileImages\DarkTheme\ShoppingCartWhite.png" />
     <None Remove="images\ProfileImages\List.png" />
     <None Remove="images\ProfileImages\ShoppingCartBlack.jpg" />
     <None Remove="images\ProfileImages\ShoppingCartBlack.png" />
@@ -158,6 +163,9 @@
     <Resource Include="Fonts\Orbitron\Orbitron-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\AdminImages\AddService.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\Close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -191,6 +199,12 @@
     <Resource Include="images\ProfileImages\ChangePassword.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\ProfileImages\DarkTheme\ListWhite.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ProfileImages\DarkTheme\ShoppingCartWhite.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\ProfileImages\List.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -221,6 +235,9 @@
     <Content Include="images\ServicesImages\DiskEdit.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\ProfileImages\DarkTheme\ChangePasswordWhite.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\ServicesImages\EngineCheck.HEIC">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

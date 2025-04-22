@@ -5,7 +5,7 @@
              StartupUri="/Views/LoginWindow.xaml">
     <Application.Resources>
         <ImageSource x:Key="ProfileIcon">/ServiceStationV;component/images/icons/profile.png</ImageSource>
-        <ImageSource x:Key="ShoppingCart">/ServiceStationV;component/images/ProfileImages/ShoppingCartBlack.jpg</ImageSource>
+        <ImageSource x:Key="ShoppingCart">/ServiceStationV;component/images/ProfileImages/DarkTheme/ShoppingCartWhite.png</ImageSource>
         <ImageSource x:Key="Star">/ServiceStationV;component/images/icons/Star.png</ImageSource>
         <ImageSource x:Key="StarAdd">/ServiceStationV;component/images/icons/StarAdd.png</ImageSource>
         <ImageSource x:Key="MainWindowBackground">/ServiceStationV;component/images/MainWindowBackground.png</ImageSource>
