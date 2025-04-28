@@ -21,6 +21,7 @@
     <None Remove="images\AdminImages\AddService.png" />
     <None Remove="images\Close.png" />
     <None Remove="images\EngineChange.mp4" />
+    <None Remove="images\icon.png" />
     <None Remove="images\Icons\profile.png" />
     <None Remove="images\Icons\SettingsIcon.png" />
     <None Remove="images\Icons\ShoppingCart.png" />
@@ -29,7 +30,10 @@
     <None Remove="images\Icons\StarAdded.png" />
     <None Remove="images\LoginWindowBackground.jpg" />
     <None Remove="images\MainMenuBackground.HEIC" />
+    <None Remove="images\MainMenuBackground.jpeg" />
     <None Remove="images\MainWindowBackground.png" />
+    <None Remove="images\MessageBox\Info.png" />
+    <None Remove="images\MessageBox\Question.png" />
     <None Remove="images\ProfileImages\ChangePassword.png" />
     <None Remove="images\ProfileImages\DarkTheme\ChangePasswordWhite.png" />
     <None Remove="images\ProfileImages\DarkTheme\ListWhite.png" />
@@ -39,6 +43,7 @@
     <None Remove="images\ProfileImages\ShoppingCartBlack.jpg" />
     <None Remove="images\ProfileImages\ShoppingCartBlack.png" />
     <None Remove="images\RegistrationWindowBackground.png" />
+    <None Remove="images\searchWhite.png" />
     <None Remove="images\ServicesImages\AlarmInstallation.HEIC" />
     <None Remove="images\ServicesImages\AlarmInstallation.jpeg" />
     <None Remove="images\ServicesImages\BlindsInstallation.HEIC" />
@@ -169,6 +174,9 @@
     <Resource Include="images\Close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\Icons\profile.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -190,10 +198,16 @@
     <Resource Include="images\LoginWindowBackground.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\MainMenuBackground.HEIC">
+    <Resource Include="images\MainMenuBackground.jpeg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\MainWindowBackground.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\MessageBox\Info.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\MessageBox\Question.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\ProfileImages\ChangePassword.png">
@@ -215,6 +229,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\RegistrationWindowBackground.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\searchWhite.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\ServicesImages\AlarmInstallation.HEIC">

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Linq;
 using System.Collections.Generic;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Models
 {
@@ -40,7 +41,6 @@ namespace ServiceStationV.Models
                 if (!AvailableThemes.Contains(themeName))
                     throw new ArgumentException($"Theme '{themeName}' not found");
 
-                // Удаляем только тематические словари
                 var themeDictionaries = Application.Current.Resources.MergedDictionaries
                     .Where(d => d.Source?.OriginalString.Contains("-Theme.xaml") == true)
                     .ToList();
@@ -50,7 +50,6 @@ namespace ServiceStationV.Models
                     Application.Current.Resources.MergedDictionaries.Remove(dictt);
                 }
 
-                // Добавляем новый словарь темы
                 var dict = new ResourceDictionary
                 {
                     Source = new Uri($"/Themes/{themeName}-Theme.xaml", UriKind.Relative)

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ServiceStationV.Repositories;
 using System.ComponentModel.DataAnnotations;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views
 {
@@ -84,5 +85,11 @@ namespace ServiceStationV.Views
                 MessageBox.Show(ex.Message);
             }
         }
+        private void CloseBTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
+
 }

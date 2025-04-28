@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views
 {
@@ -88,38 +89,40 @@ namespace ServiceStationV.Views
 
         private async void OrderBTN_Click(object sender, EventArgs e)
         {
+            if(CartServicesIds.Count < 1)
+            {
+                MessageBox.Show("Корзина пустая", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
                 using (SqlConnection con = new SqlConnection(App.conStr))
                 {
                     await con.OpenAsync();
 
-                    // 1. Создаем заказ в таблице Orders
                     string createOrderQuery = @"
-                INSERT INTO Orders (Login)
-                VALUES (@Login);
-                SELECT SCOPE_IDENTITY();"; 
-
+                        INSERT INTO Orders (Login, Status, OrderDate)
+                        VALUES (@Login, 'ACTUAL', @OrderDate);
+                        SELECT SCOPE_IDENTITY();"; 
                     int orderId;
                     using (SqlCommand cmd = new SqlCommand(createOrderQuery, con))
                     {
                         cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
+                        cmd.Parameters.AddWithValue("@OrderDate", DateTime.Now);
                         orderId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
                     }
 
-                    // 2. Добавляем услуги из корзины в таблицу OrderServices
                     string addServicesQuery = @"
-                INSERT INTO OrderServices (OrderId, ServiceId)
-                VALUES (@OrderId, @ServiceId);";
+                        INSERT INTO OrderServices (OrderId, ServiceName)
+                        VALUES (@OrderId, @ServiceName);";
 
                     using (SqlCommand addServicesCmd = new SqlCommand(addServicesQuery, con))
                     {
-                        foreach (var serviceId in await GetCartAsync())
+                        foreach (var service in await ServiceRepository.GetServicesById(await GetCartAsync()))
                         {
                             addServicesCmd.Parameters.Clear(); 
                             addServicesCmd.Parameters.AddWithValue("@OrderId", orderId);
-                            addServicesCmd.Parameters.AddWithValue("@ServiceId", serviceId);
-
+                            addServicesCmd.Parameters.AddWithValue("@ServiceName", LocalizationManager.IsEnglish ? service.ServiceName : service.ServiceNameEN);
                             await addServicesCmd.ExecuteNonQueryAsync();
                         }
                     }

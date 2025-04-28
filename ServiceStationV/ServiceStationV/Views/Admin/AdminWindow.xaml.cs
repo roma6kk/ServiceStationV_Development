@@ -9,6 +9,7 @@ using ServiceStationV.Repositories;
 using System.Windows.Media;
 using ServiceStationV.Views;
 using Microsoft.Data.SqlClient;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views.Admin
 {
@@ -43,19 +44,14 @@ namespace ServiceStationV.Views.Admin
         {
             if (sender is Button { DataContext: Service selectedService })
             {
-                // Открываем окно редактирования с передачей выбранной услуги
                 EditServiceWindow editServiceWindow = new EditServiceWindow(selectedService, _viewModel);
                 editServiceWindow.ShowDialog();
-
-                // После закрытия окна обновляем данные в ViewModel
-                //_viewModel.LoadServices();
             }
         }
         private void Card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Border border && border.DataContext is Service selectedService)
             {
-                // Открываем окно с подробной информацией об услуге
                 var serviceWindow = new ServiceWindow(selectedService);
                 serviceWindow.ShowDialog();
             }
@@ -64,7 +60,6 @@ namespace ServiceStationV.Views.Admin
         {
             if (sender is Button { DataContext: Service selectedService })
             {
-                // Подтверждение удаления
                 var result = MessageBox.Show(
                     $"Вы уверены, что хотите удалить услугу '{selectedService.ServiceName}'?",
                     "Подтверждение удаления",
@@ -97,11 +92,17 @@ namespace ServiceStationV.Views.Admin
                 }
             }
         }
-        private async void AddServiceBTN_Click(object sender, RoutedEventArgs e)
+        private void AddServiceBTN_Click(object sender, RoutedEventArgs e)
         {
             AddServiceWindow addServiceWindow = new(_viewModel);
             addServiceWindow.ShowDialog();
             
+        }
+
+        private void OrdersBTN_Click(object sender, RoutedEventArgs e)
+        {
+            OrdersWindow orderServiceWindow = new();
+            orderServiceWindow.ShowDialog();
         }
 
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)

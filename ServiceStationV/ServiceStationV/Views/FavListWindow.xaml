@@ -9,8 +9,7 @@
         Title="{DynamicResource FavListWindowTitle}"
         Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip"
-        WindowStyle="None">
+        WindowStyle="None" AllowsTransparency="True">
 
     <!-- Фон -->
     <Window.Background>

@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-	<!-- Цвета -->
+    <system:String x:Key="ThemeName">Audi RS</system:String>
+    <!-- Цвета -->
 	<Color x:Key="PrimaryColor">#121212</Color>
 	<Color x:Key="AccentColor">#CC0A2B</Color>
     <Color x:Key="CardBackgroundColor">#000000</Color>
@@ -27,7 +28,8 @@
 
 
 
-	<!-- Градиент для шапки -->
+
+    <!-- Градиент для шапки -->
 	<LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="0,1">
 		<GradientStop Color="{StaticResource HeaderGradientStart}" Offset="0"/>
 		<GradientStop Color="{StaticResource HeaderGradientEnd}" Offset="1"/>
@@ -36,7 +38,7 @@
 	 <!-- Стиль карточек услуг -->
  <Style x:Key="ServiceCardStyle" TargetType="Border">
      <Setter Property="Background" Value="{StaticResource CardBackground}"/>
-     <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+     <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
      <Setter Property="BorderThickness" Value="1"/>
      <Setter Property="CornerRadius" Value="8"/>
      <Setter Property="Effect">
@@ -57,15 +59,78 @@
  </Style>
 
  <!-- Стиль комбобоксов -->
- <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-     <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
-     <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
-     <Setter Property="BorderThickness" Value="1"/>
-     <Setter Property="Height" Value="30"/>
- </Style>
+    <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource MainFont}"/>
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Border Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
+                        <Grid>
+                            <!-- Основной текст выбранного элемента -->
+                            <ContentPresenter
+                            x:Name="ContentSite"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="5,0,30,0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
 
- <!-- Стиль текстовых полей -->
+                            <!-- Кнопка-стрелка -->
+                            <ToggleButton
+                            Grid.Column="2"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Focusable="False"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Width="20"
+                            Height="20"
+                            Margin="0,0,5,0"
+                            Content="⌄"
+                            Cursor="Hand"
+                            ClickMode="Press" />
+
+                            <!-- Popup -->
+                            <Popup
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            Placement="Bottom"
+                            Focusable="False"
+                            AllowsTransparency="True"
+                            PopupAnimation="Slide">
+                                <Border
+                                Background="{StaticResource AccentBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="10">
+                                    <Grid
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                    MinWidth="{TemplateBinding ActualWidth}">
+                                        <ScrollViewer>
+                                            <ItemsPresenter/>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <!-- Стиль текстовых полей -->
  <Style x:Key="TextBoxStyle" TargetType="TextBox">
      <Setter Property="Background" Value="{StaticResource SecondaryBrush}"/>
      <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>

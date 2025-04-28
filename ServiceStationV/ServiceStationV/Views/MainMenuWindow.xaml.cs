@@ -8,6 +8,7 @@ using ServiceStationV.ViewsModels;
 using ServiceStationV.Repositories;
 using System.Windows.Media;
 using ServiceStationV.Views;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV
 {
@@ -23,6 +24,7 @@ namespace ServiceStationV
             ThemeManager.LoadTheme("RS");
             DataContext = _viewModel;
         }
+        
         // Я ХЗ ПОЧЕМУ НО ЕСЛИ ЭТО УБРАТЬ ТИПЫ СЕРВИСОВ В КОМБОБОКСЕ НЕ ПЕРЕВОДЯТСЯ НАДО БДУЕТ ФИКСИТЬ 
         private void OnLanguageChanged(object sender, EventArgs e)
         {
@@ -71,5 +73,6 @@ namespace ServiceStationV
             ProfileWindow profileWindow = new ProfileWindow();
             profileWindow.ShowDialog();
         }
-    }
+      
+        }
 }

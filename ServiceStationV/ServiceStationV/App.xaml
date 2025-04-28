@@ -8,8 +8,47 @@
         <ImageSource x:Key="ShoppingCart">/ServiceStationV;component/images/ProfileImages/DarkTheme/ShoppingCartWhite.png</ImageSource>
         <ImageSource x:Key="Star">/ServiceStationV;component/images/icons/Star.png</ImageSource>
         <ImageSource x:Key="StarAdd">/ServiceStationV;component/images/icons/StarAdd.png</ImageSource>
+        <ImageSource x:Key="Search">/ServiceStationV;component/images/searchWhite.png</ImageSource>
         <ImageSource x:Key="MainWindowBackground">/ServiceStationV;component/images/MainWindowBackground.png</ImageSource>
+        <ImageSource x:Key="Icon">/ServiceStationV;component/images/icon.png</ImageSource>
+
         <FontFamily x:Key="MainFont">\Fonts\Orbitron\#Orbitron</FontFamily>
-    </Application.Resources>
+
+            <Style TargetType="Button">
+                <!-- Отключаем стандартные эффекты -->
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4"
+                            SnapsToDevicePixels="True">
+                                <ContentPresenter x:Name="contentPresenter"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        RecognizesAccessKey="True"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <!-- Меняем курсор при наведении -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                                <!-- Убираем все эффекты при нажатии -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Application.Resources>
 
 </Application>

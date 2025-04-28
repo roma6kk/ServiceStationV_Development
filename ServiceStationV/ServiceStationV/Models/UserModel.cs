@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static ServiceStationV.ValidationAttributes.UserValidationAttributes;
 using System.Windows;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Models
 {
@@ -69,7 +70,7 @@ namespace ServiceStationV.Models
             }
             else
             {
-                MessageBox.Show("Пожалуйста, заполните поля!");
+                MessageBox.Show("Пожалуйста, заполните поля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }

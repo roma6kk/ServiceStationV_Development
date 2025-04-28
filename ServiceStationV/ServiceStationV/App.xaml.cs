@@ -12,6 +12,8 @@ using BCrypt.Net;
 using Microsoft.Data.SqlClient;
 using static ServiceStationV.ValidationAttributes.UserValidationAttributes;
 using ServiceStationV.Models;
+using MessageBox = ServiceStationV.Views.MessageBox;
+
 namespace ServiceStationV
 {
     /// <summary>

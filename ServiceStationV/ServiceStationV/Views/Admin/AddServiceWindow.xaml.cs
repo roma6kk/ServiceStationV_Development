@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ServiceStationV.ViewsModels;
 using ServiceStationV.Repositories;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views.Admin
 {

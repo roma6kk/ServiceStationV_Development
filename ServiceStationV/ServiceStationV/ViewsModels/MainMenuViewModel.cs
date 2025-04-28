@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Windows;
 using System;
 using System.DirectoryServices;
+using System.Windows.Controls;
 namespace ServiceStationV.ViewsModels
 {
     public class MainMenuViewModel : INotifyPropertyChanged
@@ -28,6 +29,7 @@ namespace ServiceStationV.ViewsModels
             {
                 _sortOptions = value;
                 OnPropertyChanged(nameof(SortOptions));
+                
             }
         }
         
@@ -39,6 +41,7 @@ namespace ServiceStationV.ViewsModels
         new SortOption { Key = "PriceDesc", DisplayName = (string)Application.Current.Resources["Sort_Descending"] },
         new SortOption { Key = "ByName", DisplayName = (string)Application.Current.Resources["Sort_ByName"] }
     };
+            
             OnPropertyChanged(nameof(SortOptions)); 
 
         }
@@ -57,6 +60,9 @@ namespace ServiceStationV.ViewsModels
             public ServiceTypes Type { get; set; }
             public string DisplayName => Application.Current.Resources[Type.ToString()]?.ToString() ?? Type.ToString();
         }
+
+        public Visibility FilterButtonVisibility => SelectedServiceOption != null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility SortButtonVisibility => SelectedSortOption != null ? Visibility.Visible : Visibility.Collapsed;
 
         private string _selectedSort;
         public string SearchText
@@ -79,8 +85,10 @@ namespace ServiceStationV.ViewsModels
                 {
                     _selectedCategory = value;
                     OnPropertyChanged(nameof(SelectedServiceOption));
-                    OnPropertyChanged(nameof(IsFilterApplied));
+                    OnPropertyChanged(nameof(FilterButtonVisibility));
                     ViewServices?.Refresh();
+                    OnPropertyChanged(nameof(IsFilterApplied));
+                    
                 }
             }
         }
@@ -93,9 +101,11 @@ namespace ServiceStationV.ViewsModels
                 {
                     _selectedSort = value;
                     OnPropertyChanged(nameof(SelectedSortOption));
-                    OnPropertyChanged(nameof(IsSortApplied));
+                    OnPropertyChanged(nameof(SortButtonVisibility)); 
                     ServiceSort();
                     ViewServices?.Refresh();
+                    OnPropertyChanged(nameof(IsSortApplied));
+                   
                 }
             }
         }

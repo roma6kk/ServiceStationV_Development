@@ -28,6 +28,11 @@
                         <ImageBrush ImageSource="\images\AdminImages\AddService.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
+                <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="0,0,124,0" BorderThickness="0" Click="OrdersBTN_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="\images\ProfileImages\DarkTheme\ListWhite.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
                 <TextBlock Text="{DynamicResource MainMenu_Header}" 
                            FontFamily="{StaticResource MainFont}" 
                            FontWeight="Bold"

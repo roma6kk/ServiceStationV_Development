@@ -14,6 +14,7 @@
         WindowStyle="None"
         Deactivated="Window_Deactivated"
         Background="Transparent"
+        WindowStartupLocation="CenterScreen"
         AllowsTransparency="True">
 
     <Window.Resources>
@@ -52,7 +53,7 @@
     <Border CornerRadius="10" 
             BorderThickness="2" 
             BorderBrush="{DynamicResource CardBorderBrush}" 
-            Background="{DynamicResource PrimaryBrush}"
+            Background="{DynamicResource CardBackground}"
             >
         <Grid>
             <Grid.ColumnDefinitions>
@@ -64,7 +65,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="6*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <!-- Изображение услуги -->
@@ -130,29 +131,36 @@
             </ScrollViewer>
 
             <!-- Панель действий -->
-            <StackPanel Orientation="Horizontal"  
+            <Border Grid.Row="3" Grid.Column="1" Background="{DynamicResource SecondaryBrush}" CornerRadius="10" Margin="0,0,0,0">
+
+                <StackPanel Orientation="Horizontal"  
                          Grid.Row="3" 
+                         Margin="0,0,0,0"
                          Grid.Column="1" 
-                         Height="auto" 
-                         Width="auto" 
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Right">
-                <Button Name="FavListBTN"
-                        Style="{DynamicResource ActionButtonStyle}"
-                        Margin="0,0,10,0"
-                        Click="FavListBTN_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="{DynamicResource StarAdd}"/>
-                    </Button.Background>
-                </Button>
+                         Width="500"
+                         HorizontalAlignment="Center">
                 <Button Name="CartBTN"
-                        Style="{DynamicResource ActionButtonStyle}"
+                        Height="50"
+                        Width="50"
+                        HorizontalAlignment="Left"
+                        Margin="10,0,0,0"
                         Click="CartBTN_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="{StaticResource ShoppingCart}"/>
                     </Button.Background>
                 </Button>
+                <Button Name="FavListBTN"
+                        Height="50"
+                        Width="50"
+                        Margin="380,0,0,0"
+                        HorizontalAlignment="Right"
+                        Click="FavListBTN_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="{DynamicResource StarAdd}"/>
+                    </Button.Background>
+                </Button>
             </StackPanel>
+            </Border>
         </Grid>
     </Border>
 </Window>

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.ViewsModels
 {

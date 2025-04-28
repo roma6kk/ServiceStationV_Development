@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         Title="ProfileWindow" Height="750" Width="1400"
         ResizeMode="NoResize" WindowStyle="None"
+        WindowStartupLocation="CenterScreen" 
         AllowsTransparency="True" Background="Transparent">
     
 
@@ -39,8 +40,8 @@
 
                     <!-- Левая часть -->
                     <StackPanel Grid.Column="0" Margin="20">
-                        <Border Width="240" Height="240" Background="{DynamicResource SecondaryBrush}" CornerRadius="10" Margin="0,0,0,20">
-                            <!-- Аватар -->
+                        <Border Width="240" Height="240" HorizontalAlignment="Left" CornerRadius="10" Margin="0,0,0,20">
+                            <Image Source="/images/icon.png"/>
                         </Border>
                         <TextBlock Text="{DynamicResource ProfileWindowNameLabel}"
                                    FontSize="20"
@@ -70,7 +71,7 @@
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <Image Source="{DynamicResource ProfileOrders}" Width="100" Height="100"/>
                                 <Button Content="{DynamicResource ProfileWindowMyOrders}"
-                                        Style="{DynamicResource ButtonStyle}"
+                                        Foreground="{DynamicResource AccentBrush}"
                                         FontSize="18"
                                         VerticalAlignment="Center"
                                         Margin="20,0,0,0"
@@ -83,8 +84,9 @@
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <Image Source="{DynamicResource ProfileShoppingCart}" Width="100" Height="100"/>
                                 <Button Content="{DynamicResource ProfileWindowCart}"
-                                        Style="{DynamicResource ButtonStyle}"
                                         FontSize="18"
+                                        Foreground="{DynamicResource AccentBrush}"
+                                        Click="CartBTN_Click"
                                         VerticalAlignment="Center"
                                         Margin="20,0,0,0"/>
                             </StackPanel>
@@ -95,8 +97,8 @@
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <Image Source="{DynamicResource ProfileChangePassword}" Width="100" Height="100"/>
                                 <Button Content="{DynamicResource ProfileWindowChangePassword}"
-                                        Style="{DynamicResource ButtonStyle}"
                                         FontSize="18"
+                                        Foreground="{DynamicResource AccentBrush}"                                        
                                         VerticalAlignment="Center"
                                         Margin="20,0,0,0"
                                         Click="ChangePasswordBTN_Click"/>
@@ -122,14 +124,22 @@
 
                 <!-- Кнопка смены темы -->
                 <Button x:Name="ThemeToggleBtn"
-                        Content="🌓"
-                        Click="ThemeToggleBtn_Click"
-                        Style="{DynamicResource IconButtonStyle}"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="0,10,60,0"
-                        ToolTip="{DynamicResource ChangeThemeTooltip}"
-                        FontFamily="Segoe UI Symbol"/>
+        Click="ThemeToggleBtn_Click"
+                        Grid.Row="1"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        FontSize="20"
+        Margin="0,30,60,0"
+        ToolTip="{DynamicResource ChangeThemeTooltip}"
+        FontFamily="{StaticResource MainFont}"
+        Foreground="{DynamicResource TextBrush}">
+                    <Button.Content>
+                        <TextBlock>
+            <Run Text="{DynamicResource CurrentTheme}"/>
+            <Run Text="{DynamicResource ThemeName}"/>
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
 
                 <!-- Кнопка смены языка -->
                 <Button x:Name="ChangeLanguageBtn"
@@ -137,7 +147,6 @@
                         Grid.Row="1"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
-                        Style="{DynamicResource ClearButtonStyle}"
                         FontWeight="DemiBold"
                         FontSize="22"
                         Click="ChangeLanguageBtn_Click">

@@ -8,8 +8,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using MessageBox = ServiceStationV.Views.MessageBox;
 
-namespace ServiceStationV{
+namespace ServiceStationV
+{
     /// <summary>
     /// Логика взаимодействия для ProfileWindow.xaml
     /// </summary>
@@ -49,13 +51,23 @@ namespace ServiceStationV{
 
         private void MyOrdersBTN_Click(Object sender, RoutedEventArgs e)
         {
-
+            MyOrdersWindow ordersWindow = new();
+            ordersWindow.ShowDialog();
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
             DragMove();
+        }
+
+        private void CartBTN_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                CartWindow cartWindow = new CartWindow();
+                cartWindow.ShowDialog();
+            }
         }
 
         private void GetBackBTN_Click(object sender, RoutedEventArgs e)

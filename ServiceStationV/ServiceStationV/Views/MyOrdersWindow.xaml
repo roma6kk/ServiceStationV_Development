@@ -1,0 +1,89 @@
+﻿<Window x:Class="ServiceStationV.Views.MyOrdersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceStationV.Views"
+        mc:Ignorable="d"
+        Title="Мои заказы" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="{StaticResource PrimaryBrush}">
+
+    <Grid Background="{StaticResource CardBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="✕" 
+                        Grid.Column="1"
+                        FontSize="25"
+                        FontWeight="Black"
+                        HorizontalAlignment="Right" 
+                        FontFamily="{StaticResource MainFont}"
+                        Margin="20,0,20,0"
+                        Width="40" 
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="{DynamicResource AccentBrush}"
+                        Click="CloseBTN_Click"
+                        />
+        <!-- Заголовки колонок -->
+        <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="{StaticResource MainFont}"  Text="{DynamicResource ActualOrders}" FontWeight="Bold" FontSize="16" 
+                   Foreground="{StaticResource TextBrush}" Margin="10"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource MainFont}" Width="auto" HorizontalAlignment="Left" Text="{DynamicResource CompletedOrders}" FontWeight="Bold" FontSize="16" 
+                   Foreground="{StaticResource TextBrush}" Margin="10,10,0,10"/>
+
+        <!-- Список активных заказов -->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Hidden" Margin="10">
+            <ItemsControl x:Name="ActualOrdersIC" ItemsSource="{Binding ActualOrders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource ServiceCardStyle}" Margin="0,0,0,10" Padding="10" >
+                            <StackPanel>
+                                <TextBlock Text="{Binding OrderId}" FontFamily="{StaticResource MainFont}" FontWeight="Bold" Foreground="{StaticResource TextBrush}"/>
+                                <TextBlock Text="{Binding Status}" FontFamily="{StaticResource MainFont}"  Foreground="{StaticResource AccentBrush}"/>
+                                <ItemsControl ItemsSource="{Binding Services}" Margin="10,5,0,0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontFamily="{StaticResource MainFont}" Margin="5,2" Foreground="{StaticResource TextBrush}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Список выполненных заказов -->
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden" Margin="10">
+            <ItemsControl x:Name="CompletedOrdersIC" ItemsSource="{Binding CompletedOrders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource ServiceCardStyle}" Background="{StaticResource SecondaryBrush}" 
+                                Margin="0,0,0,10" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="{Binding OrderId}" FontFamily="{StaticResource MainFont}" FontWeight="Bold" Foreground="{StaticResource AccentBrush}"/>
+                                <TextBlock Text="{Binding Status}" FontFamily="{StaticResource MainFont}" FontStyle="Italic" Foreground="Green"/>
+                                <ItemsControl ItemsSource="{Binding Services}" Margin="10,5,0,0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontFamily="{StaticResource MainFont}" Margin="5,2" Foreground="Black"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

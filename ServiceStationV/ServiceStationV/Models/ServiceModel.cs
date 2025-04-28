@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using static ServiceStationV.ValidationAttributes.ServiceValidationAttributes;
 using static ServiceStationV.ValidationAttributes.ServiceValidationAttributes.LargeDescriptionENAttribute;
+using MessageBox = ServiceStationV.Views.MessageBox;
+
 namespace ServiceStationV.Models
 {
     public enum ServiceTypes
@@ -84,7 +86,7 @@ namespace ServiceStationV.Models
             }
             else
             {
-                MessageBox.Show("Пожалуйста, заполните поля!");
+                MessageBox.Show("Пожалуйста, заполните поля!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }

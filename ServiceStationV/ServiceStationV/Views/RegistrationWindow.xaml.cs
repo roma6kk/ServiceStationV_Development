@@ -19,6 +19,8 @@ using System.Windows.Shapes;
 using ServiceStationV.Repositories;
 using ServiceStationV.Models;
 using ServiceStationV.Views;
+using MessageBox = ServiceStationV.Views.MessageBox;
+
 namespace ServiceStationV
 {
     /// <summary>

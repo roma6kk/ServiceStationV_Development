@@ -1,0 +1,72 @@
+﻿<Window x:Class="ServiceStationV.Views.Admin.OrdersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceStationV.Views"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="Управление заказами" Height="600" Width="900">
+
+    <Grid Background="{DynamicResource CardBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="✕" 
+                        FontSize="25"
+                        FontWeight="Black"
+                        HorizontalAlignment="Right" 
+                        FontFamily="{StaticResource MainFont}"
+                        Margin="20,0,20,0"
+                        Width="40" 
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="{DynamicResource AccentBrush}"
+                        Click="CloseBTN_Click"
+                        />
+        <!-- Панель поиска -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Search by ID:" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="SearchBox" FontFamily="{StaticResource MainFont}" Width="200" Style="{DynamicResource TextBoxStyle}" Foreground="Black" Margin="0,0,10,0"/>
+            <Button Content="Search" FontFamily="{StaticResource MainFont}" Style="{DynamicResource ButtonStyle}" Width="100" Click="Search_Click"/>
+            <Button Content="Save all" FontFamily="{StaticResource MainFont}" Style="{DynamicResource ButtonStyle}" Width="100" 
+       Margin="20,0,0,0" Click="SaveBTN_Click"/>
+        </StackPanel>
+
+        <!-- Список заказов -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10">
+            <ItemsControl x:Name="OrdersList" ItemsSource="{Binding Orders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{DynamicResource ServiceCardStyle}" Margin="0,0,0,10" Padding="10">
+                            <StackPanel>
+                                <!-- Информация о заказе -->
+                                <TextBlock Text="{Binding OrderId}" FontFamily="{StaticResource MainFont}" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                <TextBlock Text="{Binding Status}" FontFamily="{StaticResource MainFont}" FontStyle="Italic" Foreground="{DynamicResource AccentBrush}"/>
+                                <ItemsControl ItemsSource="{Binding Services}" FontFamily="{StaticResource MainFont}" Margin="10,5,0,0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontFamily="{StaticResource MainFont}" Margin="5,2" Foreground="{DynamicResource SecondaryBrush}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- Управление статусом -->
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="COMPLETED" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource SecondaryBrush}"/>
+                                    <CheckBox x:Name="CompletedCB" Checked="CompletedCB_Checked" Height="30" Width="30" Margin="10,0,40,0"/>
+                                    <TextBox x:Name="StatusTB" Width="200" Style="{DynamicResource TextBoxStyle}" 
+                                         Text="{Binding UpdatedStatus, UpdateSourceTrigger=PropertyChanged}" 
+                                         Foreground="Black" Margin="0,0,10,0"/>
+                                    
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

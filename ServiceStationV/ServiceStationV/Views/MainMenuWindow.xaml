@@ -13,7 +13,7 @@
 
 
     <Window.Background>
-        <ImageBrush ImageSource="../images/MainMenuBackground.HEIC" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="../images/MainMenuBackground.jpeg" Stretch="UniformToFill"/>
     </Window.Background>
 
     <Grid Background="{DynamicResource PrimaryBrush}" Opacity="0.95">
@@ -25,7 +25,7 @@
 
         <Border Grid.Column="0" Grid.Row="0" CornerRadius="0,0,30,30" Background="{DynamicResource HeaderGradient}">
             <Grid>
-                <TextBlock Text="{DynamicResource MainMenu_Header}" 
+                <TextBlock Text="Service" 
                            FontFamily="{StaticResource MainFont}" 
                            FontWeight="Bold"
                            VerticalAlignment="Center" 
@@ -33,12 +33,23 @@
                            FontSize="56" 
                            Foreground="WhiteSmoke"
                            Margin="64,0,0,0"/>
+                <TextBlock Text="Station" 
+                           FontFamily="{StaticResource MainFont}" 
+                           FontWeight="Bold"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" 
+                           FontSize="56" 
+                           Foreground="#E4002B"
+                           Margin="320,0,0,0"/>
+                <Image Source="{StaticResource Icon}" Width="56" Margin="0,0,380,10" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0">
-                    <Border Width="300" Height="50" Margin="0,0,30,0" VerticalAlignment="Center" CornerRadius="30" Padding="5">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,80,0">
+                    <Border Width="300" Height="50" Margin="0,0,0,20" VerticalAlignment="Bottom" CornerRadius="30" Padding="5">
                         <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" FontFamily="{StaticResource MainFont}" FontSize="30" Width="284" Height="34"/>
                     </Border>
-
+                    <Image Source="{StaticResource Search}" Width="30" Height="30" VerticalAlignment="Top" Margin="0,10,30,0"/>
+                    </StackPanel>
                     <Button Width="50" Height="100" Margin="44,0,0,0" BorderThickness="0" Click="FavListBTN_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="{StaticResource Star}" Stretch="Uniform"/>
@@ -60,22 +71,42 @@
             </Grid>
         </Border>
 
-        <Button x:Name="ClearFilterButton" Style="{DynamicResource ClearButtonStyle}" Content="X" Width="20" Height="30" FontSize="20" FontWeight="Regular" Foreground="{DynamicResource TextBrush}" Background="Transparent" Click="ClearFilterButton_Click" HorizontalAlignment="Left" Margin="45,10,0,0" BorderThickness="0" Grid.Row="1">
-            
+        <Button x:Name="ClearFilterButton" 
+        Panel.ZIndex="1"
+        Content="X" Width="20" Height="20" FontSize="14" FontWeight="Regular"
+        Foreground="{DynamicResource TextBrush}" Background="Transparent"
+        Click="ClearFilterButton_Click" Visibility="{Binding FilterButtonVisibility}" HorizontalAlignment="Left" Margin="260,0,0,15" BorderThickness="0" Grid.Row="1">
         </Button>
 
-        <Button  Style="{DynamicResource ClearButtonStyle}" x:Name="ClearSortButton" Content="X" Width="20" Height="30" FontSize="20" FontWeight="Regular" Foreground="{DynamicResource TextBrush}" Background="Transparent" Click="ClearSortButton_Click" HorizontalAlignment="Left" Margin="265,10,0,0" BorderThickness="0" Grid.Row="1">
-
+        <Button x:Name="ClearSortButton" 
+        Panel.ZIndex="1"
+        Content="X" Width="20" Height="20"
+        FontSize="14" FontWeight="Regular" Foreground="{DynamicResource TextBrush}" Background="Transparent"
+        Click="ClearSortButton_Click" Visibility="{Binding SortButtonVisibility}" HorizontalAlignment="Left" Margin="520,0,0,15" BorderThickness="0" Grid.Row="1">
         </Button>
+        <TextBlock Grid.Row="1" Width="auto" Text="{DynamicResource FilterText}" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource AccentBrush}" Margin="65,0,0,0"/>
+        <TextBlock Grid.Row="1" Width="auto" Text="{DynamicResource SortText}" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource AccentBrush}" Margin="285,0,0,0"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="64,15,0,0">
-            <Border CornerRadius="10" BorderThickness="1" Width="200" Height="30" Margin="0,0,20,0">
-                <ComboBox Style="{DynamicResource ComboBoxStyle}"  ItemsSource="{Binding FilterServices}" SelectedValue="{Binding SelectedServiceOption, Mode=TwoWay}" SelectedValuePath="Type" DisplayMemberPath="DisplayName" FontSize="13" Margin="3" BorderThickness="0"/>
-            </Border>
+            <ComboBox Style="{DynamicResource ComboBoxStyle}"  
+          ItemsSource="{Binding FilterServices}" 
+          SelectedValue="{Binding SelectedServiceOption, Mode=TwoWay}" 
+          SelectedValuePath="Type" 
+          DisplayMemberPath="DisplayName"
+          Width="200"
+          Height="30"
+          Margin="0,0,20,0"/>
 
-            <Border CornerRadius="10" BorderThickness="1" Width="240" Height="30">
-                <ComboBox Style="{DynamicResource ComboBoxStyle}"  ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SelectedSortOption, Mode=TwoWay}" DisplayMemberPath="DisplayName" SelectedValuePath="Key" FontSize="13" Margin="3" BorderThickness="0" />
-            </Border>
+
+            <ComboBox Style="{DynamicResource ComboBoxStyle}"  
+          ItemsSource="{Binding SortOptions}" 
+          SelectedValue="{Binding SelectedSortOption, Mode=TwoWay}" 
+          DisplayMemberPath="DisplayName" 
+          SelectedValuePath="Key" 
+          FontSize="13"
+          Width="240"
+          Height="30"/>
+
         </StackPanel>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
@@ -95,7 +126,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                             <Button.Content>
-                                <Border x:Name="CardBorder"  Style="{DynamicResource ServiceCardStyle}" CornerRadius="10" Margin="10" Padding="15" Width="450">
+                                <Border x:Name="CardBorder" Cursor="Hand" Style="{DynamicResource ServiceCardStyle}" CornerRadius="10" Margin="10" Padding="15" Width="450">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>

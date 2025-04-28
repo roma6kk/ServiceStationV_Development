@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Windows;
 using System;
 using System.DirectoryServices;
+using MessageBox = ServiceStationV.Views.MessageBox;
+
 namespace ServiceStationV.ViewsModels
 {
     public class AdminViewModel : INotifyPropertyChanged

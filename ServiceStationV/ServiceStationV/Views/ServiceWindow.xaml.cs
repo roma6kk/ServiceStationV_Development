@@ -16,6 +16,8 @@ using Microsoft.Data.SqlClient;
 using ServiceStationV.Models;
 using ServiceStationV.Repositories;
 using ServiceStationV.ViewsModels;
+using MessageBox = ServiceStationV.Views.MessageBox;
+
 namespace ServiceStationV.Views
 {
     /// <summary>
