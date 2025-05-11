@@ -15,7 +15,6 @@ namespace ServiceStationV.Repositories
     {
         public static User CurrentUser = new User();
         public static List<User> Users = new List<User>();
-
         public static bool AddUser(User user, SqlConnection con)
         {
             try

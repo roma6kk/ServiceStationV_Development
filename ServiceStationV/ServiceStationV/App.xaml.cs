@@ -16,12 +16,10 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public static string conStr = @"Server=ROMAN; Database=ServiceStationDB; Integrated Security = true;TrustServerCertificate=True;";
+        public static string AdminLogin = "admin";
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

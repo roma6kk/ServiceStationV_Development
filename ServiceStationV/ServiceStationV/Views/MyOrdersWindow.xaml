@@ -8,6 +8,8 @@
         Title="Мои заказы" Height="450" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
+         WindowStartupLocation="CenterScreen"
+         AllowsTransparency="True"
         Background="{StaticResource PrimaryBrush}">
 
     <Grid Background="{StaticResource CardBackground}">
@@ -63,22 +65,66 @@
         </ScrollViewer>
 
         <!-- Список выполненных заказов -->
-        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden" Margin="10">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="10">
             <ItemsControl x:Name="CompletedOrdersIC" ItemsSource="{Binding CompletedOrders}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource ServiceCardStyle}" Background="{StaticResource SecondaryBrush}" 
-                                Margin="0,0,0,10" Padding="10">
+                        <Border Style="{StaticResource ServiceCardStyle}" 
+                        Background="{StaticResource SecondaryBrush}" 
+                        Margin="0,0,0,15" 
+                        Padding="10">
                             <StackPanel>
-                                <TextBlock Text="{Binding OrderId}" FontFamily="{StaticResource MainFont}" FontWeight="Bold" Foreground="{StaticResource AccentBrush}"/>
-                                <TextBlock Text="{Binding Status}" FontFamily="{StaticResource MainFont}" FontStyle="Italic" Foreground="Green"/>
-                                <ItemsControl ItemsSource="{Binding Services}" Margin="10,5,0,0">
+                                <!-- Заголовок заказа -->
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="{Binding OrderId}" 
+                                       FontFamily="{StaticResource MainFont}" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Text="{Binding Status}" 
+                                       FontFamily="{StaticResource MainFont}" 
+                                       Foreground="Green"
+                                       Margin="10,0,0,0"/>
+                                </StackPanel>
+
+                                <!-- Список услуг -->
+                                <ItemsControl ItemsSource="{Binding Services}" Margin="10,5,0,5">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}" FontFamily="{StaticResource MainFont}" Margin="5,2" Foreground="Black"/>
+                                            <!-- Выводим строку напрямую -->
+                                            <TextBlock Text="{Binding}" 
+                       FontFamily="{StaticResource MainFont}" 
+                       Margin="5,2" 
+                       Foreground="Black"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
+
+                                <!-- Блок комментария -->
+                                <StackPanel Margin="0,10,0,0"             
+                                            Visibility="{Binding IsOrderHasFeedback, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    
+                                    <TextBlock Text="{DynamicResource FeedBack}" 
+                                       FontFamily="{StaticResource MainFont}" 
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,5"/>
+
+                                    <TextBox x:Name="CommentTextBox" 
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap"
+                                     MinHeight="60"
+                                     MaxHeight="120"
+                                     VerticalScrollBarVisibility="Auto"
+                                     FontFamily="{StaticResource MainFont}"
+                                     Margin="0,0,0,5"/>
+
+                                    <Button Content="{DynamicResource Save}" 
+                                            Click="SaveBTN_Click"
+                                            Tag="{Binding Path=Text, ElementName=CommentTextBox}"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,10,0,0"
+                                    Padding="10,5"
+                                    Style="{StaticResource ButtonStyle}"/>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                     </DataTemplate>

@@ -19,13 +19,23 @@ namespace ServiceStationV.Views.Admin
 
         public AdminWindow()
         {
-            // ЭТО ТОЖЕ 
-            LocalizationManager.LanguageChanged += OnLanguageChanged;
             InitializeComponent();
-            ThemeManager.LoadTheme("RS");
             DataContext = _viewModel;
+            ThemeManager.LoadTheme("RS");
+            LocalizationManager.LanguageChanged += OnLanguageChanged;
         }
-        // Я ХЗ ПОЧЕМУ НО ЕСЛИ ЭТО УБРАТЬ ТИПЫ СЕРВИСОВ В КОМБОБОКСЕ НЕ ПЕРЕВОДЯТСЯ НАДО БДУЕТ ФИКСИТЬ 
+
+        private void CloseBTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        public void StatisticBTN_Click(object sender, RoutedEventArgs e)
+        {
+            StatisticWindow sw = new StatisticWindow();
+            sw.ShowDialog();
+        }
+
+
         private void OnLanguageChanged(object sender, EventArgs e)
         {
             _viewModel.UpdateSortOptions();
@@ -74,7 +84,6 @@ namespace ServiceStationV.Views.Admin
                             await con.OpenAsync();
                             string query = @"DELETE FROM UserCart WHERE ServiceId = @ServiceId;
                                              DELETE FROM UserFavList WHERE ServiceId = @ServiceId
-                                             DELETE FROM OrderServices WHERE ServiceId = @ServiceId;
                                              DELETE FROM Services WHERE ServiceId = @ServiceId;
                                              ";
                             using (SqlCommand cmd = new(query, con))

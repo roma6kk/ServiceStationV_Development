@@ -3,12 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Редактирование услуги" Height="auto" Width="600"
         WindowStyle="None"
-        WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource PrimaryBrush}">
+        Background="{DynamicResource PrimaryBrush}"
+     WindowStartupLocation="CenterScreen"
+     AllowsTransparency="True">
 
-    <Grid>
+<Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <StackPanel Margin="20">
+            <StackPanel Margin="20,0,20,20">
+                <Button Grid.Column="1"
+                    Content="✕" 
+                    FontSize="25"
+                    FontWeight="Black"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    FontFamily="{StaticResource MainFont}"
+                    Margin="0,0,0,0"
+                    Width="40" 
+                    Panel.ZIndex="1"
+                    Height="40"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="{DynamicResource AccentBrush}"
+                    Click="CloseBTN_Click"/>    
                 <!--DragNDrop поле-->
                 <Border Name="imageBorder" 
                         BorderBrush="Gray" 
@@ -20,58 +36,58 @@
                         DragEnter="ImageBorder_DragEnter"
                         DragOver="ImageBorder_DragOver"
                         Drop="ImageBorder_Drop">
-                    <TextBlock Text="Перетащите изображение сюда" 
+    <TextBlock Text="Перетащите изображение сюда" 
                HorizontalAlignment="Stretch" 
                VerticalAlignment="Stretch"
                 Padding="60"
                TextAlignment="Center"
                                
                 Foreground="Gray"/>
-                </Border>
-                <!-- Название услуги -->
-                <TextBlock Text="Название услуги (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="ServiceNameTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
+    </Border>
+    <!-- Название услуги -->
+    <TextBlock Text="Название услуги (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="ServiceNameTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
 
-                <TextBlock Text="Название услуги (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="ServiceNameENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
+    <TextBlock Text="Название услуги (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="ServiceNameENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
 
-                <!-- Описание -->
-                <TextBlock Text="Краткое описание (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="DescriptionTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="80"/>
+    <!-- Описание -->
+    <TextBlock Text="Краткое описание (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="DescriptionTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="80"/>
 
-                <TextBlock Text="Краткое описание (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="DescriptionENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="80"/>
+    <TextBlock Text="Краткое описание (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="DescriptionENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="80"/>
 
-                <TextBlock Text="Полное описание (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="LargeDescriptionTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="100"/>
+    <TextBlock Text="Полное описание (RU):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="LargeDescriptionTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="100"/>
 
-                <TextBlock Text="Полное описание (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="LargeDescriptionENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="100"/>
+    <TextBlock Text="Полное описание (EN):" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="LargeDescriptionENTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10" TextWrapping="Wrap" Height="100"/>
 
-                <!-- Цена -->
-                <TextBlock Text="Цена:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="PriceTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
+    <!-- Цена -->
+    <TextBlock Text="Цена:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="PriceTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Margin="0,5,0,10"/>
 
-                <!-- Тип услуги -->
-                <TextBlock Text="Тип услуги:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <ComboBox Name="ServiceTypeComboBox" Style="{DynamicResource ComboBoxStyle}" Margin="0,5,0,10">
-                    <ComboBoxItem Content="Диагностика"/>
-                    <ComboBoxItem Content="Двигатель"/>
-                    <ComboBoxItem Content="Подвеска"/>
-                    <ComboBoxItem Content="Тормоза"/>
-                    <ComboBoxItem Content="Колеса"/>
-                    <ComboBoxItem Content="Охлаждение"/>
-                    <ComboBoxItem Content="Тюнинг"/>
-                    <ComboBoxItem Content="Обслуживание"/>
-                </ComboBox>
+    <!-- Тип услуги -->
+    <TextBlock Text="Тип услуги:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <ComboBox Name="ServiceTypeComboBox" Style="{DynamicResource ComboBoxStyle}" Margin="0,5,0,10">
+        <ComboBoxItem Content="Диагностика"/>
+        <ComboBoxItem Content="Двигатель"/>
+        <ComboBoxItem Content="Подвеска"/>
+        <ComboBoxItem Content="Тормоза"/>
+        <ComboBoxItem Content="Колеса"/>
+        <ComboBoxItem Content="Охлаждение"/>
+        <ComboBoxItem Content="Тюнинг"/>
+        <ComboBoxItem Content="Обслуживание"/>
+    </ComboBox>
 
-                <!-- Изображение -->
-                <TextBlock Text="Ссылка на изображение:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
-                <TextBox Name="ImageSrcTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Text="pack://siteoforigin:,,," Margin="0,5,0,10"/>
+    <!-- Изображение -->
+    <TextBlock Text="Ссылка на изображение:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+    <TextBox Name="ImageSrcTextBox" Style="{DynamicResource TextBoxStyle}" Background="{DynamicResource CardBackground}" Text="pack://siteoforigin:,,," Margin="0,5,0,10"/>
 
-                <!-- Кнопка сохранения -->
-                <Button Content="Сохранить" Click="SaveBTN_Click" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Right" Width="100" Margin="0,20,0,0"/>
-            </StackPanel>
-        </ScrollViewer>
+    <!-- Кнопка сохранения -->
+    <Button Content="Сохранить" Click="SaveBTN_Click" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Right" Width="100" Margin="0,20,0,0"/>
+    </StackPanel>
+    </ScrollViewer>
     </Grid>
 </Window>

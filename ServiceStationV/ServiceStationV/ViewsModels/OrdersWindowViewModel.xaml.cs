@@ -21,30 +21,88 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.ViewsModels
 {
-    /// <summary>
-    /// Логика взаимодействия для OrdersWindowViewModel.xaml
-    /// </summary>
     public partial class OrdersWindowViewModel : INotifyCollectionChanged
     {
-        public ObservableCollection<Order> Orders { get; private set; } = new();
+        private ObservableCollection<Order> _allOrders = new();
+        public ObservableCollection<Order> AllOrders
+        {
+            get => _allOrders;
+            private set
+            {
+                _allOrders = value;
+                OnPropertyChanged(nameof(AllOrders));
+            }
+        }
+
+        private ObservableCollection<Order> _orders = new();
+        public ObservableCollection<Order> Orders
+        {
+            get => _orders;
+            private set
+            {
+                _orders = value;
+                OnPropertyChanged(nameof(Orders));
+                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
         public OrdersWindowViewModel()
         {
             LoadAllOrders();
         }
+
         public async void LoadAllOrders()
         {
             try
             {
                 var orders = await OrderRepository.GetInProgressOrdersAsync();
-                Orders.Clear();
+                AllOrders.Clear();
                 foreach (var order in orders)
                 {
-                    Orders.Add(order);
+                    AllOrders.Add(order);
                 }
+
+                ReplaceOrders(new ObservableCollection<Order>(AllOrders));
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке заказов: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void Search(string searchText)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                ReplaceOrders(AllOrders);
+                return;
+            }
+
+            int orderId;
+            if (int.TryParse(searchText, out orderId))
+            {
+                var result = AllOrders.FirstOrDefault(o => o.OrderId == orderId);
+                if (result != null)
+                {
+                    ReplaceOrders(new ObservableCollection<Order> { result });
+                }
+                else
+                {
+                    ReplaceOrders(new ObservableCollection<Order>()); 
+                }
+            }
+            else
+            {
+                MessageBox.Show("Введите корректный ID заказа.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void ReplaceOrders(ObservableCollection<Order> newOrders)
+        {
+            Orders.Clear();
+            foreach (var order in newOrders)
+            {
+                Orders.Add(order);
             }
         }
 
@@ -78,29 +136,7 @@ namespace ServiceStationV.ViewsModels
         }
 
 
-        public async void Search(TextBox searchBox)
-        {
-            int orderId;
-            if (int.TryParse(searchBox.Text, out orderId))
-            {
-                ObservableCollection<Order> orders = new();
-                Order? order = await LoadOrderByIdAsync(orderId);
-                if (order != null)
-                {
-                    Orders.Clear();
-                    Orders.Add(order);
-                }
-                else
-                {
-                    searchBox.Clear();
-                    MessageBox.Show("Указанный OrderId не найден. Возможно, заказ уже выполнен.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Ошибка ввода.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        
 
 
 

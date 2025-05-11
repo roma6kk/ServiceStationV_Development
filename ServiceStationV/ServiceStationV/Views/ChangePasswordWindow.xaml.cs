@@ -19,9 +19,6 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для ChangePasswordWindow.xaml
-    /// </summary>
     public partial class ChangePasswordWindow : Window
     {
         public ChangePasswordWindow()

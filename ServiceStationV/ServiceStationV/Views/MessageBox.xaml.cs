@@ -6,9 +6,6 @@ using System.Windows.Media.Imaging;
 
 namespace ServiceStationV.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для MessageBox.xaml
-    /// </summary>
     public partial class MessageBox : Window
     {
         public MessageBox()
@@ -84,7 +81,7 @@ namespace ServiceStationV.Views
                     bitmap.UriSource = new Uri("pack://application:,,,/images/MessageBox/Question.png");
                     break;
                 case MessageBoxImage.Information:
-                    bitmap.UriSource = new Uri("pack://application:,,,/iages/MessageBox/Info.png");
+                    bitmap.UriSource = new Uri("pack://application:,,,/images/MessageBox/Info.png");
                     break;
                 default:
                     ImageContainer.Visibility = Visibility.Collapsed;
@@ -136,7 +133,6 @@ namespace ServiceStationV.Views
             dialog.SetImage(image);
             dialog.AddButtons(buttons, defaultResult);
 
-            // Set appropriate system sounds
             System.Media.SystemSounds.Beep.Play();
 
             dialog.ShowDialog();

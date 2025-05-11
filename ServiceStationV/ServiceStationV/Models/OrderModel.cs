@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Azure.Core;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -26,6 +28,17 @@ namespace ServiceStationV.Models
                 OnPropertyChanged();
             }
         }
+        private bool _isOrderHasFeedback;
+        public bool IsOrderHasFeedback
+        {
+            get => _isOrderHasFeedback;
+            set
+            {
+                _isOrderHasFeedback = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

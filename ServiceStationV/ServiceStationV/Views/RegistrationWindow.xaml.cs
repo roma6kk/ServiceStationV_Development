@@ -23,9 +23,6 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV
 {
-    /// <summary>
-    /// Логика взаимодействия для RegistrationWindow.xaml
-    /// </summary>
     public partial class RegistrationWindow : Window
     {
         Views.LoginWindow loginWindow;
@@ -75,12 +72,12 @@ namespace ServiceStationV
                     await con.OpenAsync();
                     string query = @"SELECT COUNT(*) FROM Users 
                              WHERE Login = @Login OR PhoneNumber = @PhoneNumber";
-                    int count;
+                    int? count;
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Login", LoginTB.Text);
                         cmd.Parameters.AddWithValue("@PhoneNumber", PhoneNumberTB.Text);
-                        count = (int)await cmd.ExecuteScalarAsync();
+                        count = (int?)await cmd.ExecuteScalarAsync();
                         if (count > 0)
                         {
                             MessageBox.Show("Пользователь с таким логином или номером телефона уже существует!",

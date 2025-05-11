@@ -90,13 +90,19 @@
 
             <!-- Кнопка закрытия -->
             <Button Grid.Column="2"
-                    Style="{DynamicResource CloseButtonStyle}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Right"
-                    Margin="5"
-                    Click="CloseBTN_Click">
-                <TextBlock Text="✕" FontSize="20" VerticalAlignment="Center"/>
-            </Button>
+                Content="✕" 
+                FontSize="25"
+                FontWeight="Black"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                FontFamily="{StaticResource MainFont}"
+                Margin="0,0,0,0"
+                Width="40" 
+                Height="40"
+                Background="Transparent"
+                BorderThickness="0"
+                Foreground="{DynamicResource AccentBrush}"
+                Click="CloseBTN_Click"/>
 
             <!-- Описание услуги -->
             <ScrollViewer Grid.Row="2" 

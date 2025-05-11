@@ -69,5 +69,12 @@
     <!--MYORDERSWINDOW-->
     <system:String x:Key="ActualOrders">Текущие заказы</system:String>
     <system:String x:Key="CompletedOrders">Выполненные заказы</system:String>
+    <system:String x:Key="FeedBack">Отзыв:</system:String>
+    <system:String x:Key="Save">Сохранить</system:String>
+    <system:String x:Key="SortByDate">Сортировка по дате</system:String>
+    <system:String x:Key="Ascending">По возрастанию</system:String>
+    <system:String x:Key="Descending">По убыванию</system:String>
+
+
 
 </ResourceDictionary>

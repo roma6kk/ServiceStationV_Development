@@ -20,9 +20,6 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для ServiceWindow.xaml
-    /// </summary>
     public partial class ServiceWindow : Window
     {
         public static Service LoadedService { get; private set; } = null;

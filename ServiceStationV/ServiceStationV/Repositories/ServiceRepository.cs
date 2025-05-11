@@ -216,7 +216,8 @@ namespace ServiceStationV.Repositories
                             services.Add(new Service
                             {
                                 ServiceId = reader.GetInt32(0),
-                                ServiceName = LocalizationManager.IsEnglish ? reader.GetString(7) : reader.GetString(1),
+                                ServiceName = reader.GetString(1),     
+                                ServiceNameEN = reader.GetString(7),   
                                 SmallDescription = LocalizationManager.IsEnglish ? reader.GetString(8) : reader.GetString(2),
                                 LargeDescription = LocalizationManager.IsEnglish ? reader.GetString(9) : reader.GetString(3),
                                 Price = reader.GetDecimal(4),

@@ -69,5 +69,10 @@
     <!--MYORDERSWINDOW-->
     <system:String x:Key="ActualOrders">Actual orders</system:String>
     <system:String x:Key="CompletedOrders">Completed orders</system:String>
-
+    <system:String x:Key="FeedBack">FeedBack:</system:String>
+    <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="SortByDate">Sort by date</system:String>
+    <system:String x:Key="Ascending">By ascending</system:String>
+    <system:String x:Key="Descending">By descending</system:String>
+    
 </ResourceDictionary>

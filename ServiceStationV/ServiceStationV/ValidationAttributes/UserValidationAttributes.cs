@@ -10,7 +10,7 @@ namespace ServiceStationV.ValidationAttributes
 {
     class UserValidationAttributes
     {
-        // Валидационные атрибуты
+        
 
         public class FullNameAttribute : ValidationAttribute
         {
@@ -85,6 +85,6 @@ namespace ServiceStationV.ValidationAttributes
             }
         }
 
-        //-------------------------------
+        
     }
 }

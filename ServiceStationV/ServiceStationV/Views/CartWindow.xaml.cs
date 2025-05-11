@@ -4,6 +4,7 @@ using ServiceStationV.Repositories;
 using ServiceStationV.ViewsModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,12 +14,20 @@ namespace ServiceStationV.Views
 {
     public partial class CartWindow : Window
     {
-        public List<int> CartServicesIds { get; private set; } = new List<int>();
+        public List<int> CartServicesIds { get; private set; } = new();
 
         public CartWindow()
         {
-            InitializeComponent();
-            LoadCartAsync();
+            try
+            {
+                InitializeComponent();
+                LoadCartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при инициализации окна: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
         }
 
         private async void LoadCartAsync()
@@ -32,70 +41,110 @@ namespace ServiceStationV.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке данных корзины: {ex.Message}");
+                MessageBox.Show($"Ошибка при загрузке корзины: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void CloseBTN_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            try
+            {
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при закрытии окна: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async Task<List<int>> GetCartAsync()
         {
-            List<int> cart = new List<int>();
-            using (SqlConnection con = new SqlConnection(App.conStr))
+            var cart = new List<int>();
+
+            try
             {
-                await con.OpenAsync();
-                string query = @"SELECT ServiceId FROM UserCart WHERE Login = @Login";
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlConnection con = new SqlConnection(App.conStr))
                 {
-                    cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
-                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    await con.OpenAsync();
+                    string query = @"SELECT ServiceId FROM UserCart WHERE Login = @Login";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        while (await reader.ReadAsync())
+                        cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser?.Login ?? throw new InvalidOperationException("Пользователь не авторизован"));
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
-                            cart.Add(reader.GetInt32(0));
+                            while (await reader.ReadAsync())
+                            {
+                                if (!reader.IsDBNull(0))
+                                    cart.Add(reader.GetInt32(0));
+                            }
                         }
                     }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"Ошибка подключения к базе данных: {sqlEx.Message}", "Ошибка SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при получении данных из корзины: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             return cart;
         }
 
         private async Task RemoveServiceFromCart(int serviceId, string login)
         {
-            using (SqlConnection con = new SqlConnection(App.conStr))
+            try
             {
-                await con.OpenAsync();
-                string query = @"DELETE FROM UserCart WHERE ServiceId = @ServiceId AND Login = @Login";
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlConnection con = new SqlConnection(App.conStr))
                 {
-                    cmd.Parameters.AddWithValue("@ServiceId", serviceId);
-                    cmd.Parameters.AddWithValue("@Login", login);
-                    cmd.ExecuteNonQuery();
+                    await con.OpenAsync();
+                    string query = @"DELETE FROM UserCart WHERE ServiceId = @ServiceId AND Login = @Login";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ServiceId", serviceId);
+                        cmd.Parameters.AddWithValue("@Login", login);
+                        await cmd.ExecuteNonQueryAsync();
+                    }
                 }
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"Ошибка базы данных: {sqlEx.Message}", "Ошибка SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при удалении услуги из корзины: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private async void RemoveBTN_Click(object sender, EventArgs e)
         {
-            if (sender is Button btn)
+            try
             {
-                var serviceToRemove = btn.DataContext as Service;
-                await RemoveServiceFromCart(serviceToRemove.ServiceId, UserRepository.CurrentUser.Login);
-                LoadCartAsync();
+                if (sender is Button btn && btn.DataContext is Service serviceToRemove)
+                {
+                    await RemoveServiceFromCart(serviceToRemove.ServiceId, UserRepository.CurrentUser.Login);
+                    LoadCartAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при удалении элемента: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private async void OrderBTN_Click(object sender, EventArgs e)
         {
-            if(CartServicesIds.Count < 1)
-            {
-                MessageBox.Show("Корзина пустая", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
             try
             {
+                if (CartServicesIds.Count == 0)
+                {
+                    MessageBox.Show("Корзина пустая", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 using (SqlConnection con = new SqlConnection(App.conStr))
                 {
                     await con.OpenAsync();
@@ -103,26 +152,27 @@ namespace ServiceStationV.Views
                     string createOrderQuery = @"
                         INSERT INTO Orders (Login, Status, OrderDate)
                         VALUES (@Login, 'ACTUAL', @OrderDate);
-                        SELECT SCOPE_IDENTITY();"; 
+                        SELECT SCOPE_IDENTITY();";
+
                     int orderId;
                     using (SqlCommand cmd = new SqlCommand(createOrderQuery, con))
                     {
                         cmd.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
                         cmd.Parameters.AddWithValue("@OrderDate", DateTime.Now);
-                        orderId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                        var result = await cmd.ExecuteScalarAsync();
+                        orderId = Convert.ToInt32(result);
                     }
 
-                    string addServicesQuery = @"
-                        INSERT INTO OrderServices (OrderId, ServiceName)
-                        VALUES (@OrderId, @ServiceName);";
+                    string addServicesQuery = @"INSERT INTO OrderServices (OrderId, ServiceName) VALUES (@OrderId, @ServiceName);";
 
                     using (SqlCommand addServicesCmd = new SqlCommand(addServicesQuery, con))
                     {
                         foreach (var service in await ServiceRepository.GetServicesById(await GetCartAsync()))
                         {
-                            addServicesCmd.Parameters.Clear(); 
+                            addServicesCmd.Parameters.Clear();
                             addServicesCmd.Parameters.AddWithValue("@OrderId", orderId);
-                            addServicesCmd.Parameters.AddWithValue("@ServiceName", LocalizationManager.IsEnglish ? service.ServiceName : service.ServiceNameEN);
+                            var serviceName = LocalizationManager.IsEnglish ? service.ServiceName : service.ServiceNameEN;
+                            addServicesCmd.Parameters.Add("@ServiceName", SqlDbType.NVarChar, 4000).Value = serviceName ?? (object)DBNull.Value;
                             await addServicesCmd.ExecuteNonQueryAsync();
                         }
                     }
@@ -132,16 +182,25 @@ namespace ServiceStationV.Views
                     MessageBox.Show("Заказ успешно создан!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"Ошибка базы данных: {sqlEx.Message}", "Ошибка SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (FormatException fEx)
+            {
+                MessageBox.Show($"Ошибка формата данных: {fEx.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при создании заказа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private async Task ClearCartAsync(string login)
         {
             try
             {
-                using (SqlConnection con = new(App.conStr))
+                using (SqlConnection con = new SqlConnection(App.conStr))
                 {
                     await con.OpenAsync();
                     string query = @"DELETE FROM UserCart WHERE Login = @Login";
@@ -152,6 +211,10 @@ namespace ServiceStationV.Views
                     }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"Ошибка базы данных: {sqlEx.Message}", "Ошибка SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при очистке корзины: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -160,7 +223,14 @@ namespace ServiceStationV.Views
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            try
+            {
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при закрытии окна: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

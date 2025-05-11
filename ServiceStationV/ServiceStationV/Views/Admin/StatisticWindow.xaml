@@ -1,0 +1,60 @@
+﻿<Window x:Class="ServiceStationV.Views.Admin.StatisticWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        Title="Статистика заказов" Height="500" Width="800"
+        Background="{DynamicResource CardBackground}"
+         WindowStartupLocation="CenterScreen"
+         WindowStyle="None"
+         AllowsTransparency="True">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Column="1"
+            Content="✕" 
+            FontSize="25"
+            FontWeight="Black"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            FontFamily="{StaticResource MainFont}"
+            Margin="0,0,0,0"
+            Width="40" 
+            Height="40"
+            Background="Transparent"
+            BorderThickness="0"
+            Foreground="{DynamicResource AccentBrush}"
+            Click="CloseBTN_Click"/>
+    
+
+    <TextBlock Text="Статистика заказов" FontSize="24" FontWeight="Bold"
+                   Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <StackPanel Margin="0,0,40,0">
+                <TextBlock Text="Всего заказов" FontSize="16" Foreground="{DynamicResource TextBrush}" />
+                <TextBlock x:Name="TotalOrdersTB" FontSize="20" FontWeight="Bold" Foreground="WhiteSmoke" Text="0" />
+            </StackPanel>
+            <StackPanel Margin="0,0,40,0">
+                <TextBlock Text="Активные" FontSize="16" Foreground="{DynamicResource TextBrush}" />
+                <TextBlock x:Name="ActiveOrdersTB" FontSize="20" FontWeight="Bold" Foreground="Green" Text="0" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Выполненные" FontSize="16" Foreground="{DynamicResource TextBrush}" />
+                <TextBlock x:Name="CompletedOrdersTB" FontSize="20" FontWeight="Bold" Foreground="Blue" Text="0" />
+            </StackPanel>
+        </StackPanel>
+        <Border Grid.Row="2" Margin="0,20,0,0" Background="{DynamicResource CardBackground}" CornerRadius="10" ClipToBounds="True" >
+            <Border CornerRadius="10" Background="WhiteSmoke" ClipToBounds="True">
+                <lvc:PieChart x:Name="PieChartControl"
+                      LegendPosition="Right" />
+            </Border>
+        </Border>
+
+    </Grid>
+</Window>

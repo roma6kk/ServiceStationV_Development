@@ -1,9 +1,7 @@
--- ”даление старых записей (если требуетс€)
 TRUNCATE TABLE Services;
 
 
 
--- ¬ставка всех 20 записей с исправленными пут€ми и форматами изображений
 INSERT INTO Services (ServiceName, SmallDescription, LargeDescription, Price, ImageSrc, ServiceType) 
 VALUES
 ( 'ƒиагностика двигател€', ' омплексна€ проверка двигател€', 'ѕолна€ диагностика состо€ни€ двигател€ с использованием современного оборудовани€', 1500, 'pack://siteoforigin:,,,/images/ServicesImages/EnigneDiagnostic.jpeg', 'ƒиагностика'),

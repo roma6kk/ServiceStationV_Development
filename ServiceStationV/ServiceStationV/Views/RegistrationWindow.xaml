@@ -8,7 +8,10 @@
         Title="{DynamicResource RegWindowTitle}" 
         Height="600" 
         Width="600"
-        Closing="RegWindow_Closing">
+        Closing="RegWindow_Closing"
+         WindowStartupLocation="CenterScreen"
+         WindowStyle="None"
+         AllowsTransparency="True">
 
     <Window.Resources>
         <SolidColorBrush x:Key="PrimaryColor" Color="#0B2444"/>

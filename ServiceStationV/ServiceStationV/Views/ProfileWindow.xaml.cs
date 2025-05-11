@@ -12,69 +12,166 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV
 {
-    /// <summary>
-    /// Логика взаимодействия для ProfileWindow.xaml
-    /// </summary>
     public partial class ProfileWindow : Window
     {
         public ProfileWindow()
         {
-            InitializeComponent();
-            this.DataContext = new ProfileWindowViewModel();
+            try
+            {
+                InitializeComponent();
+                this.DataContext = new ProfileWindowViewModel();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при инициализации окна профиля: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                Close();
+            }
         }
 
         private void ThemeToggleBtn_Click(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ToggleTheme();
+            try
+            {
+                ThemeManager.ToggleTheme();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при смене темы: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
+
         private void ChangePasswordBTN_Click(object sender, RoutedEventArgs e)
         {
-            var changePasswordWindow = new ChangePasswordWindow
+            try
             {
-                Owner = this
-            };
-            changePasswordWindow.ShowDialog();
+                var changePasswordWindow = new ChangePasswordWindow
+                {
+                    Owner = this
+                };
+                changePasswordWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии окна смены пароля: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
+
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            this.Topmost = true;
-            this.Activate();
+            try
+            {
+                this.Topmost = true;
+                this.Activate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при активации окна: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
         }
-        private async void ChangeLanguageBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var newCulture = LocalizationManager.CurrentCulture.Name == "en-US"
-                ? new CultureInfo("ru-RU")
-                : new CultureInfo("en-US");
-            LocalizationManager.SetLanguage(newCulture);
 
+        private void ChangeLanguageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var newCulture = LocalizationManager.CurrentCulture.Name == "en-US"
+                    ? new CultureInfo("ru-RU")
+                    : new CultureInfo("en-US");
+                LocalizationManager.SetLanguage(newCulture);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при смене языка: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
-        private void MyOrdersBTN_Click(Object sender, RoutedEventArgs e)
+        private void MyOrdersBTN_Click(object sender, RoutedEventArgs e)
         {
-            MyOrdersWindow ordersWindow = new();
-            ordersWindow.ShowDialog();
+            try
+            {
+                MyOrdersWindow ordersWindow = new();
+                ordersWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии списка заказов: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
-            DragMove();
+            try
+            {
+                base.OnMouseLeftButtonDown(e);
+                DragMove();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при перемещении окна: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
         }
 
         private void CartBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button)
+            try
             {
-                CartWindow cartWindow = new CartWindow();
-                cartWindow.ShowDialog();
+                if (sender is Button)
+                {
+                    CartWindow cartWindow = new CartWindow();
+                    cartWindow.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии корзины: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 
         private void GetBackBTN_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            try
+            {
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при закрытии окна: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
-
-
     }
 }

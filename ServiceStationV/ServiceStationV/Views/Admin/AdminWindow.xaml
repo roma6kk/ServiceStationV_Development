@@ -11,7 +11,7 @@
         WindowStyle="None">
 
     <Window.Background>
-        <ImageBrush ImageSource="../../images/MainMenuBackground.HEIC" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="../../images/MainMenuBackground.jpeg" Stretch="UniformToFill"/>
     </Window.Background>
 
     <Grid Background="{DynamicResource PrimaryBrush}" Opacity="0.95">
@@ -23,16 +23,28 @@
 
         <Border Grid.Column="0" Grid.Row="0" CornerRadius="0,0,30,30" Background="{DynamicResource HeaderGradient}">
             <Grid>
-                <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="0,0,44,0" BorderThickness="0" Click="AddServiceBTN_Click">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,64,0">
+                <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="0,0,0,0" BorderThickness="0" Click="StatisticBTN_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="\images\AdminImages\statistic.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="22,0,0,0" BorderThickness="0" Click="AddServiceBTN_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\images\AdminImages\AddService.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="0,0,124,0" BorderThickness="0" Click="OrdersBTN_Click">
+                <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="22,0,0,0" BorderThickness="0" Click="OrdersBTN_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="\images\ProfileImages\DarkTheme\ListWhite.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
+                    <Button Grid.Column="0" Grid.Row="0" Width="50" HorizontalAlignment="Right" Height="100" Margin="22,0,0,0" BorderThickness="0" Click="CloseBTN_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="\images\Exit.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
                 <TextBlock Text="{DynamicResource MainMenu_Header}" 
                            FontFamily="{StaticResource MainFont}" 
                            FontWeight="Bold"
@@ -43,22 +55,43 @@
                            Margin="64,0,0,0"/>
             </Grid>
         </Border>
-
-        <Button x:Name="ClearFilterButton" Style="{DynamicResource ClearButtonStyle}" Content="X" Width="20" Height="30" FontSize="20" FontWeight="Regular" Foreground="{DynamicResource TextBrush}" Background="Transparent" Click="ClearFilterButton_Click" HorizontalAlignment="Left" Margin="45,10,0,0" BorderThickness="0" Grid.Row="1">
-        </Button>
-
-        <Button Style="{DynamicResource ClearButtonStyle}" x:Name="ClearSortButton" Content="X" Width="20" Height="30" FontSize="20" FontWeight="Regular" Foreground="{DynamicResource TextBrush}" Background="Transparent" Click="ClearSortButton_Click" HorizontalAlignment="Left" Margin="265,10,0,0" BorderThickness="0" Grid.Row="1">
-        </Button>
-
+        <TextBlock Grid.Row="1" Width="auto" VerticalAlignment="Top" Text="{DynamicResource FilterText}" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource AccentBrush}" Margin="65,0,0,0"/>
+        <TextBlock Grid.Row="1" Width="auto" VerticalAlignment="Top" Text="{DynamicResource SortText}" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource AccentBrush}" Margin="285,0,0,0"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="64,15,0,0">
-            <Border CornerRadius="10" BorderThickness="1" Width="200" Height="30" Margin="0,0,20,0">
-                <ComboBox Style="{DynamicResource ComboBoxStyle}" ItemsSource="{Binding FilterServices}" SelectedValue="{Binding SelectedServiceOption, Mode=TwoWay}" SelectedValuePath="Type" DisplayMemberPath="DisplayName" FontSize="13" Margin="3" BorderThickness="0"/>
-            </Border>
+            <ComboBox Style="{DynamicResource ComboBoxStyle}"  
+   ItemsSource="{Binding FilterServices}" 
+   SelectedValue="{Binding SelectedServiceOption, Mode=TwoWay}" 
+   SelectedValuePath="Type" 
+   DisplayMemberPath="DisplayName"
+   Width="200"
+   Height="30"
+   Margin="0,0,20,0"/>
 
-            <Border CornerRadius="10" BorderThickness="1" Width="240" Height="30">
-                <ComboBox Style="{DynamicResource ComboBoxStyle}" ItemsSource="{Binding SortOptions}" SelectedValue="{Binding SelectedSortOption, Mode=TwoWay}" DisplayMemberPath="DisplayName" SelectedValuePath="Key" FontSize="13" Margin="3" BorderThickness="0"/>
-            </Border>
+
+            <ComboBox Style="{DynamicResource ComboBoxStyle}"  
+   ItemsSource="{Binding SortOptions}" 
+   SelectedValue="{Binding SelectedSortOption, Mode=TwoWay}" 
+   DisplayMemberPath="DisplayName" 
+   SelectedValuePath="Key" 
+   FontSize="13"
+   Width="240"
+   Height="30"/>
+            
         </StackPanel>
+        <Button x:Name="ClearFilterButton" 
+Panel.ZIndex="1"
+Content="X" Width="20" Height="20" FontSize="14" FontWeight="Regular"
+Foreground="{DynamicResource TextBrush}" Background="Transparent"
+Click="ClearFilterButton_Click" Visibility="{Binding FilterButtonVisibility}" HorizontalAlignment="Left" Margin="260,0,0,15" BorderThickness="0" Grid.Row="1">
+        </Button>
+
+        <Button x:Name="ClearSortButton" 
+        Panel.ZIndex="1"
+        Content="X" Width="20" Height="20"
+        FontSize="14" FontWeight="Regular" Foreground="{DynamicResource TextBrush}" Background="Transparent"
+        Click="ClearSortButton_Click" Visibility="{Binding SortButtonVisibility}" HorizontalAlignment="Left" Margin="520,0,0,15" BorderThickness="0" Grid.Row="1">
+        </Button>
+      
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
             <ItemsControl ItemsSource="{Binding ViewServices}" Margin="20" HorizontalAlignment="Center">
@@ -70,14 +103,12 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <!-- Карточка -->
                         <Border x:Name="CardBorder" 
                     Style="{DynamicResource ServiceCardStyle}" 
                     CornerRadius="10" 
                     Margin="10" 
                     Padding="15" 
                     Width="450"
-                    Background="{DynamicResource CardBackground}"
                     MouseLeftButtonDown="Card_MouseLeftButtonDown"
                     Cursor="Hand">
                             <Grid>
@@ -87,25 +118,21 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
-                                <!-- Изображение -->
                                 <Border CornerRadius="10" BorderThickness="1" Height="200" Grid.Row="0" Margin="0 0 0 10" Background="{DynamicResource CardBackground}">
                                     <Image Source="{Binding ImageSrc}" Stretch="UniformToFill" Height="200" ClipToBounds="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                 </Border>
 
-                                <!-- Название и описание -->
                                 <StackPanel Grid.Row="1">
                                     <TextBlock Text="{Binding ServiceName}" Foreground="{DynamicResource TextBrush}" FontSize="18" FontWeight="Bold" Margin="0 0 0 5"/>
                                     <TextBlock Text="{Binding SmallDescription}" Foreground="{DynamicResource TextBrush}" FontSize="14" TextWrapping="Wrap"/>
                                 </StackPanel>
 
-                                <!-- Тип услуги, цена и кнопки -->
                                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4">
                                     <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="6 2">
                                         <TextBlock Text="{Binding LocalizedServiceType}" Foreground="White" FontSize="12"/>
                                     </Border>
                                     <TextBlock Text="{Binding LocalizedPrice}" Style="{DynamicResource PriceTextStyle}"/>
 
-                                    <!-- Кнопки "Редактировать" и "Удалить" -->
                                     <Button Content="Edit" 
                                 Style="{DynamicResource EditButtonStyle}" 
                                 Click="EditService_Click" 

@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using System.Collections.ObjectModel;
 using System.Windows;
 using MessageBox = ServiceStationV.Views.MessageBox;
+using ServiceStationV.Repositories;
 
 public static class OrderRepository
 {
@@ -13,17 +14,33 @@ public static class OrderRepository
     public static async Task<ObservableCollection<Order>> GetInProgressOrdersAsync()
     {
         var orders = new ObservableCollection<Order>();
-
+       
         using (SqlConnection con = new SqlConnection(App.conStr))
         {
-            var command = new SqlCommand(@"
+            SqlCommand command;
+            if (UserRepository.CurrentUser.Login == App.AdminLogin)
+            {
+
+                command = new SqlCommand(@"
                 SELECT o.OrderId, o.Status, o.OrderDate, os.ServiceName
                 FROM Orders o
                 LEFT JOIN OrderServices os ON o.OrderId = os.OrderId
                 WHERE o.Status != 'COMPLETED'
                 ORDER BY o.OrderDate DESC", con);
+            }
+            else
+            {
+                command = new SqlCommand(@"
+                SELECT o.OrderId, o.Status, o.OrderDate, os.ServiceName
+                FROM Orders o
+                LEFT JOIN OrderServices os ON o.OrderId = os.OrderId
+                WHERE o.Status != 'COMPLETED' AND
+                o.Login = @Login
+                ORDER BY o.OrderDate DESC", con);
+            }
 
             await con.OpenAsync();
+            command.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
@@ -59,14 +76,28 @@ public static class OrderRepository
 
         using (SqlConnection con = new SqlConnection(App.conStr))
         {
-            SqlCommand command = new SqlCommand(@"
+            SqlCommand command;
+            if (UserRepository.CurrentUser.Login == App.AdminLogin)
+            {
+                command = new SqlCommand(@"
                 SELECT o.OrderId, o.Status, o.OrderDate, os.ServiceName
                 FROM Orders o
                 LEFT JOIN OrderServices os ON o.OrderId = os.OrderId
-                WHERE o.Status = 'COMPLETED'
+                WHERE o.Status = 'COMPLETED' 
                 ORDER BY o.OrderDate DESC", con);
-
+            }
+            else
+            {
+                command = new SqlCommand(@"
+                SELECT o.OrderId, o.Status, o.OrderDate, os.ServiceName
+                FROM Orders o
+                LEFT JOIN OrderServices os ON o.OrderId = os.OrderId
+                WHERE o.Status = 'COMPLETED' AND
+                o.Login = @Login                
+                ORDER BY o.OrderDate DESC", con);
+            }
             await con.OpenAsync();
+            command.Parameters.AddWithValue("@Login", UserRepository.CurrentUser.Login);
             using (var reader = await command.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
@@ -96,13 +127,39 @@ public static class OrderRepository
         return orders;
     }
 
-    public static async Task<ObservableCollection<Order>> GetAllOrdersAsync()
+    public static async Task<ObservableCollection<Order>> GetActualOrdersAsync()
     {
         ObservableCollection<Order> orders = new();
         using (SqlConnection con = new(App.conStr))
         {
             await con.OpenAsync();
             string query = "SELECT * FROM Orders WHERE Status != 'COMPLETED'";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    Order order = new Order
+                    {
+                        OrderId = reader.GetInt32(0),
+                        Login = reader.GetString(1),
+                        OrderDate = reader.GetDateTime(2),
+                        Status = reader.GetString(3),
+                        Services = await LoadServiceNames(reader.GetInt32(0))
+                    };
+                    orders.Add(order);
+                }
+                return orders;
+            }
+        }
+    }
+    public static async Task<ObservableCollection<Order>> GetAllOrdersAsync()
+    {
+        ObservableCollection<Order> orders = new();
+        using (SqlConnection con = new(App.conStr))
+        {
+            await con.OpenAsync();
+            string query = "SELECT * FROM Orders";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 SqlDataReader reader = await cmd.ExecuteReaderAsync();

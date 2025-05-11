@@ -15,12 +15,32 @@ namespace ServiceStationV.Views.Admin
     {
         private Service _service;
         private AdminViewModel _adminViewModel;
+
         public EditServiceWindow(Service service, AdminViewModel adminViewModel)
         {
-            InitializeComponent();
-            _adminViewModel = adminViewModel;
-            LoadServiceAsync(service.ServiceId);
+            try
+            {
+                InitializeComponent();
+                _adminViewModel = adminViewModel;
+                LoadServiceAsync(service.ServiceId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при инициализации окна: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+            }
+        }
 
+        private void CloseBTN_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при закрытии окна: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void LoadServiceAsync(int serviceId)
@@ -36,14 +56,15 @@ namespace ServiceStationV.Views.Admin
                     return;
                 }
 
-                ServiceNameTextBox.Text = _service.ServiceName;
-                ServiceNameENTextBox.Text = _service.ServiceNameEN;
-                DescriptionTextBox.Text = _service.SmallDescription;
-                DescriptionENTextBox.Text = _service.SmallDescriptionEN;
-                LargeDescriptionTextBox.Text = _service.LargeDescription;
-                LargeDescriptionENTextBox.Text = _service.LargeDescriptionEN;
+                ServiceNameTextBox.Text = _service.ServiceName ?? string.Empty;
+                ServiceNameENTextBox.Text = _service.ServiceNameEN ?? string.Empty;
+                DescriptionTextBox.Text = _service.SmallDescription ?? string.Empty;
+                DescriptionENTextBox.Text = _service.SmallDescriptionEN ?? string.Empty;
+                LargeDescriptionTextBox.Text = _service.LargeDescription ?? string.Empty;
+                LargeDescriptionENTextBox.Text = _service.LargeDescriptionEN ?? string.Empty;
                 PriceTextBox.Text = _service.Price.ToString();
-                ImageSrcTextBox.Text = _service.ImageSrc;
+
+                ImageSrcTextBox.Text = _service.ImageSrc ?? string.Empty;
 
                 ServiceTypeComboBox.SelectedIndex = (int)_service.ServiceType;
             }
@@ -64,21 +85,21 @@ namespace ServiceStationV.Views.Admin
                     return;
                 }
 
-                _service.ServiceName = ServiceNameTextBox.Text;
-                _service.ServiceNameEN = ServiceNameENTextBox.Text;
-                _service.SmallDescription = DescriptionTextBox.Text;
-                _service.SmallDescriptionEN = DescriptionENTextBox.Text;
-                _service.LargeDescription = LargeDescriptionTextBox.Text;
-                _service.LargeDescriptionEN = LargeDescriptionENTextBox.Text;
+                _service.ServiceName = ServiceNameTextBox.Text?.Trim();
+                _service.ServiceNameEN = ServiceNameENTextBox.Text?.Trim();
+                _service.SmallDescription = DescriptionTextBox.Text?.Trim();
+                _service.SmallDescriptionEN = DescriptionENTextBox.Text?.Trim();
+                _service.LargeDescription = LargeDescriptionTextBox.Text?.Trim();
+                _service.LargeDescriptionEN = LargeDescriptionENTextBox.Text?.Trim();
 
-                if (!decimal.TryParse(PriceTextBox.Text, out decimal price))
+                if (!decimal.TryParse(PriceTextBox.Text?.Trim(), out decimal price))
                 {
                     MessageBox.Show("Некорректное значение цены.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 _service.Price = price;
 
-                _service.ImageSrc = ImageSrcTextBox.Text;
+                _service.ImageSrc = ImageSrcTextBox.Text?.Trim();
 
                 var selectedServiceType = ServiceTypeComboBox.SelectedItem as ComboBoxItem;
                 if (selectedServiceType == null)
@@ -86,97 +107,151 @@ namespace ServiceStationV.Views.Admin
                     MessageBox.Show("Выберите тип услуги.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                _service.ServiceType = (ServiceTypes)Enum.Parse(typeof(ServiceTypes), selectedServiceType.Content.ToString());
 
-                if (await ServiceRepository.UpdateService(_service))
+                if (Enum.TryParse(typeof(ServiceTypes), selectedServiceType.Content?.ToString(), out object? parsedType))
+                {
+                    _service.ServiceType = (ServiceTypes)parsedType;
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось распознать тип услуги.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                bool updated = await ServiceRepository.UpdateService(_service);
+                if (updated)
                 {
                     MessageBox.Show("Услуга успешно обновлена", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     await _adminViewModel.RefreshServicesAsync();
                     this.Close();
                 }
+                else
+                {
+                    MessageBox.Show("Не удалось обновить услугу.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (UnauthorizedAccessException uex)
+            {
+                MessageBox.Show($"Ошибка доступа: {uex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (IOException ioex)
+            {
+                MessageBox.Show($"Ошибка ввода-вывода: {ioex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void ImageBorder_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            try
             {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Any(IsImageFile))
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    e.Effects = DragDropEffects.Copy;
-                    ImageBorder.BorderBrush = Brushes.Blue;
-                    return;
+                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    if (files.Any(IsImageFile))
+                    {
+                        e.Effects = DragDropEffects.Copy;
+                        ImageBorder.BorderBrush = Brushes.Blue;
+                        return;
+                    }
                 }
+                e.Effects = DragDropEffects.None;
             }
-            e.Effects = DragDropEffects.None;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при DragEnter: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Effects = DragDropEffects.None;
+            }
         }
 
-        // Обработка перетаскивания над областью
         private void ImageBorder_DragOver(object sender, DragEventArgs e)
         {
-            e.Handled = true;
-        }
-
-        // Обработка завершения перетаскивания
-        private void ImageBorder_Drop(object sender, DragEventArgs e)
-        {
-            ImageBorder.BorderBrush = Brushes.Gray;
-
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            try
             {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                var imageFile = files.FirstOrDefault(IsImageFile);
-
-                if (imageFile != null)
-                {
-                    LoadImageToBorder(imageFile);
-                }
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при DragOver: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // Проверка, является ли файл изображением
-        private bool IsImageFile(string filePath)
+        private void ImageBorder_Drop(object sender, DragEventArgs e)
         {
-            var extensions = new[] { ".jpg", ".jpeg", ".png", ".bmp", ".gif" };
-            return extensions.Contains(Path.GetExtension(filePath).ToLower());
+            try
+            {
+                ImageBorder.BorderBrush = Brushes.Gray;
+
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    var imageFile = files.FirstOrDefault(IsImageFile);
+
+                    if (imageFile != null)
+                    {
+                        LoadImageToBorder(imageFile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при Drop: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        // Загрузка изображения в Border и обновление пути
+        private bool IsImageFile(string filePath)
+        {
+            try
+            {
+                var extensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                string ext = Path.GetExtension(filePath).ToLower();
+                return !string.IsNullOrEmpty(ext) && extensions.Contains(ext);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void LoadImageToBorder(string imagePath)
         {
             try
             {
-                string projectPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string imagesFolder = System.IO.Path.Combine(projectPath, "images/ServicesImages");
+                string projectPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string imagesFolder = Path.Combine(projectPath, "images", "ServicesImages");
 
                 if (!Directory.Exists(imagesFolder))
                 {
                     Directory.CreateDirectory(imagesFolder);
                 }
 
-                // Генерируем уникальное имя файла
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagePath);
-                string destinationPath = System.IO.Path.Combine(imagesFolder, fileName);
+                string fileName = Guid.NewGuid() + Path.GetExtension(imagePath);
+                string destinationPath = Path.Combine(imagesFolder, fileName);
 
-                File.Copy(imagePath, destinationPath, true);
-
-
+                File.Copy(imagePath, destinationPath, overwrite: true);
 
                 if (ImageBorder.Child is TextBlock textBlock)
+                {
                     textBlock.Text = "Изображение успешно загружено";
+                }
 
-                // Сохраняем путь к изображению
                 ImageSrcTextBox.Text = $"pack://siteoforigin:,,,/images/ServicesImages/{fileName}";
+            }
+            catch (UnauthorizedAccessException uex)
+            {
+                MessageBox.Show($"Нет прав на запись файла: {uex.Message}", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (IOException ioex)
+            {
+                MessageBox.Show($"Ошибка ввода-вывода: {ioex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки изображения: {ex.Message}");
+                MessageBox.Show($"Ошибка загрузки изображения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-    
-}
+    }
 }

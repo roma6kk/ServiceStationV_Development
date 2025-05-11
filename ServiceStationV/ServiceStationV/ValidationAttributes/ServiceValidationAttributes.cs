@@ -25,7 +25,6 @@ namespace ServiceStationV.ValidationAttributes
                     return new ValidationResult("Название услуги не должно превышать 30 символов!");
                 }
 
-                // Только русские буквы, цифры, пробелы и основные знаки препинания
                 if (!Regex.IsMatch(name, @"^[а-яА-ЯёЁ0-9\s\.,!?-]+$"))
                 {
                     return new ValidationResult("Название услуги должно содержать только русские буквы!");
@@ -50,7 +49,6 @@ namespace ServiceStationV.ValidationAttributes
                     return new ValidationResult("Краткое описание не должно превышать 50 символов!");
                 }
 
-                // Только русские буквы, цифры, пробелы и основные знаки препинания
                 if (!Regex.IsMatch(description, @"^[а-яА-ЯёЁ0-9\s\.,!?-]+$"))
                 {
                     return new ValidationResult("Краткое описание должно содержать только русские буквы!");
@@ -71,7 +69,6 @@ namespace ServiceStationV.ValidationAttributes
 
                 string description = value.ToString();
 
-                // Только русские буквы, цифры, пробелы и основные знаки препинания
                 if (!Regex.IsMatch(description, @"^[а-яА-ЯёЁ0-9\s\.,!?\-\r\n]+$"))
                 {
                     return new ValidationResult("Подробное описание должно содержать только русские буквы!");
@@ -93,7 +90,7 @@ namespace ServiceStationV.ValidationAttributes
                         return new ValidationResult("Английское название услуги не должно превышать 30 символов!");
                     }
 
-                    // Только английские буквы, цифры, пробелы и основные знаки препинания
+
                     if (!Regex.IsMatch(name, @"^[a-zA-Z0-9\s\.,!?-]+$"))
                     {
                         return new ValidationResult("Английское название должно содержать только латинские буквы!");
@@ -116,7 +113,7 @@ namespace ServiceStationV.ValidationAttributes
                         return new ValidationResult("Английское краткое описание не должно превышать 50 символов!");
                     }
 
-                    // Только английские буквы, цифры, пробелы и основные знаки препинания
+
                     if (!Regex.IsMatch(description, @"^[a-zA-Z0-9\s\.,!?-]+$"))
                     {
                         return new ValidationResult("Английское краткое описание должно содержать только латинские буквы!");
@@ -135,7 +132,7 @@ namespace ServiceStationV.ValidationAttributes
                 {
                     string description = value.ToString();
 
-                    // Только английские буквы, цифры, пробелы и основные знаки препинания
+
                     if (!Regex.IsMatch(description, @"^[a-zA-Z0-9\s\.,!?\-\r\n]+$"))
                     {
                         return new ValidationResult("Английское подробное описание должно содержать только латинские буквы!");
@@ -162,25 +159,7 @@ namespace ServiceStationV.ValidationAttributes
                     return ValidationResult.Success;
                 }
             }
-            //ВОЗМОЖНО ИСПРОЛЬЗОАНИЕ ДЛЯ ДОБАВЛЕНИЕ НОВЫХ ТИПОВ
-            //public class ServiceTypeAttribute : ValidationAttribute
-            //{
-            //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-            //    {
-            //        if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
-            //        {
-            //            return new ValidationResult("Тип услуги не может быть пустым!");
-            //        }
-
-            //        string type = value.ToString();
-            //        if (type.Length > 20)
-            //        {
-            //            return new ValidationResult("Тип услуги не должен превышать 20 символов!");
-            //        }
-
-            //        return ValidationResult.Success;
-            //    }
-            //}
+            
         }
     }
 

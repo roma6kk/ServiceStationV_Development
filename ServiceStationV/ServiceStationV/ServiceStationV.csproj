@@ -19,8 +19,10 @@
     <None Remove="Fonts\Orbitron\Orbitron-SemiBold.ttf" />
     <None Remove="Fonts\Orbitron\Orbitron-VariableFont_wght.ttf" />
     <None Remove="images\AdminImages\AddService.png" />
+    <None Remove="images\AdminImages\statistic.png" />
     <None Remove="images\Close.png" />
     <None Remove="images\EngineChange.mp4" />
+    <None Remove="images\Exit.png" />
     <None Remove="images\icon.png" />
     <None Remove="images\Icons\profile.png" />
     <None Remove="images\Icons\SettingsIcon.png" />
@@ -155,7 +157,10 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="LiveChartsCore" Version="2.0.0-rc5.4" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Wpf" Version="2.0.0-rc5.4" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="SkiaSharp" Version="3.119.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -171,7 +176,13 @@
     <Resource Include="images\AdminImages\AddService.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\AdminImages\statistic.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\Close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Exit.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\icon.png">

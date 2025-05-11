@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ServiceStationV.Views"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Title="Управление заказами" Height="600" Width="900">
+        Title="Управление заказами" Height="600" Width="900"
+        AllowsTransparency="True">
 
     <Grid Background="{DynamicResource CardBackground}">
         <Grid.RowDefinitions>
@@ -29,7 +30,18 @@
         <!-- Панель поиска -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
             <TextBlock Text="Search by ID:" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <TextBox x:Name="SearchBox" FontFamily="{StaticResource MainFont}" Width="200" Style="{DynamicResource TextBoxStyle}" Foreground="Black" Margin="0,0,10,0"/>
+            <TextBox x:Name="SearchBox" FontFamily="{StaticResource MainFont}" Width="200"  TextChanged="SearchBox_TextChanged" Style="{DynamicResource TextBoxStyle}" Foreground="Black" Margin="0,0,10,0"/>
+            <ComboBox x:Name="SortByDateCB" 
+          SelectedIndex="0"
+          FontFamily="{StaticResource MainFont}"
+          Style="{DynamicResource ComboBoxStyle}"
+          Width="180"
+          Margin="20,0,30,0"
+          SelectionChanged="SortByDateCB_SelectionChanged">
+                <ComboBoxItem Content="{DynamicResource SortByDate}" IsSelected="True"/>
+                <ComboBoxItem Content="{DynamicResource Ascending}"/>
+                <ComboBoxItem Content="{DynamicResource Descending}"/>
+            </ComboBox>
             <Button Content="Search" FontFamily="{StaticResource MainFont}" Style="{DynamicResource ButtonStyle}" Width="100" Click="Search_Click"/>
             <Button Content="Save all" FontFamily="{StaticResource MainFont}" Style="{DynamicResource ButtonStyle}" Width="100" 
        Margin="20,0,0,0" Click="SaveBTN_Click"/>
@@ -40,11 +52,22 @@
             <ItemsControl x:Name="OrdersList" ItemsSource="{Binding Orders}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{DynamicResource ServiceCardStyle}" Margin="0,0,0,10" Padding="10">
+                        <Border Margin="0,0,0,10" Padding="10">
+                            <Border.Style>
+                                <Style TargetType="Border" BasedOn="{StaticResource ServiceCardStyle}">
+                                    <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Status}" Value="ACTUAL">
+                                            <Setter Property="BorderThickness" Value="3" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                             <StackPanel>
                                 <!-- Информация о заказе -->
                                 <TextBlock Text="{Binding OrderId}" FontFamily="{StaticResource MainFont}" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
                                 <TextBlock Text="{Binding Status}" FontFamily="{StaticResource MainFont}" FontStyle="Italic" Foreground="{DynamicResource AccentBrush}"/>
+
                                 <ItemsControl ItemsSource="{Binding Services}" FontFamily="{StaticResource MainFont}" Margin="10,5,0,0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -58,9 +81,8 @@
                                     <TextBlock Text="COMPLETED" FontFamily="{StaticResource MainFont}" Foreground="{DynamicResource SecondaryBrush}"/>
                                     <CheckBox x:Name="CompletedCB" Checked="CompletedCB_Checked" Height="30" Width="30" Margin="10,0,40,0"/>
                                     <TextBox x:Name="StatusTB" Width="200" Style="{DynamicResource TextBoxStyle}" 
-                                         Text="{Binding UpdatedStatus, UpdateSourceTrigger=PropertyChanged}" 
-                                         Foreground="Black" Margin="0,0,10,0"/>
-                                    
+                             Text="{Binding UpdatedStatus, UpdateSourceTrigger=PropertyChanged}" 
+                             Foreground="Black" Margin="0,0,10,0"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>

@@ -27,7 +27,7 @@ namespace ServiceStationV.ViewsModels
         public FavListWindowViewModels(List<int> favListIds)
         {
             FavListIds = favListIds;
-            FavList = new List<Service>(); // Инициализация пустого списка
+            FavList = new List<Service>(); 
         }
 
         public async Task LoadFavListAsync()

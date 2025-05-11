@@ -11,11 +11,11 @@
         <ImageSource x:Key="Search">/ServiceStationV;component/images/searchWhite.png</ImageSource>
         <ImageSource x:Key="MainWindowBackground">/ServiceStationV;component/images/MainWindowBackground.png</ImageSource>
         <ImageSource x:Key="Icon">/ServiceStationV;component/images/icon.png</ImageSource>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <FontFamily x:Key="MainFont">\Fonts\Orbitron\#Orbitron</FontFamily>
 
             <Style TargetType="Button">
-                <!-- Отключаем стандартные эффекты -->
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -36,11 +36,9 @@
                                         RecognizesAccessKey="True"/>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <!-- Меняем курсор при наведении -->
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Cursor" Value="Hand"/>
                                 </Trigger>
-                                <!-- Убираем все эффекты при нажатии -->
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter TargetName="border" Property="Background" Value="Transparent"/>
                                 </Trigger>

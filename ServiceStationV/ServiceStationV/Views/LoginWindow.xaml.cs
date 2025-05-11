@@ -18,9 +18,6 @@ using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         public LoginWindow()
@@ -28,6 +25,11 @@ namespace ServiceStationV.Views
             InitializeComponent();
             LocalizationManager.LanguageChanged += OnLanguageChanged;
 
+        }
+
+        private void CloseBTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
         private void OnLanguageChanged(object sender, EventArgs e)
         {
@@ -83,27 +85,35 @@ namespace ServiceStationV.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка LoginBTN_Click: " + ex, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ошибка LoginBTN_Click: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (BCrypt.Net.BCrypt.Verify(PasswordTB.Password, LoggedUser.Password))
+            try
             {
-                UserRepository.CurrentUser = LoggedUser;
-                if (LoggedUser.Login == "admin") 
+                if (BCrypt.Net.BCrypt.Verify(PasswordTB.Password, LoggedUser.Password))
                 {
-                    AdminWindow adminWindow = new AdminWindow();
-                    adminWindow.Show();
+                    UserRepository.CurrentUser = LoggedUser;
+                    if (LoggedUser.Login == "admin")
+                    {
+                        AdminWindow adminWindow = new AdminWindow();
+                        adminWindow.Show();
+                        this.Close();
+                        return;
+                    }
+                    MainMenuWindow MMWindow = new MainMenuWindow();
+                    Application.Current.MainWindow = MMWindow;
+                    MMWindow.Show();
                     this.Close();
                     return;
                 }
-                MainMenuWindow MMWindow = new MainMenuWindow();
-                Application.Current.MainWindow = MMWindow;
-                MMWindow.Show();
-                this.Close();
-                return;
+                MessageBox.Show("Неверный логин и/или пароль!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                PasswordTB.Clear();
             }
-            MessageBox.Show("Неверный логин и/или пароль!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-            PasswordTB.Clear();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка входа:" + ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                PasswordTB.Clear();
+            }
         }
     }
 }

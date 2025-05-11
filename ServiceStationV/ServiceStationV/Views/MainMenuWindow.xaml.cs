@@ -1,14 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Effects;
 using ServiceStationV.Models;
-using ServiceStationV.ViewsModels;
-using ServiceStationV.Repositories;
-using System.Windows.Media;
 using ServiceStationV.Views;
-using MessageBox = ServiceStationV.Views.MessageBox;
+using ServiceStationV.ViewsModels;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ServiceStationV
 {
@@ -18,61 +15,163 @@ namespace ServiceStationV
 
         public MainMenuWindow()
         {
-            // ЭТО ТОЖЕ 
-            LocalizationManager.LanguageChanged += OnLanguageChanged;
-            InitializeComponent();
-            ThemeManager.LoadTheme("RS");
-            DataContext = _viewModel;
+            try
+            {
+                LocalizationManager.LanguageChanged += OnLanguageChanged;
+                InitializeComponent();
+                ThemeManager.LoadTheme("RS");
+                DataContext = _viewModel;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при инициализации окна: {ex.Message}\nПопробуйте перезапустить приложение.",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                Close(); 
+            }
         }
-        
-        // Я ХЗ ПОЧЕМУ НО ЕСЛИ ЭТО УБРАТЬ ТИПЫ СЕРВИСОВ В КОМБОБОКСЕ НЕ ПЕРЕВОДЯТСЯ НАДО БДУЕТ ФИКСИТЬ 
+
+        private void CloseBTN_Click( object sender, RoutedEventArgs e )
+        {
+            this.Close();
+        }
         private void OnLanguageChanged(object sender, EventArgs e)
         {
-            _viewModel.UpdateSortOptions();
-            _viewModel.ViewServices?.Refresh();
+            try
+            {
+                _viewModel.UpdateSortOptions();
+                _viewModel.ViewServices?.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при смене языка: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
+
         private void ServiceBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button { DataContext: Service selectedService })
+            try
             {
-                ServiceWindow serviceWindow = new ServiceWindow(selectedService);
-                serviceWindow.ShowDialog();
+                if (sender is Button { DataContext: Service selectedService })
+                {
+                    ServiceWindow serviceWindow = new ServiceWindow(selectedService);
+                    serviceWindow.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Не удалось определить выбранную услугу.",
+                        "Ошибка",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии услуги: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
         }
 
         private void CartBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button)
+            try
             {
                 CartWindow cartWindow = new CartWindow();
                 cartWindow.ShowDialog();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии корзины: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
 
-        private void FavListBTN_Click(Object sender, RoutedEventArgs e)
+        private void FavListBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button)
+            try
             {
                 FavListWindow favListWindow = new FavListWindow();
                 favListWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии избранного: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
         }
 
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.SelectedServiceOption = null;
+            try
+            {
+                _viewModel.SelectedServiceOption = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при сбросе фильтра: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
 
         private void ClearSortButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.SelectedSortOption = null;
+            try
+            {
+                _viewModel.SelectedSortOption = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при сбросе сортировки: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
 
         private void ProfileBTN_Click(object sender, RoutedEventArgs e)
         {
-            ProfileWindow profileWindow = new ProfileWindow();
-            profileWindow.ShowDialog();
+            try
+            {
+                ProfileWindow profileWindow = new ProfileWindow();
+                profileWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Ошибка при открытии профиля: {ex.Message}",
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
-      
-        }
+    }
 }

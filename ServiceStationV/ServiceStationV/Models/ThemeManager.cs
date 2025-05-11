@@ -86,7 +86,6 @@ namespace ServiceStationV.Models
             }
             catch
             {
-                // Ultimate fallback to system theme
                 Application.Current.Resources.MergedDictionaries.Clear();
             }
         }
