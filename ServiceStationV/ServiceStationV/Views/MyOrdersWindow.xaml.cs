@@ -77,8 +77,8 @@ namespace ServiceStationV.Views
                     }
                 }
 
-                await viewModel.LoadOrdersAsync();
-                await viewModel.LoadFeedbacksAsync();
+                order.IsOrderHasFeedback = false;
+
             }
             catch (Exception ex)
             {

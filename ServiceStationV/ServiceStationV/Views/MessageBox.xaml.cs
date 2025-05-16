@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,6 +9,7 @@ namespace ServiceStationV.Views
 {
     public partial class MessageBox : Window
     {
+
         public MessageBox()
         {
             InitializeComponent();
@@ -120,6 +122,9 @@ namespace ServiceStationV.Views
             return Show(Application.Current.MainWindow, message, caption, buttons, image, MessageBoxResult.OK);
         }
 
+        private static readonly string soundPath = System.IO.Path.GetFullPath(@"..\..\..\images\ErrorSound.wav");
+        private static SoundPlayer player = new SoundPlayer(soundPath);
+
         public static MessageBoxResult Show(Window owner, string message, string caption, MessageBoxButton buttons, MessageBoxImage image, MessageBoxResult defaultResult)
         {
             var dialog = new MessageBox()
@@ -132,8 +137,13 @@ namespace ServiceStationV.Views
             dialog.MessageContainer.Text = message;
             dialog.SetImage(image);
             dialog.AddButtons(buttons, defaultResult);
+            if (!System.IO.File.Exists(soundPath))
+            {
+                System.Windows.MessageBox.Show($"Файл не найден: {soundPath}");
+                return System.Windows.MessageBoxResult.OK;
+            }
 
-            System.Media.SystemSounds.Beep.Play();
+            player.Play();
 
             dialog.ShowDialog();
             return dialog.Result;

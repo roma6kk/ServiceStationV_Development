@@ -171,7 +171,7 @@ namespace ServiceStationV.Views
                         {
                             addServicesCmd.Parameters.Clear();
                             addServicesCmd.Parameters.AddWithValue("@OrderId", orderId);
-                            var serviceName = LocalizationManager.IsEnglish ? service.ServiceName : service.ServiceNameEN;
+                            var serviceName = service.ServiceName == null ? service.ServiceNameEN : service.ServiceName;
                             addServicesCmd.Parameters.Add("@ServiceName", SqlDbType.NVarChar, 4000).Value = serviceName ?? (object)DBNull.Value;
                             await addServicesCmd.ExecuteNonQueryAsync();
                         }

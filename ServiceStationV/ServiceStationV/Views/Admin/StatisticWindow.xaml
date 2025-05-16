@@ -9,13 +9,10 @@
          AllowsTransparency="True">
 
     <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto" MinHeight="100"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Button Grid.Column="1"
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Button 
             Content="✕" 
             FontSize="25"
             FontWeight="Black"
@@ -29,32 +26,61 @@
             BorderThickness="0"
             Foreground="{DynamicResource AccentBrush}"
             Click="CloseBTN_Click"/>
-    
 
-    <TextBlock Text="Статистика заказов" FontSize="24" FontWeight="Bold"
+
+                <TextBlock Text="Статистика заказов" FontSize="24" FontWeight="Bold"
                    Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center"
                    Margin="0,0,0,20"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <StackPanel Margin="0,0,40,0">
-                <TextBlock Text="Всего заказов" FontSize="16" Foreground="{DynamicResource TextBrush}" />
-                <TextBlock x:Name="TotalOrdersTB" FontSize="20" FontWeight="Bold" Foreground="WhiteSmoke" Text="0" />
-            </StackPanel>
-            <StackPanel Margin="0,0,40,0">
-                <TextBlock Text="Активные" FontSize="16" Foreground="{DynamicResource TextBrush}" />
-                <TextBlock x:Name="ActiveOrdersTB" FontSize="20" FontWeight="Bold" Foreground="Green" Text="0" />
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Text="Выполненные" FontSize="16" Foreground="{DynamicResource TextBrush}" />
-                <TextBlock x:Name="CompletedOrdersTB" FontSize="20" FontWeight="Bold" Foreground="Blue" Text="0" />
-            </StackPanel>
-        </StackPanel>
-        <Border Grid.Row="2" Margin="0,20,0,0" Background="{DynamicResource CardBackground}" CornerRadius="10" ClipToBounds="True" >
-            <Border CornerRadius="10" Background="WhiteSmoke" ClipToBounds="True">
-                <lvc:PieChart x:Name="PieChartControl"
-                      LegendPosition="Right" />
-            </Border>
-        </Border>
 
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
+                    <StackPanel Margin="0,0,40,0">
+                        <TextBlock Text="Всего заказов" FontSize="16" Foreground="{DynamicResource TextBrush}" />
+                        <TextBlock x:Name="TotalOrdersTB" FontSize="20" FontWeight="Bold" Foreground="WhiteSmoke" Text="0" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,40,0">
+                        <TextBlock Text="Активные" FontSize="16" Foreground="{DynamicResource TextBrush}" />
+                        <TextBlock x:Name="ActiveOrdersTB" FontSize="20" FontWeight="Bold" Foreground="Green" Text="0" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Выполненные" FontSize="16" Foreground="{DynamicResource TextBrush}" />
+                        <TextBlock x:Name="CompletedOrdersTB" FontSize="20" FontWeight="Bold" Foreground="Blue" Text="0" />
+                    </StackPanel>
+                </StackPanel>
+                <Border  Margin="0,20,0,0" Background="{DynamicResource CardBackground}" CornerRadius="10" ClipToBounds="True"
+                         Padding="10" Height="300">
+                    <Border CornerRadius="10" Background="WhiteSmoke" ClipToBounds="True">
+                        <lvc:PieChart x:Name="PieChartControl"
+                      LegendPosition="Right" />
+                    </Border>
+                </Border>
+                <Border Margin="0,20,0,0"
+        Background="{DynamicResource CardBackground}"
+        CornerRadius="10"
+        Padding="10">
+                    <StackPanel>
+                        <TextBlock Text="Последние отзывы клиентов" 
+                   FontSize="18" 
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource AccentBrush}"
+                   Margin="0,0,0,10"/>
+
+                        <DataGrid x:Name="ReviewsDataGrid"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  Background="WhiteSmoke"
+                  BorderBrush="{DynamicResource AccentBrush}"
+                  ItemsSource="{Binding RecentFeedbacks}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="User" Binding="{Binding Login}" Width="*"/>
+                                <DataGridTextColumn Header="Feedback" Binding="{Binding FeedbackText}" Width="2*" />
+                                <DataGridTextColumn Header="Date" Binding="{Binding OrderDateTime, StringFormat=dd.MM.yyyy HH:mm:ss}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

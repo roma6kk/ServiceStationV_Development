@@ -12,7 +12,6 @@ namespace ServiceStationV.ViewsModels
         public int ServiceId { get; }
         public string ImagePath { get; }
         public string LargeDiscription { get; }
-        public string VideoPath { get; set; } = "/images/EngineChange.mp4"; 
 
         public ServiceWindowViewModel()
         {

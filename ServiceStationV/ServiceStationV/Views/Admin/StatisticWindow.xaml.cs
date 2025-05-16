@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ServiceStationV.ViewsModels;
 using System.Threading.Tasks;
 using System.Windows;
 using MessageBox = ServiceStationV.Views.MessageBox;
@@ -14,12 +15,20 @@ namespace ServiceStationV.Views.Admin
 {
     public partial class StatisticWindow : Window
     {
+        private readonly StatisticWindowViewModel _viewModel;
+
         public StatisticWindow()
         {
             try
             {
                 InitializeComponent();
-                Loaded += LoadStatisticsAsync;
+                _viewModel = new StatisticWindowViewModel();
+                DataContext = _viewModel;
+                Loaded += LoadStatisticsAsync; 
+                Loaded += async (s, e) =>
+                {   
+                    await _viewModel.GetRecentFeedbacksAsync(); 
+                };
             }
             catch (Exception ex)
             {

@@ -24,6 +24,7 @@ namespace ServiceStationV.Views.Admin
                 InitializeComponent();
                 DataContext = _OWViewModel;
                 _OWViewModel.LoadAllOrders();
+
             }
             catch (Exception ex)
             {
@@ -123,6 +124,7 @@ namespace ServiceStationV.Views.Admin
                 if (sender is CheckBox checkBox && checkBox.DataContext is Order order)
                 {
                     order.Status = "COMPLETED";
+                    order.OrderDate = DateTime.Now;
                     await OrderRepository.UpdateOrderStatusAsync(order.OrderId, order.Status);
                     _OWViewModel.LoadAllOrders();
                 }

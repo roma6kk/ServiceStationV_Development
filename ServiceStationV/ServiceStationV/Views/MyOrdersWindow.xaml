@@ -50,6 +50,7 @@
                             <StackPanel>
                                 <TextBlock Text="{Binding OrderId}" FontFamily="{StaticResource MainFont}" FontWeight="Bold" Foreground="{StaticResource TextBrush}"/>
                                 <TextBlock Text="{Binding Status}" FontFamily="{StaticResource MainFont}"  Foreground="{StaticResource AccentBrush}"/>
+                                <TextBlock Text="{Binding OrderDate, StringFormat=dd.MM.yyyy HH:mm:ss}"  FontFamily="{StaticResource MainFont}"  Foreground="{StaticResource TextBrush }"/>
                                 <ItemsControl ItemsSource="{Binding Services}" Margin="10,5,0,0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -84,7 +85,12 @@
                                        FontFamily="{StaticResource MainFont}" 
                                        Foreground="Green"
                                        Margin="10,0,0,0"/>
+
                                 </StackPanel>
+                                    <TextBlock Text="{Binding OrderDate, StringFormat=dd.MM.yyyy HH:mm}"
+                                        FontFamily="{StaticResource MainFont}" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource AccentBrush}"/>
 
                                 <!-- Список услуг -->
                                 <ItemsControl ItemsSource="{Binding Services}" Margin="10,5,0,5">
@@ -104,26 +110,26 @@
                                             Visibility="{Binding IsOrderHasFeedback, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     
                                     <TextBlock Text="{DynamicResource FeedBack}" 
-                                       FontFamily="{StaticResource MainFont}" 
-                                       FontWeight="SemiBold"
-                                       Margin="0,0,0,5"/>
+                                               FontFamily="{StaticResource MainFont}" 
+                                               FontWeight="SemiBold"
+                                               Margin="0,0,0,5"/>
 
                                     <TextBox x:Name="CommentTextBox" 
-                                     AcceptsReturn="True"
-                                     TextWrapping="Wrap"
-                                     MinHeight="60"
-                                     MaxHeight="120"
-                                     VerticalScrollBarVisibility="Auto"
-                                     FontFamily="{StaticResource MainFont}"
-                                     Margin="0,0,0,5"/>
+                                             AcceptsReturn="True"
+                                             TextWrapping="Wrap"
+                                             MinHeight="60"
+                                             MaxHeight="120"
+                                             VerticalScrollBarVisibility="Auto"
+                                             FontFamily="{StaticResource MainFont}"
+                                             Margin="0,0,0,5"/>
 
                                     <Button Content="{DynamicResource Save}" 
                                             Click="SaveBTN_Click"
                                             Tag="{Binding Path=Text, ElementName=CommentTextBox}"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,10,0,0"
-                                    Padding="10,5"
-                                    Style="{StaticResource ButtonStyle}"/>
+                                            HorizontalAlignment="Right"
+                                            Margin="0,10,0,0"
+                                            Padding="10,5"
+                                            Style="{StaticResource ButtonStyle}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>

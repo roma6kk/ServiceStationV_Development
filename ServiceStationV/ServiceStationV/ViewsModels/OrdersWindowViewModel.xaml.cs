@@ -136,10 +136,6 @@ namespace ServiceStationV.ViewsModels
         }
 
 
-        
-
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 

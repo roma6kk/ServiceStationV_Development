@@ -21,7 +21,10 @@
     <None Remove="images\AdminImages\AddService.png" />
     <None Remove="images\AdminImages\statistic.png" />
     <None Remove="images\Close.png" />
+    <None Remove="images\Diagnostic.mp4" />
     <None Remove="images\EngineChange.mp4" />
+    <None Remove="images\ErrorSound.mp3" />
+    <None Remove="images\ErrorSound.wav" />
     <None Remove="images\Exit.png" />
     <None Remove="images\icon.png" />
     <None Remove="images\Icons\profile.png" />
@@ -33,6 +36,7 @@
     <None Remove="images\LoginWindowBackground.jpg" />
     <None Remove="images\MainMenuBackground.HEIC" />
     <None Remove="images\MainMenuBackground.jpeg" />
+    <None Remove="images\Maintenance.mp4" />
     <None Remove="images\MainWindowBackground.png" />
     <None Remove="images\MessageBox\Info.png" />
     <None Remove="images\MessageBox\Question.png" />
@@ -89,13 +93,20 @@
     <None Remove="images\ServicesImages\WiringDiagnostic.jpeg" />
     <None Remove="images\ShoppingCart.png" />
     <None Remove="images\Success.png" />
+    <None Remove="images\Tuning.mp4" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="images\Diagnostic.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\EngineChange.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\icon.ico" />
+    <Content Include="images\Maintenance.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\ServicesImages\AlarmInstallation.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -153,6 +164,9 @@
     <Content Include="images\ServicesImages\WiringDiagnostic.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\Tuning.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -180,6 +194,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\ErrorSound.wav">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Exit.png">

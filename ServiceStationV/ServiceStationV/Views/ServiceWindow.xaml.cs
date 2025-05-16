@@ -35,13 +35,41 @@ namespace ServiceStationV.Views
                     new DoubleAnimation(1, TimeSpan.FromSeconds(0.3)));
                 await SetCartButtonBackground();
                 await SetFavListButtonBackground();
-                if (service.ServiceType == ServiceTypes.Двигатель)
+                string path;
+                switch (service.ServiceType)
                 {
-                    ServiceVideo.Height = 200;
-                    ServiceVideo.Width = 200;
-                    string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images", "EngineChange.mp4");
-                    ServiceVideo.Source = new Uri(path, UriKind.Absolute);
-                    ServiceVideo.Play();
+                    case ServiceTypes.Двигатель:
+                        ServiceVideo.Height = 200;
+                        ServiceVideo.Width = 200;
+
+                        path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images", "EngineChange.mp4");
+                        ServiceVideo.Source = new Uri(path, UriKind.Absolute);
+                        ServiceVideo.Play();
+                        break;
+                    case ServiceTypes.Диагностика:
+                        ServiceVideo.Height = 400;
+                        ServiceVideo.Width = 200;
+
+                        path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images", "Diagnostic.mp4");
+                        ServiceVideo.Source = new Uri(path, UriKind.Absolute);
+                        ServiceVideo.Play();
+                        break;
+                    case ServiceTypes.Обслуживание:
+                        ServiceVideo.Height = 400;
+                        ServiceVideo.Width = 200;
+
+                        path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images", "Maintenance.mp4");
+                        ServiceVideo.Source = new Uri(path, UriKind.Absolute);
+                        ServiceVideo.Play();
+                        break;
+                    case ServiceTypes.Тюнинг:
+                        ServiceVideo.Height = 400;
+                        ServiceVideo.Width = 200;
+
+                        path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images", "Tuning.mp4");
+                        ServiceVideo.Source = new Uri(path, UriKind.Absolute);
+                        ServiceVideo.Play();
+                        break;
                 }
             };
 
