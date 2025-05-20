@@ -61,7 +61,6 @@ namespace ServiceStationV.Repositories
                     }
                 }
                 Services.Add(service);
-
                 return true;
             }
             catch (SqlException ex)

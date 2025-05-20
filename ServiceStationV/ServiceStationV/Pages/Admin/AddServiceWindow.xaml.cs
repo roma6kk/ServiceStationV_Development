@@ -12,7 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ServiceStationV.ViewsModels;
+using ServiceStationV.ViewableData;
 using ServiceStationV.Repositories;
 using MessageBox = ServiceStationV.Views.MessageBox;
 
@@ -72,6 +72,8 @@ namespace ServiceStationV.Views.Admin
                     {
                         ServiceRepository.AddService(service);
                         _adminViewModel.ViewServices.Refresh();
+                        _adminViewModel.RefreshServicesAsync();
+
                         this.Close();
                     }
                     catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)

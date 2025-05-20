@@ -96,6 +96,9 @@ namespace ServiceStationV.ValidationAttributes
                         return new ValidationResult("Английское название должно содержать только латинские буквы!");
                     }
                 }
+                else return new ValidationResult("Английское название услуги не может быть пустым!");
+
+
 
                 return ValidationResult.Success;
             }
@@ -119,6 +122,7 @@ namespace ServiceStationV.ValidationAttributes
                         return new ValidationResult("Английское краткое описание должно содержать только латинские буквы!");
                     }
                 }
+                else return new ValidationResult("Английское описание услуги не может быть пустым!");
 
                 return ValidationResult.Success;
             }
@@ -138,6 +142,8 @@ namespace ServiceStationV.ValidationAttributes
                         return new ValidationResult("Английское подробное описание должно содержать только латинские буквы!");
                     }
                 }
+                else return new ValidationResult("Английское описание услуги не может быть пустым!");
+
 
                 return ValidationResult.Success;
             }

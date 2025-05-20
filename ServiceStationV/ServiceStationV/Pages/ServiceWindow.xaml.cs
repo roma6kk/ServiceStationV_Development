@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.Data.SqlClient;
 using ServiceStationV.Models;
 using ServiceStationV.Repositories;
-using ServiceStationV.ViewsModels;
+using ServiceStationV.ViewableData;
 using MessageBox = ServiceStationV.Views.MessageBox;
 
 namespace ServiceStationV.Views

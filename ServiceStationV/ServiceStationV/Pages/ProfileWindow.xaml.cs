@@ -1,7 +1,7 @@
 ﻿using ServiceStationV.Models;
 using ServiceStationV.Repositories;
 using ServiceStationV.Views;
-using ServiceStationV.ViewsModels;
+using ServiceStationV.ViewableData;
 using System;
 using System.Globalization;
 using System.Windows;

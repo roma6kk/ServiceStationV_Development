@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using ServiceStationV.Models;
 using ServiceStationV.Views;
-using ServiceStationV.ViewsModels;
+using ServiceStationV.ViewableData;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ServiceStationV

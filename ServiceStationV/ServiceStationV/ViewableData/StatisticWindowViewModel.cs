@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public class StatisticWindowViewModel : INotifyPropertyChanged
     {

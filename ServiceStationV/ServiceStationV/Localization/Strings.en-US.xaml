@@ -25,7 +25,7 @@
 	<system:String x:Key="RegWindowRegisterButton">Register</system:String>
 	<system:String x:Key="RegWindowBackButton">Back</system:String>
     <!--MAINMENUWINDOW-->                  
-    <system:String x:Key="MainMenu_Header">omg so cool service </system:String>
+    <system:String x:Key="MainMenu_Header">ADMIN </system:String>
     <system:String x:Key="Sort_Ascending">Price (Ascending)</system:String>
     <system:String x:Key="Sort_Descending">Price (Descending)</system:String>
     <system:String x:Key="Sort_ByName">Name</system:String>

@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public class CartWindowViewModels : INotifyPropertyChanged
     {

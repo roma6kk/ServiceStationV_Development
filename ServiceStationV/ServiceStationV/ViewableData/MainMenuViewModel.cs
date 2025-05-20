@@ -11,7 +11,7 @@ using System.Windows.Data;
 using ServiceStationV.Models;
 using ServiceStationV.Repositories;
 
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public class MainMenuViewModel : INotifyPropertyChanged
     {

@@ -19,7 +19,7 @@ using System.Windows.Media.Animation;
 using System.ComponentModel;
 using MessageBox = ServiceStationV.Views.MessageBox;
 
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public partial class OrdersWindowViewModel : INotifyCollectionChanged
     {

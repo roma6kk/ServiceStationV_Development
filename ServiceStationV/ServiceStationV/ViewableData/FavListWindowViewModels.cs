@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using MessageBox = ServiceStationV.Views.MessageBox;
 
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public class FavListWindowViewModels : INotifyPropertyChanged
     {

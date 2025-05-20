@@ -1,6 +1,6 @@
 ﻿using ServiceStationV.Models;
 using ServiceStationV.Repositories;
-using ServiceStationV.ViewsModels;
+using ServiceStationV.ViewableData;
 using System;
 using System.IO;
 using System.Windows;
@@ -117,7 +117,8 @@ namespace ServiceStationV.Views.Admin
                     MessageBox.Show("Не удалось распознать тип услуги.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-
+                if (!_service.ValidateService())
+                    return;
                 bool updated = await ServiceRepository.UpdateService(_service);
                 if (updated)
                 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using ServiceStationV.Models;
 using ServiceStationV.Repositories;
-using ServiceStationV.ViewsModels;
+using ServiceStationV.ViewableData;
 using System;
 using System.Collections.Generic;
 using System.Data;

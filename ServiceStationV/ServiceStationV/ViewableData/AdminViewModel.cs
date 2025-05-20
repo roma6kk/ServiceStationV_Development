@@ -10,7 +10,7 @@ using ServiceStationV.Models;
 using ServiceStationV.Repositories;
 using MessageBox = ServiceStationV.Views.MessageBox;
 
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public class AdminViewModel : INotifyPropertyChanged
     {

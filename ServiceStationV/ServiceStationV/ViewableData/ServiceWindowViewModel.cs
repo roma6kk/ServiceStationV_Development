@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceStationV.Models;
 using ServiceStationV.Views;
-namespace ServiceStationV.ViewsModels
+namespace ServiceStationV.ViewableData
 {
     public class ServiceWindowViewModel
     {
